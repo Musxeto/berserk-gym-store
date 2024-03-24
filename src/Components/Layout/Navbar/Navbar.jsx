@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showGymWear, setShowGymWear] = useState(false);
   const [showNutrition, setShowNutrition] = useState(false);
-
+  const [showAccessories, setShowAccessories] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -15,13 +15,19 @@ const Navbar = () => {
   const gymWearSubTabs = [
     { name: "Shirts", link: "/gym-wear/shirts" },
     { name: "Tank Tops", link: "/gym-wear/tanktops" },
+    { name: "Hoodies", link: "/gym-wear/hoodies" },
   ];
 
   const nutritionSubTabs = [
     { name: "Protein Powder", link: "/nutrition/protein-powder" },
     { name: "Protein Bars", link: "/nutrition/protein-bars" },
   ];
-
+  const accessoriesSubTabs = [
+    { name: "Weightlifting Belt", link: "/accessories" },
+    { name: "Wrist Wraps", link: "/accessories" },
+    { name: "Lifting Straps", link: "/accessories" },
+    { name: "Gloves", link: "/accessories" },
+  ];
   return (
     <nav className="bg-white border-b-2 border-gray-200">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
@@ -99,23 +105,38 @@ const Navbar = () => {
               </div>
             )}
           </div>
+          <div className="relative">
+            <span
+              className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
+              onClick={() => setShowAccessories(!showAccessories)}
+            >
+              Accessories <FaChevronDown className="inline-block" />
+            </span>
+            {showAccessories && (
+              <div className="absolute top-full left-0 mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
+                {accessoriesSubTabs.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.link}
+                    className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
           <Link
-            to="/nutrition"
-            className="text-gray-600 hover:text-gray-900 transition duration-300"
-          >
-            Brand
-          </Link>
-          <Link
-            to="/nutrition"
+            to="/Bundles"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
             Bundles
           </Link>
           <Link
-            to="/nutrition"
+            to="/about"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
-            Reviews
+            About
           </Link>
           {/* Add more navigation links as necessary */}
         </div>
