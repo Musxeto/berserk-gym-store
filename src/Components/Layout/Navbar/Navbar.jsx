@@ -1,43 +1,28 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import berserkLogo from "/berserk.png";
-import { FaBars, FaShoppingCart, FaChevronDown } from "react-icons/fa";
+import { FaBars, FaShoppingCart, FaChevronDown, FaTimes } from "react-icons/fa";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showGymWear, setShowGymWear] = useState(false);
   const [showNutrition, setShowNutrition] = useState(false);
   const [showAccessories, setShowAccessories] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const gymWearSubTabs = [
-    { name: "Shirts", link: "/gym-wear/shirts" },
-    { name: "Tank Tops", link: "/gym-wear/tanktops" },
-    { name: "Hoodies", link: "/gym-wear/hoodies" },
-  ];
-
-  const nutritionSubTabs = [
-    { name: "Protein Powder", link: "/nutrition/protein-powder" },
-    { name: "Protein Bars", link: "/nutrition/protein-bars" },
-  ];
-  const accessoriesSubTabs = [
-    { name: "Weightlifting Belt", link: "/accessories" },
-    { name: "Wrist Wraps", link: "/accessories" },
-    { name: "Lifting Straps", link: "/accessories" },
-    { name: "Gloves", link: "/accessories" },
-  ];
   return (
     <nav className="bg-white border-b-2 border-gray-200">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
-        {/* Brand logo and name */}
         <Link to="/" className="flex items-center space-x-3">
           <img src={berserkLogo} className="h-10" alt="Berserk Fit Logo" />
           <span className="text-2xl font-semibold">Berserk Fit</span>
         </Link>
 
-        {/* Mobile hamburger menu and Shopping cart */}
         <div className="flex items-center space-x-6 md:hidden">
           <button
             className="text-gray-500 hover:text-gray-900 focus:outline-none"
@@ -47,8 +32,10 @@ const Navbar = () => {
             <span className="sr-only">Open mobile menu</span>
           </button>
           <div className="flex items-center space-x-3">
-            <FaShoppingCart className="w-6 h-6 text-gray-600" />
-            {/* Implement cart component */}
+            <FaShoppingCart
+              className="w-6 h-6 text-gray-600"
+              onClick={() => setShowCart(!showCart)}
+            />
           </div>
         </div>
 
@@ -141,10 +128,11 @@ const Navbar = () => {
           {/* Add more navigation links as necessary */}
         </div>
 
-        {/* Shopping cart icon */}
         <div className="hidden md:flex items-center space-x-3">
-          <FaShoppingCart className="w-6 h-6 text-gray-600 hover:text-gray-900 hover:cursor-pointer" />
-          {/* Implement cart component */}
+          <FaShoppingCart
+            className="w-6 h-6 text-gray-600 hover:text-gray-900 hover:cursor-pointer"
+            onClick={() => setShowCart(!showCart)}
+          />
         </div>
       </div>
 
@@ -205,6 +193,9 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
+
+      {/* Shopping cart sidebar */}
+      <ShoppingCart isOpen={showCart} closeSidebar={() => setShowCart(false)} />
     </nav>
   );
 };
