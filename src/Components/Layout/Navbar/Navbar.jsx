@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import berserkLogo from "/berserk.png";
-import { FaBars, FaShoppingCart, FaChevronDown, FaTimes } from "react-icons/fa";
+import { FaBars, FaShoppingCart, FaChevronDown } from "react-icons/fa";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 
 const Navbar = () => {
@@ -14,6 +14,27 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  // Sample data for dropdown menus
+  const gymWearSubTabs = [
+    { name: "T-Shirts", link: "/gym-wear/t-shirts" },
+    { name: "Tank Tops", link: "/gym-wear/tank-tops" },
+    { name: "Shorts", link: "/gym-wear/shorts" },
+    { name: "Leggings", link: "/gym-wear/leggings" },
+  ];
+
+  const nutritionSubTabs = [
+    { name: "Protein Powder", link: "/nutrition/protein-powder" },
+    { name: "Creatine", link: "/nutrition/creatine" },
+    { name: "Vitamins", link: "/nutrition/vitamins" },
+    { name: "Pre-Workout", link: "/nutrition/pre-workout" },
+  ];
+
+  const accessoriesSubTabs = [
+    { name: "Lifting Belts", link: "/accessories/lifting-belts" },
+    { name: "Wrist Wraps", link: "/accessories/wrist-wraps" },
+    { name: "Resistance Bands", link: "/accessories/resistance-bands" },
+  ];
 
   return (
     <nav className="bg-white border-b-2 border-gray-200">
@@ -31,24 +52,14 @@ const Navbar = () => {
             <FaBars className="w-6 h-6" />
             <span className="sr-only">Open mobile menu</span>
           </button>
-          <div className="flex items-center space-x-3">
-            <FaShoppingCart
-              className="w-6 h-6 text-gray-600"
-              onClick={() => setShowCart(!showCart)}
-            />
-          </div>
+          <FaShoppingCart
+            className="w-6 h-6 text-gray-600"
+            onClick={() => setShowCart(!showCart)}
+          />
         </div>
 
         {/* Navigation links */}
         <div className="hidden md:flex flex-grow items-center justify-center space-x-6">
-          <div className="relative">
-            <Link
-              to="/"
-              className="text-gray-600 hover:text-gray-900 transition duration-300"
-            >
-              Home
-            </Link>
-          </div>
           <div className="relative">
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
@@ -70,6 +81,7 @@ const Navbar = () => {
               </div>
             )}
           </div>
+
           {/* Nutrition dropdown */}
           <div className="relative">
             <span
@@ -92,6 +104,8 @@ const Navbar = () => {
               </div>
             )}
           </div>
+
+          {/* Accessories dropdown */}
           <div className="relative">
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
@@ -113,8 +127,9 @@ const Navbar = () => {
               </div>
             )}
           </div>
+
           <Link
-            to="/Bundles"
+            to="/bundles"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
             Bundles
@@ -138,14 +153,7 @@ const Navbar = () => {
 
       <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
         <ul className="text-center py-2">
-          <li>
-            <Link
-              to="/"
-              className="block py-2 px-4 text-gray-600 hover:text-gray-900"
-            >
-              Home
-            </Link>
-          </li>
+          {/* Mobile dropdown menu items */}
           <li>
             <span
               className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
@@ -159,7 +167,7 @@ const Navbar = () => {
                   <li key={index}>
                     <Link
                       to={item.link}
-                      className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
+                      className="block py-2                      px-4 text-gray-800 hover:bg-gray-100"
                     >
                       {item.name}
                     </Link>
@@ -168,7 +176,6 @@ const Navbar = () => {
               </ul>
             )}
           </li>
-
           <li>
             <span
               className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
@@ -179,6 +186,28 @@ const Navbar = () => {
             {showNutrition && (
               <ul className="pl-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
                 {nutritionSubTabs.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      to={item.link}
+                      className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+          <li>
+            <span
+              className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
+              onClick={() => setShowAccessories(!showAccessories)}
+            >
+              Accessories <FaChevronDown className="inline-block" />
+            </span>
+            {showAccessories && (
+              <ul className="pl-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
+                {accessoriesSubTabs.map((item, index) => (
                   <li key={index}>
                     <Link
                       to={item.link}
