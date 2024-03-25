@@ -41,7 +41,9 @@ const Navbar = () => {
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center space-x-3">
           <img src={berserkLogo} className="h-10" alt="Berserk Fit Logo" />
-          <span className="text-2xl font-semibold">Berserk Fit</span>
+          <span className="text-2xl font-semibold text-gray-900">
+            Berserk Fit
+          </span>
         </Link>
 
         <div className="flex items-center space-x-6 md:hidden">
@@ -63,7 +65,11 @@ const Navbar = () => {
           <div className="relative">
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={() => setShowGymWear(!showGymWear)}
+              onClick={() => {
+                setShowGymWear(!showGymWear);
+                setShowAccessories(false);
+                setShowNutrition(false);
+              }}
             >
               Gym Wear <FaChevronDown className="inline-block" />
             </span>
@@ -86,7 +92,11 @@ const Navbar = () => {
           <div className="relative">
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={() => setShowNutrition(!showNutrition)}
+              onClick={() => {
+                setShowNutrition(!showNutrition);
+                setShowGymWear(false);
+                setShowAccessories(false);
+              }}
             >
               Nutrition <FaChevronDown className="inline-block" />
             </span>
@@ -109,7 +119,11 @@ const Navbar = () => {
           <div className="relative">
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={() => setShowAccessories(!showAccessories)}
+              onClick={() => {
+                setShowNutrition(false);
+                setShowGymWear(false);
+                setShowAccessories(!showAccessories);
+              }}
             >
               Accessories <FaChevronDown className="inline-block" />
             </span>

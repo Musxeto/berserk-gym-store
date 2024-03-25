@@ -11,10 +11,9 @@ const ShoppingCart = ({ isOpen, closeSidebar }) => {
       <div className="flex justify-between items-center p-4 border-b">
         <h2 className="text-lg font-semibold">Shopping Cart</h2>
         <button onClick={closeSidebar}>
-          <FaTimes className="text-gray-500" /> {/* Use FaTimes here */}
+          <FaTimes className="text-gray-500 hover:text-gray-900" />
         </button>
       </div>
-      {/* Your shopping cart content goes here */}
     </div>
   );
 };
