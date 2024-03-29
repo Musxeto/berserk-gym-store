@@ -27,7 +27,7 @@ const HeroSection = () => {
             <img
               src={hero}
               alt="Hero"
-              className="max-h-96 w-auto shadow-lg rounded-lg object-cover"
+              className="max-h-96 w-auto object-cover"
             />
           </div>
         </div>
