@@ -25,7 +25,12 @@ const HeroSection = () => {
           <img
             src="hero.jpg"
             alt="Hero"
-            className="max-h-96 w-auto rounded-lg shadow-lg object-cover"
+            style={{
+              width: "100%",
+              height: "70vh",
+              objectFit: "contain",
+            }}
+            className="rounded-lg shadow-lg"
           />
         </div>
       </div>
