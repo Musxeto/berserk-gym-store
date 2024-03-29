@@ -17,17 +17,17 @@ const Navbar = () => {
 
   // Sample data for dropdown menus
   const gymWearSubTabs = [
-    { name: "T-Shirts", link: "/gym-wear/t-shirts" },
-    { name: "Tank Tops", link: "/gym-wear/tank-tops" },
-    { name: "Shorts", link: "/gym-wear/shorts" },
-    { name: "Leggings", link: "/gym-wear/leggings" },
+    { name: "T-Shirts", link: "/tshirts" },
+    { name: "Tank Tops", link: "/tanktops" },
+    { name: "Shorts", link: "/shorts" },
+    { name: "Leggings", link: "/leggings" },
   ];
 
   const nutritionSubTabs = [
-    { name: "Protein Powder", link: "/nutrition/protein-powder" },
-    { name: "Creatine", link: "/nutrition/creatine" },
-    { name: "Vitamins", link: "/nutrition/vitamins" },
-    { name: "Pre-Workout", link: "/nutrition/pre-workout" },
+    { name: "Protein Powder", link: "/proteinpowder" },
+    { name: "Creatine", link: "/creatine" },
+    { name: "Vitamins", link: "/vitamins" },
+    { name: "Pre-Workout", link: "/preworkout" },
   ];
 
   const accessoriesSubTabs = [
@@ -37,7 +37,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white border-b-2 border-gray-200">
+    <nav className="sticky top-0 z-50 bg-white border-b-2 border-gray-200">
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center space-x-3">
           <img src={berserkLogo} className="h-10" alt="Berserk Fit Logo" />

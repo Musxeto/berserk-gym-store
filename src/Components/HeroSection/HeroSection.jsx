@@ -3,7 +3,7 @@ import React from "react";
 const HeroSection = () => {
   const hero = "/hero.jpg";
   return (
-    <section className="py-16 px-4 lg:px-0 bg-white text-black">
+    <section className="py-16 px-4 lg:px-0 mb-2 bg-white text-black">
       {/* Hero section */}
       <div className="container mx-auto lg:flex lg:items-center lg:justify-between">
         {/* Left side content */}
@@ -27,7 +27,7 @@ const HeroSection = () => {
             <img
               src={hero}
               alt="Hero"
-              className="max-h-96 w-auto rounded shadow-lg rounded-lg object-cover"
+              className="max-h-96 w-auto shadow-lg rounded-lg object-cover"
             />
           </div>
         </div>
