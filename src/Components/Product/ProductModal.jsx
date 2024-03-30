@@ -6,9 +6,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 const ProductModal = ({ isOpen, closeModal, product, discountedPrice }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [productTotal, setProductTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   discountedPrice =
     product.price - (product.price * parseInt(product.discount)) / 100;
@@ -20,7 +19,8 @@ const ProductModal = ({ isOpen, closeModal, product, discountedPrice }) => {
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
   };
-  const handleAddToCart = () => {
+
+  const handleAddToCart = async () => {
     if (!selectedSize || !quantity) {
       console.error("Please select both size and quantity.");
       toast.error("Please select both size and quantity.");
@@ -29,23 +29,31 @@ const ProductModal = ({ isOpen, closeModal, product, discountedPrice }) => {
 
     setIsLoading(true);
     const total = discountedPrice * quantity;
-    setSelectedProduct((prevProduct) => ({
-      ...prevProduct,
+
+    // Simulating an asynchronous operation
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    setSelectedProduct({
       ...product,
       size: selectedSize,
       quantity,
       productTotal: total,
-    }));
+    });
 
-    console.log("Product added to cart:", selectedProduct.name);
-    console.log("Size:", selectedProduct.size);
-    console.log("Quantity:", selectedProduct.quantity);
-    console.log("Total:", selectedProduct.productTotal);
     setIsLoading(false);
-
     toast.success("Product added to cart!");
+    console.log(selectedProduct.size);
     closeModal();
   };
+
+  // Display loading spinner while adding to cart
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <ClipLoader size={50} color="#ffffff" loading={true} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -133,16 +141,12 @@ const ProductModal = ({ isOpen, closeModal, product, discountedPrice }) => {
             />
           </div>
 
-          {/* Add to Cart Button with Loading Spinner */}
+          {/* Add to Cart Button */}
           <button
-            className="bg-black text-white py-2 px-4 rounded-lg mt-4 relative"
+            className="bg-black text-white py-2 px-4 rounded-lg mt-4"
             onClick={handleAddToCart}
           >
-            {isLoading ? (
-              <ClipLoader size={20} color="#fff" loading={true} />
-            ) : (
-              "Add to Cart"
-            )}
+            Add to Cart
           </button>
         </div>
       </div>
