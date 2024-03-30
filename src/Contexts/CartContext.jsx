@@ -5,7 +5,6 @@ const CartContext = createContext();
 
 // Custom hook to access the cart context
 export const useCart = () => useContext(CartContext);
-
 // CartProvider component to wrap your application and provide the cart context
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);

@@ -61,7 +61,7 @@ const Navbar = () => {
           />
           {cart.length > 0 && (
             <span
-              onClick={!showCart}
+              onClick={() => setShowCart(!showCart)}
               className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute top-0 right-0 transform -translate-x-1 mt-5 "
             >
               {cart.length}
