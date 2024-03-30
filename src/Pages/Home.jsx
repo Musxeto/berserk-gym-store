@@ -3,15 +3,16 @@ import Navbar from "../Components/Layout/Navbar/Navbar";
 import HeroSection from "../Components/HeroSection/HeroSection";
 import SectionPreview from "../Components/Sections/Sections";
 import Products from "../Components/Product/Products";
+
 // Sample product data
 const productsData = [
   {
     image: "/product1.jpg",
     hoverImage: "/product2.jpg",
     name: "Product 1",
-    sizes: "S, M, L",
-    price: "$19.99",
-    discount: "10% off",
+    sizes: ["S", "M", "L"], // Available sizes
+    price: "19.99",
+    discount: 10,
   },
   // Add more product data as needed
 ];
