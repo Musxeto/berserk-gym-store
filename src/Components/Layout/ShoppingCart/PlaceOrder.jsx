@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import FinalModal from "./FinalModal";
+import { useCart } from "../../../Contexts/CartContext"; // Import useCart hook to access cart context
 
 const PlaceOrder = ({ closeSidebar }) => {
+  const { cart, total } = useCart(); // Get cart and total from the cart context
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -27,13 +29,19 @@ const PlaceOrder = ({ closeSidebar }) => {
     setShowModal(false);
   };
 
-  const orderDetails = []; // Add your order details here
+  const orderDetails = cart.map((item) => ({
+    name: item.name,
+    quantity: item.quantity,
+
+    productTotal: item.productTotal,
+  }));
 
   return (
     <>
       {showModal ? (
         <FinalModal
           orderDetails={orderDetails}
+          total={total} // Pass total directly to FinalModal component
           userData={formData}
           closeModal={closeModal}
         />

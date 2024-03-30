@@ -1,13 +1,31 @@
-// FinalModal.js
-import React from "react";
+import React, { useState } from "react";
+import { useCart } from "../../../Contexts/CartContext";
 
-const FinalModal = ({ orderDetails, userData, closeModal }) => {
-  const calculateTotal = (orderDetails) => {
-    let total = 0;
-    orderDetails.forEach((item) => {
-      total += item.productTotal;
+const FinalModal = ({
+  orderDetails,
+  userData,
+  closeModal,
+  onCheckoutModeChange,
+}) => {
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+  const { clearCart, total } = useCart(); // Accessing clearCart function from the cart context
+
+  const confirmOrder = () => {
+    // Log the complete order details object
+    console.log("Complete Order Details:", {
+      orderDetails,
+      userData,
+      total,
     });
-    return total.toFixed(2);
+
+    // Add your confirmation message here
+    setConfirmationMessage("Your order has been confirmed!");
+
+    // Reset states and clear the shopping cart
+    closeModal();
+    clearCart();
+
+    // Set checkoutMode to false
   };
 
   return (
@@ -23,7 +41,7 @@ const FinalModal = ({ orderDetails, userData, closeModal }) => {
                 </li>
               ))}
             </ul>
-            <p className="mt-4">Total: ${calculateTotal(orderDetails)}</p>
+            <p className="mt-4">Total: ${total}</p>
           </div>
           <div>
             <h2 className="text-lg font-semibold mb-4">User Information</h2>
@@ -45,12 +63,16 @@ const FinalModal = ({ orderDetails, userData, closeModal }) => {
           </div>
         </div>
         <div className="mt-8 text-right">
-          <button
-            className="bg-blue-600 text-white py-2 px-4 rounded-lg mr-4"
-            onClick={closeModal}
-          >
-            Close
-          </button>
+          {confirmationMessage ? (
+            <p className="text-green-600">{confirmationMessage}</p>
+          ) : (
+            <button
+              className="bg-green-600 text-white py-2 px-4 rounded-lg mr-4"
+              onClick={confirmOrder}
+            >
+              Confirm Order
+            </button>
+          )}
         </div>
       </div>
     </div>
