@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useCart } from "../../Contexts/CartContext";
 
-const ProductModal = ({ isOpen, closeModal, product, discountedPrice }) => {
+const ProductModal = ({ isOpen, closeModal, product }) => {
+  const { addToCart } = useCart(); // Access the addToCart function from the cart context
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  discountedPrice =
+  const discountedPrice =
     product.price - (product.price * parseInt(product.discount)) / 100;
 
   const handleSizeSelect = (size) => {
@@ -22,7 +23,6 @@ const ProductModal = ({ isOpen, closeModal, product, discountedPrice }) => {
 
   const handleAddToCart = async () => {
     if (!selectedSize || !quantity) {
-      console.error("Please select both size and quantity.");
       toast.error("Please select both size and quantity.");
       return;
     }
@@ -33,21 +33,23 @@ const ProductModal = ({ isOpen, closeModal, product, discountedPrice }) => {
     // Simulating an asynchronous operation
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    setSelectedProduct({
+    const item = {
       ...product,
       size: selectedSize,
-      quantity,
+      quantity: quantity,
       productTotal: total,
-    });
+    };
+
+    // Add the item to the cart using the addToCart function from the cart context
+    addToCart(item);
 
     setIsLoading(false);
-    toast.success("Product added to cart!");
-    console.log(selectedProduct.size);
+    toast.dark("Product added to cart!");
     closeModal();
   };
 
-  // Display loading spinner while adding to cart
   if (isLoading) {
+    // Display a loading spinner while adding to cart
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <ClipLoader size={50} color="#ffffff" loading={true} />

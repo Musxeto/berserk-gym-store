@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddToCartButton from "./AddToCartButton.jsx";
+import ModalBtn from "./ModalBtn.jsx";
 import ProductModal from "./ProductModal.jsx"; // Assuming the path is correct
 
 const Product = ({ product }) => {
@@ -65,7 +65,7 @@ const Product = ({ product }) => {
         </div>
         {/* Add the AddToCartButton component */}
         <div className="mt-4">
-          <AddToCartButton product={product} />
+          <ModalBtn product={product} />
         </div>
 
         {/* Product modal */}

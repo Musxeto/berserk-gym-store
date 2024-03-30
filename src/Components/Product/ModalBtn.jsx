@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa"; // Import the FaShoppingCart icon from react-icons
 import ProductModal from "./ProductModal";
 
-const AddToCartButton = ({ product }) => {
+const ModalBtn = ({ product }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -31,4 +31,4 @@ const AddToCartButton = ({ product }) => {
   );
 };
 
-export default AddToCartButton;
+export default ModalBtn;
