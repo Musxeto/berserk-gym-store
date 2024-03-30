@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const ProductModal = ({ isOpen, closeModal, product }) => {
   const [selectedSize, setSelectedSize] = useState(""); // State to store selected size
   const [quantity, setQuantity] = useState(1); // State to store quantity
+  const [isLoading, setIsLoading] = useState(false); // State to track loading state
 
   // Function to handle size selection
   const handleSizeSelect = (size) => {
@@ -16,11 +18,16 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
 
   // Function to handle adding product to cart
   const handleAddToCart = () => {
-    // Implement your logic to add the product to cart
-    console.log("Product added to cart:", product.name);
-    console.log("Size:", selectedSize);
-    console.log("Quantity:", quantity);
-    closeModal(); // Close the modal after adding to cart
+    setIsLoading(true); // Set loading state to true
+    // Simulate an asynchronous action (e.g., API request) with setTimeout
+    setTimeout(() => {
+      // Implement your logic to add the product to cart
+      console.log("Product added to cart:", product.name);
+      console.log("Size:", selectedSize);
+      console.log("Quantity:", quantity);
+      setIsLoading(false); // Reset loading state
+      closeModal(); // Close the modal after adding to cart
+    }, 2000); // Simulated loading time of 2 seconds
   };
 
   return (
@@ -91,12 +98,16 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
             />
           </div>
 
-          {/* Add to Cart Button */}
+          {/* Add to Cart Button with Loading Spinner */}
           <button
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4"
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 relative"
             onClick={handleAddToCart}
           >
-            Add to Cart
+            {isLoading ? (
+              <ClipLoader size={20} color="#fff" loading={true} />
+            ) : (
+              "Add to Cart"
+            )}
           </button>
         </div>
       </div>
