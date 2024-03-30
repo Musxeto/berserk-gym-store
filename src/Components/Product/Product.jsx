@@ -72,7 +72,7 @@ const Product = ({ product }) => {
         <ProductModal
           isOpen={modalOpen}
           closeModal={closeModal}
-          product={...product}
+          product={product}
         />
       </div>
     </div>
