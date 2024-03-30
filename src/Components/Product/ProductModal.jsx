@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { FaShoppingCart } from "react-icons/fa";
 import ClipLoader from "react-spinners/ClipLoader";
 
-const ProductModal = ({ isOpen, closeModal, product }) => {
+const ProductModal = ({ isOpen, closeModal, product, discountedPrice }) => {
   const [selectedSize, setSelectedSize] = useState(""); // State to store selected size
   const [quantity, setQuantity] = useState(1); // State to store quantity
   const [isLoading, setIsLoading] = useState(false); // State to track loading state
-
+  discountedPrice =
+    product.price - (product.price * parseInt(product.discount)) / 100;
   // Function to handle size selection
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
@@ -18,7 +20,13 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
 
   // Function to handle adding product to cart
   const handleAddToCart = () => {
+    if (!selectedSize || !quantity) {
+      console.error("Please select both size and quantity.");
+      return;
+    }
+
     setIsLoading(true); // Set loading state to true
+
     // Simulate an asynchronous action (e.g., API request) with setTimeout
     setTimeout(() => {
       // Implement your logic to add the product to cart
@@ -39,7 +47,18 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
       <div className="bg-white p-8 rounded-lg max-w-4xl flex">
         {/* Left Column: Product Image */}
         <div className="w-1/2">
-          <img src={product.image} alt={product.name} className="w-full mb-4" />
+          <div className="relative">
+            <img
+              src={product.hoverImage}
+              alt={product.name}
+              className="w-full rounded-lg"
+            />
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full rounded-lg absolute top-0 opacity-0 hover:opacity-100 transition duration-300"
+            />
+          </div>
         </div>
 
         {/* Right Column: Product Details */}
@@ -64,7 +83,18 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
             </button>
           </h2>
           <p className="text-gray-600 mb-4">{product.description}</p>
-          <p className="text-gray-800 font-semibold">${product.price}</p>
+          <p className="text-gray-800 font-semibold">
+            {/* Display discounted price */}
+            <span className="text-red-500">
+              ${discountedPrice.toFixed(2)}
+            </span>{" "}
+            {/* Display original price with strike-through */}
+            {product.discount && (
+              <span className="ml-2 text-gray-400 line-through">
+                ${product.price}
+              </span>
+            )}
+          </p>
 
           {/* Size Selector */}
           <div className="mt-4">
@@ -75,7 +105,7 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
                   key={size}
                   className={`px-3 py-1 rounded-full mr-2 ${
                     selectedSize === size
-                      ? "bg-blue-500 text-white"
+                      ? "bg-gray-900 text-white"
                       : "bg-gray-200 text-gray-700"
                   }`}
                   onClick={() => handleSizeSelect(size)}
@@ -100,7 +130,7 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
 
           {/* Add to Cart Button with Loading Spinner */}
           <button
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 relative"
+            className="bg-black text-white py-2 px-4 rounded-lg mt-4 relative"
             onClick={handleAddToCart}
           >
             {isLoading ? (
