@@ -24,7 +24,9 @@ const Home = () => {
       <HeroSection />
       <SectionPreview />
       <div className="container mx-auto mt-8">
-        <h2 className="text-3xl font-bold mb-4">Featured Products</h2>
+        <h2 className="text-3xl font-bold mb-4 text-center">
+          Featured Products
+        </h2>
         <Products products={productsData} />
       </div>
     </div>

@@ -2,12 +2,14 @@ import { useState } from "react";
 
 import "./App.css";
 import Home from "./Pages/Home";
-
+import ToastProvider from "./Contexts/ToastProvider";
 function App() {
   return (
-    <div>
-      <Home />
-    </div>
+    <ToastProvider>
+      <div>
+        <Home />
+      </div>
+    </ToastProvider>
   );
 }
 
