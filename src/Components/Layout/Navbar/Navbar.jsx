@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import berserkLogo from "/berserk.png";
 import { FaBars, FaShoppingCart, FaChevronDown } from "react-icons/fa";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
+import { useCart } from "../../../Contexts/CartContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,7 @@ const Navbar = () => {
   const [showNutrition, setShowNutrition] = useState(false);
   const [showAccessories, setShowAccessories] = useState(false);
   const [showCart, setShowCart] = useState(false);
-
+  const { cart } = useCart();
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -55,9 +56,17 @@ const Navbar = () => {
             <span className="sr-only">Open mobile menu</span>
           </button>
           <FaShoppingCart
-            className="w-6 h-6 text-gray-600"
+            className="w-6 h-6 text-gray-600 relative"
             onClick={() => setShowCart(!showCart)}
           />
+          {cart.length > 0 && (
+            <span
+              onClick={!showCart}
+              className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute top-0 right-0 transform -translate-x-1 mt-5 "
+            >
+              {cart.length}
+            </span>
+          )}
         </div>
 
         {/* Navigation links */}
@@ -158,10 +167,16 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center space-x-3">
+          {/* Shopping cart icon */}
           <FaShoppingCart
-            className="w-6 h-6 text-gray-600 hover:text-gray-900 hover:cursor-pointer"
+            className="w-6 h-6 text-gray-600 relative"
             onClick={() => setShowCart(!showCart)}
           />
+          {cart.length > 0 && (
+            <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute top-0 right-0 transform -translate-x-8 mt-5 ">
+              {cart.length}
+            </span>
+          )}
         </div>
       </div>
 
