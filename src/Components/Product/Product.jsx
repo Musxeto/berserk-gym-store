@@ -41,13 +41,13 @@ const Product = ({ product }) => {
           <span className="text-gray-800 mr-2">
             <span className="text-red-500">${discountedPrice.toFixed(2)}</span>{" "}
             {/* Display discounted price */}
-            {product.discount && (
+            {product.discount > 0 && (
               <span className="ml-2 text-gray-400 line-through">
                 ${product.price}
               </span> // Display original price with strike-through
             )}
           </span>
-          {product.discount && (
+          {product.discount > 0 && (
             <div className="text-red-500">{product.discount}% off</div>
           )}
         </div>

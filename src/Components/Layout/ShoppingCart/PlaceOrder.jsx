@@ -30,9 +30,7 @@ const PlaceOrder = ({ setCheckoutMode }) => {
   };
 
   const orderDetails = cart.map((item) => ({
-    name: item.name,
-    quantity: item.quantity,
-    productTotal: item.productTotal,
+    ...item,
   }));
 
   return (
