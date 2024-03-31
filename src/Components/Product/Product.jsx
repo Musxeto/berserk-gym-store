@@ -24,14 +24,14 @@ const Product = ({ product }) => {
     <div className="bg-white rounded-lg shadow-lg p-4">
       <div className="relative">
         <img
-          src={product.hoverImage}
-          alt={product.name}
-          className="w-full rounded-lg"
-        />
-        <img
           src={product.image}
           alt={product.name}
-          className="w-full rounded-lg absolute top-0 opacity-0 hover:opacity-100 transition duration-300"
+          className="w-full h-70 object-cover rounded-lg"
+        />
+        <img
+          src={product.hoverImage}
+          alt={product.name}
+          className="w-full h-70 object-cover rounded-lg absolute top-0 opacity-0 hover:opacity-100 transition duration-300"
         />
       </div>
       <div className="mt-4">
