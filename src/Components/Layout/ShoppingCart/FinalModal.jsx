@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useCart } from "../../../Contexts/CartContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FinalModal = ({
   orderDetails,
@@ -11,21 +13,22 @@ const FinalModal = ({
   const { clearCart, total } = useCart(); // Accessing clearCart function from the cart context
 
   const confirmOrder = () => {
-    // Log the complete order details object
+    orderDetails = { ...orderDetails, userData, total };
+
     console.log("Complete Order Details:", {
       orderDetails,
-      userData,
-      total,
     });
 
-    // Add your confirmation message here
     setConfirmationMessage("Your order has been confirmed!");
 
     // Reset states and clear the shopping cart
     closeModal();
     clearCart();
 
-    // Set checkoutMode to false
+    // Show toast notification
+    toast.dark("Your order has been confirmed!", {
+      autoClose: 3000,
+    });
   };
 
   return (
