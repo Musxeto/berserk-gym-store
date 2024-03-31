@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ModalBtn from "./ModalBtn.jsx";
-import ProductModal from "./ProductModal.jsx"; // Assuming the path is correct
+import ProductModal from "./ProductModal.jsx";
 
 const Product = ({ product }) => {
   // Calculate the discounted price

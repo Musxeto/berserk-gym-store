@@ -5,7 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { useCart } from "../../Contexts/CartContext";
 
 const ProductModal = ({ isOpen, closeModal, product }) => {
-  const { addToCart } = useCart(); // Access the addToCart function from the cart context
+  const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);

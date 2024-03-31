@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FinalModal from "./FinalModal";
 import { useCart } from "../../../Contexts/CartContext"; // Import useCart hook to access cart context
 
-const PlaceOrder = ({ closeSidebar }) => {
+const PlaceOrder = ({ setCheckoutMode }) => {
   const { cart, total } = useCart(); // Get cart and total from the cart context
   const [formData, setFormData] = useState({
     email: "",
@@ -26,13 +26,12 @@ const PlaceOrder = ({ closeSidebar }) => {
 
   const closeModal = () => {
     setShowModal(false);
-    setShowModal(false);
+    setCheckoutMode(false); // Set checkoutMode to false when closing modal
   };
 
   const orderDetails = cart.map((item) => ({
     name: item.name,
     quantity: item.quantity,
-
     productTotal: item.productTotal,
   }));
 
@@ -132,12 +131,20 @@ const PlaceOrder = ({ closeSidebar }) => {
                 className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
             </div>
-            <button
-              type="submit"
-              className="bg-blue-600 text-white py-2 px-4 rounded-lg"
-            >
-              Place Order
-            </button>
+            <div className="flex flex-row justify-between">
+              <button
+                type="submit"
+                className="bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-900"
+              >
+                Place Order
+              </button>
+              <button
+                className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-500"
+                onClick={() => setCheckoutMode(false)}
+              >
+                Cancel
+              </button>
+            </div>
           </form>
         </div>
       )}

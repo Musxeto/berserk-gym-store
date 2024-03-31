@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaTrash } from "react-icons/fa"; // Import FaTrash for the dustbin icon
+import { FaTrash } from "react-icons/fa";
 import { useCart } from "../../../Contexts/CartContext";
 import { FaTimes } from "react-icons/fa";
 import PlaceOrder from "./PlaceOrder";
@@ -17,7 +17,6 @@ const ShoppingCart = ({ isOpen, closeSidebar }) => {
       .reduce((total, item) => total + item.productTotal, 0)
       .toFixed(2);
   };
-
   return (
     <div
       className={`fixed top-0 right-0 w-96 h-full bg-white shadow-lg z-10 transition-transform duration-300 ${
@@ -35,7 +34,7 @@ const ShoppingCart = ({ isOpen, closeSidebar }) => {
         style={!checkoutMode ? { maxHeight: "calc(100% - 15rem)" } : {}}
       >
         {checkoutMode ? (
-          <PlaceOrder />
+          <PlaceOrder setCheckoutMode={setCheckoutMode} />
         ) : (
           // Display shopping cart items
           <div>

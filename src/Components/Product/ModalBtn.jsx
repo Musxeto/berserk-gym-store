@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaShoppingCart } from "react-icons/fa"; // Import the FaShoppingCart icon from react-icons
+import { FaShoppingCart } from "react-icons/fa";
 import ProductModal from "./ProductModal";
 
 const ModalBtn = ({ product }) => {
