@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const SectionPreview = () => {
-  // Define categories directly within the component
   const categories = [
     {
       name: "T-Shirts",

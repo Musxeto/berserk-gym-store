@@ -3,6 +3,7 @@ import Navbar from "../Components/Layout/Navbar/Navbar";
 import HeroSection from "../Components/HeroSection/HeroSection";
 import SectionPreview from "../Components/Sections/Sections";
 import Products from "../Components/Product/Products";
+import { Footer } from "flowbite-react";
 
 const productsData = [
   {
@@ -66,7 +67,6 @@ const productsData = [
 const Home = () => {
   return (
     <div>
-      <Navbar />
       <HeroSection />
       <SectionPreview />
       <div className="container mx-auto mt-8">
