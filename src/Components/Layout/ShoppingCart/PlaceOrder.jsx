@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import FinalModal from "./FinalModal";
-import { useCart } from "../../../Contexts/CartContext"; // Import useCart hook to access cart context
+import { useCart } from "../../../Contexts/CartContext";
 
 const PlaceOrder = ({ setCheckoutMode }) => {
-  const { cart, total } = useCart(); // Get cart and total from the cart context
+  const { cart, total } = useCart();
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -26,7 +26,7 @@ const PlaceOrder = ({ setCheckoutMode }) => {
 
   const closeModal = () => {
     setShowModal(false);
-    setCheckoutMode(false); // Set checkoutMode to false when closing modal
+    setCheckoutMode(false);
   };
 
   const orderDetails = cart.map((item) => ({
@@ -40,7 +40,7 @@ const PlaceOrder = ({ setCheckoutMode }) => {
       {showModal ? (
         <FinalModal
           orderDetails={orderDetails}
-          total={total} // Pass total directly to FinalModal component
+          total={total}
           userData={formData}
           closeModal={closeModal}
         />
