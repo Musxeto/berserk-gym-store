@@ -18,19 +18,35 @@ const Footer = () => {
             <span className="text-xl font-bold">Berserk Fit</span>
           </Link>
           <div className="flex justify-center lg:justify-start mt-4">
-            <a href="https://www.facebook.com/BerserkFit/" className="mr-4">
+            <a
+              href="https://www.facebook.com/BerserkFit/"
+              target="_blank"
+              className="mr-4"
+            >
               <FaFacebook className="w-6 h-6" />
             </a>
-            <a href="https://twitter.com/itxgm/" className="mr-4">
+            <a
+              href="https://twitter.com/itxgm/"
+              target="_blank"
+              className="mr-4"
+            >
               <FaTwitter className="w-6 h-6" />
             </a>
-            <a href="#" className="mr-4">
+            <a href="#" target="_blank" className="mr-4">
               <FaInstagram className="w-6 h-6" />
             </a>
-            <a href="https://www.linkedin.com/in/mustafa-gm/" className="mr-4">
+            <a
+              href="https://www.linkedin.com/in/mustafa-gm/"
+              target="_blank"
+              className="mr-4"
+            >
               <FaLinkedin className="w-6 h-6" />
             </a>
-            <a href="https://github.com/Musxeto" className="mr-4">
+            <a
+              href="https://github.com/Musxeto"
+              target="_blank"
+              className="mr-4"
+            >
               <FaGithub className="w-6 h-6" />
             </a>
           </div>
