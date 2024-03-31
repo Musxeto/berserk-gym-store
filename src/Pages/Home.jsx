@@ -69,7 +69,7 @@ const Home = () => {
     <div>
       <HeroSection />
       <SectionPreview />
-      <div className="container mx-auto mt-8">
+      <div className="container mx-auto mt-8 mb-20">
         <h2 className="text-3xl font-bold mb-4 text-center">
           Featured Products
         </h2>
