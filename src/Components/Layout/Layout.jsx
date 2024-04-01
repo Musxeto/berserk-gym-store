@@ -6,16 +6,17 @@ const Layout = ({ pageTitle, pageDescription, products }) => {
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    const query = event.target.value;
+    setSearchQuery(query);
 
     const filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(event.target.value.toLowerCase())
+      product.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredProducts(filtered);
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col justify-center items-center">
       <div className="container mx-auto">
         <header className="mt-8 mb-4">
           <h1 className="text-3xl font-bold">{pageTitle}</h1>
@@ -31,7 +32,13 @@ const Layout = ({ pageTitle, pageDescription, products }) => {
             onChange={handleSearchChange}
           />
         </div>
-        <Products products={filteredProducts} />
+        {filteredProducts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-screen">
+            <p className="text-gray-600 text-4xl">No products found.</p>
+          </div>
+        ) : (
+          <Products products={filteredProducts} />
+        )}
       </div>
     </div>
   );
