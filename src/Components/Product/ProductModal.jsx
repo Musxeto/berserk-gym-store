@@ -103,11 +103,16 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
           </h2>
           <p className="text-gray-600 mb-4">{product.description}</p>
           <p className="text-gray-800 font-semibold">
-            <span className="text-red-500">${discountedPrice.toFixed(2)}</span>{" "}
-            {product.discount && (
-              <span className="ml-2 text-gray-400 line-through">
-                ${product.price}
-              </span>
+            {" "}
+            {product.discount > 0 && (
+              <div>
+                <span className="text-red-500">
+                  ${discountedPrice.toFixed(2)}
+                </span>
+                <span className="ml-2 text-gray-400 line-through">
+                  ${product.price}
+                </span>
+              </div>
             )}
           </p>
 
