@@ -34,7 +34,6 @@ const Navbar = () => {
   const accessoriesSubTabs = [
     { name: "Lifting Belts", link: "/accessories/lifting-belts" },
     { name: "Wrist Wraps", link: "/accessories/wrist-wraps" },
-    { name: "Resistance Bands", link: "/accessories/resistance-bands" },
   ];
 
   return (
@@ -152,16 +151,16 @@ const Navbar = () => {
           </div>
 
           <Link
-            to="/bundles"
-            className="text-gray-600 hover:text-gray-900 transition duration-300"
-          >
-            Bundles
-          </Link>
-          <Link
             to="/about"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
             About
+          </Link>
+          <Link
+            to="/admin"
+            className="text-gray-600 hover:text-gray-900 transition duration-300"
+          >
+            Admin
           </Link>
           {/* Add more navigation links as necessary */}
         </div>
@@ -248,6 +247,14 @@ const Navbar = () => {
                 ))}
               </ul>
             )}
+          </li>
+          <li>
+            <Link
+              to="/admin"
+              className="text-gray-600 hover:text-gray-900 transition duration-300"
+            >
+              Admin
+            </Link>
           </li>
         </ul>
       </div>
