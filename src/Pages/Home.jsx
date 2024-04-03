@@ -47,8 +47,8 @@ const productsData = [
     discount: 0,
   },
   {
-    image: "/protienpowder_hover.jpg",
-    hoverImage: "/protienpowder.jpg",
+    image: "/protienpowder.jpg",
+    hoverImage: "/protienpowder_hover.jpg",
     name: "Protein Powder",
     sizes: ["1kg"],
     price: "49.99",
