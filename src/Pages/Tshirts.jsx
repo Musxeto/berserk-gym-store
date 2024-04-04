@@ -20,7 +20,7 @@ const Tshirts = () => {
       discount: 0,
       image: "/berserk_logo_tshirt.jpg",
       hoverImage: "/berserk_logo_tshirt_hover.jpg",
-      sizes: ["S", "M", "L", "XL"],
+      sizes: ["S", "M", "L", "X L"],
     },
     {
       id: 4,
