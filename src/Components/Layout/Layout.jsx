@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { css } from "@emotion/react";
+import { ClipLoader } from "react-spinners";
 import Products from "../Product/Products";
 import { FaSearch, FaSortAlphaDown, FaSortAlphaUp } from "react-icons/fa";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const Layout = ({ pageTitle, pageDescription, products }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -119,7 +127,12 @@ const Layout = ({ pageTitle, pageDescription, products }) => {
 
         {filteredProducts === null ? (
           <div className="flex items-center justify-center h-screen">
-            <p className="text-gray-600 text-4xl">Loading...</p>
+            <ClipLoader
+              color={"#000"}
+              loading={true}
+              css={override}
+              size={50}
+            />
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="flex items-center justify-center h-screen">

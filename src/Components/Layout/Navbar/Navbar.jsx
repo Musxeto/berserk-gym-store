@@ -18,8 +18,10 @@ const Navbar = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
+        !event.target.closest(".mobile-menu") &&
         !event.target.closest(".navbar-dropdown") &&
-        !event.target.closest(".dropdown-toggle")
+        !event.target.closest(".dropdown-toggle") &&
+        !event.target.closest(".dropdown-menu")
       ) {
         closeDropdown();
         setIsOpen(false);
@@ -32,6 +34,16 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
+  const handleClickOutside = (event) => {
+    if (
+      (!event.target.closest(".navbar-dropdown") &&
+        !event.target.closest(".dropdown-toggle")) ||
+      !event.target.closest(".dropdown-menu")
+    ) {
+      closeDropdown();
+    }
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -80,7 +92,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b-2 border-gray-200">
-      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+      <div className="menu max-w-screen-xl flex items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center space-x-3">
           <img src={berserkLogo} className="h-10" alt="Berserk Fit Logo" />
           <span className="text-2xl font-semibold text-gray-900">

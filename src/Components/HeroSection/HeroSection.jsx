@@ -17,9 +17,13 @@ const HeroSection = () => {
               Elevate your fitness journey with Berserk Fit. Shop now for the
               best in performance gymwear and supplements!
             </p>
-            <button className="bg-gray-950 hover:bg-gray-800 text-white py-2 px-4 rounded-lg lg:text-lg">
-              <Link to={"/products"}>Shop Now</Link>
-            </button>
+
+            <Link to={"/products"}>
+              {" "}
+              <button className="bg-gray-950 hover:bg-gray-800 text-white py-2 px-4 rounded-lg lg:text-lg">
+                Shop Now
+              </button>
+            </Link>
           </div>
         </div>
         {/* Right side image */}
