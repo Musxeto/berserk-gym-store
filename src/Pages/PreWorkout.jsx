@@ -2,7 +2,6 @@ import React from "react";
 import Layout from "../Components/Layout/Layout";
 
 const PreWorkout = () => {
-  // Sample data for pre-workout products
   const preWorkoutProducts = [
     {
       id: 1,
@@ -11,7 +10,7 @@ const PreWorkout = () => {
       discount: 0,
       image: "/preworkout_powder.jpg",
       hoverImage: "/preworkout_powder_hover.jpg",
-      sizes: ["250g", "500g", "1kg"],
+      sizes: ["500g"],
     },
     {
       id: 2,
@@ -20,9 +19,8 @@ const PreWorkout = () => {
       discount: 10,
       image: "/preworkout_drink.jpg",
       hoverImage: "/preworkout_drink_hover.jpg",
-      sizes: ["300g"],
+      sizes: ["12 FL OZ"],
     },
-    // Add more pre-workout products as needed
   ];
 
   return (

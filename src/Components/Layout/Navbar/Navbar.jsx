@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import berserkLogo from "/berserk.png";
 import { FaBars, FaShoppingCart, FaChevronDown } from "react-icons/fa";
@@ -14,6 +14,10 @@ const Navbar = () => {
   const { cart } = useCart();
   const dropdownRef = useRef(null);
 
+  useEffect(() => {
+    closeDropdown();
+  }, [isOpen]);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -22,12 +26,6 @@ const Navbar = () => {
     setShowGymWear(false);
     setShowNutrition(false);
     setShowAccessories(false);
-  };
-
-  const handleOutsideClick = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      closeDropdowns();
-    }
   };
 
   const toggleGymWear = () => {
@@ -47,7 +45,13 @@ const Navbar = () => {
     setShowGymWear(false);
     setShowNutrition(false);
   };
+  const closeDropdown = () => {
+    setShowGymWear(false);
+    setShowNutrition(false);
+    setShowAccessories(false);
+  };
 
+  // Sample data for dropdown menus
   const gymWearSubTabs = [
     { name: "T-Shirts", link: "/tshirts" },
     { name: "Tank Tops", link: "/tanktops" },
@@ -65,6 +69,7 @@ const Navbar = () => {
   const accessoriesSubTabs = [
     { name: "Lifting Belts", link: "/accessories/lifting-belts" },
     { name: "Wrist Wraps", link: "/accessories/wrist-wraps" },
+    { name: "Gym Bags", link: "/accessories/gym-bags" },
   ];
 
   return (
@@ -173,13 +178,23 @@ const Navbar = () => {
             to="/about"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
-            About
+            <span
+              className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
+              onClick={closeDropdown}
+            >
+              About
+            </span>
           </Link>
           <Link
             to="/admin"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
-            Admin
+            <span
+              className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
+              onClick={closeDropdown}
+            >
+              Admin
+            </span>
           </Link>
           {/* Add more navigation links as necessary */}
         </div>
@@ -197,7 +212,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
+      {/*---------------------------------------M o b i l e   d r o p d o w n  m e n u----------------------------------------------------*/}
       <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
         <ul className="text-center py-2">
           {/* Mobile dropdown menu items */}
@@ -269,10 +284,28 @@ const Navbar = () => {
           </li>
           <li>
             <Link
+              to="/about"
+              className="text-gray-600 hover:text-gray-900 transition duration-300"
+            >
+              <span
+                className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
+                onClick={closeDropdown}
+              >
+                About
+              </span>
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/admin"
               className="text-gray-600 hover:text-gray-900 transition duration-300"
             >
-              Admin
+              <span
+                className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
+                onClick={closeDropdown}
+              >
+                Admin
+              </span>
             </Link>
           </li>
         </ul>
