@@ -16,7 +16,11 @@ const Navbar = () => {
   const dropdownRefs = useRef([useRef(null), useRef(null), useRef(null)]);
 
   useEffect(() => {
-    closeDropdown();
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(".mobile-menu") && isOpen) {
+        setIsOpen(false);
+      }
+    };
 
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -27,11 +31,11 @@ const Navbar = () => {
 
   const handleClickOutside = (event) => {
     if (
-      !event.target.closest(".dropdown-toggle") &&
-      !event.target.closest(".dropdown-menu")
+      !event.target.closest(".navbar-dropdown") &&
+      isOpen &&
+      !event.target.closest(".dropdown-toggle")
     ) {
       closeDropdown();
-      setIsOpen(false);
     }
   };
 
@@ -43,6 +47,7 @@ const Navbar = () => {
     setShowGymWear(false);
     setShowNutrition(false);
     setShowAccessories(false);
+    setDropdownState([false, false, false]);
   };
 
   const toggleDropdown = (index) => {
@@ -175,7 +180,7 @@ const Navbar = () => {
         </div>
       </div>
       {/*---------------------------------------M o b i l e   d r o p d o w n  m e n u----------------------------------------------------*/}
-      <div className={`md:hidden ${isOpen ? "block" : "hidden"} `}>
+      <div className={`mobile-menu md:hidden ${isOpen ? "block" : "hidden"} `}>
         <ul className="text-center py-2">
           {/* Mobile dropdown menu items */}
           {dropdownTabs.map((tab, index) => (
@@ -207,26 +212,26 @@ const Navbar = () => {
             <Link
               to="/about"
               className="text-gray-600 hover:text-gray-900 transition duration-300"
+              onClick={(e) => {
+                closeDropdown();
+                if (isOpen) {
+                  e.stopPropagation();
+                }
+              }}
             >
-              <span
-                className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
-                onClick={closeDropdown}
-              >
-                About
-              </span>
+              <span className="block py-2 px-4 cursor-pointer">About</span>
             </Link>
-          </li>
-          <li>
             <Link
               to="/admin"
               className="text-gray-600 hover:text-gray-900 transition duration-300"
+              onClick={(e) => {
+                closeDropdown();
+                if (isOpen) {
+                  e.stopPropagation();
+                }
+              }}
             >
-              <span
-                className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
-                onClick={closeDropdown}
-              >
-                Admin
-              </span>
+              <span className="block py-2 px-4 cursor-pointer">Admin</span>
             </Link>
           </li>
         </ul>

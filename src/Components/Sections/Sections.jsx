@@ -22,10 +22,10 @@ const SectionPreview = () => {
       link: "/proteinpowders",
     },
     {
-      name: "Accessories",
+      name: "Wrist Wraps",
       description: "Browse our selection of workout Accessories.",
       image: "/accessories.jpeg",
-      link: "/accessories",
+      link: "accessories/wrist-wraps",
     },
   ];
 
