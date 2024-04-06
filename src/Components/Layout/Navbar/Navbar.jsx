@@ -17,7 +17,11 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest(".mobile-menu") && isOpen) {
+      if (
+        !event.target.closest(".navbar-dropdown") &&
+        !event.target.closest(".dropdown-toggle")
+      ) {
+        closeDropdown();
         setIsOpen(false);
       }
     };
@@ -28,16 +32,6 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
-
-  const handleClickOutside = (event) => {
-    if (
-      !event.target.closest(".navbar-dropdown") &&
-      isOpen &&
-      !event.target.closest(".dropdown-toggle")
-    ) {
-      closeDropdown();
-    }
-  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
