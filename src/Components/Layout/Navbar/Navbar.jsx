@@ -69,7 +69,7 @@ const Navbar = () => {
   const accessoriesSubTabs = [
     { name: "Lifting Belts", link: "/accessories/lifting-belts" },
     { name: "Wrist Wraps", link: "/accessories/wrist-wraps" },
-    { name: "Gym Bags", link: "/accessories/gym-bags" },
+    { name: "Wrist Wraps", link: "/accessories/gym-bvagh" },
   ];
 
   return (
