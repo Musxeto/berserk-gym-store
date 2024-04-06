@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import berserkLogo from "/berserk.png";
 import { FaBars, FaShoppingCart, FaChevronDown } from "react-icons/fa";
@@ -12,11 +12,28 @@ const Navbar = () => {
   const [showAccessories, setShowAccessories] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const { cart } = useCart();
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowGymWear(false);
+        setShowNutrition(false);
+        setShowAccessories(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Sample data for dropdown menus
   const gymWearSubTabs = [
     { name: "T-Shirts", link: "/tshirts" },
     { name: "Tank Tops", link: "/tanktops" },
@@ -70,7 +87,7 @@ const Navbar = () => {
 
         {/* Navigation links */}
         <div className="hidden md:flex flex-grow items-center justify-center space-x-6">
-          <div className="relative">
+          <div className="relative" ref={dropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
               onClick={() => {
@@ -97,7 +114,7 @@ const Navbar = () => {
           </div>
 
           {/* Nutrition dropdown */}
-          <div className="relative">
+          <div className="relative" ref={dropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
               onClick={() => {
@@ -124,7 +141,7 @@ const Navbar = () => {
           </div>
 
           {/* Accessories dropdown */}
-          <div className="relative">
+          <div className="relative" ref={dropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
               onClick={() => {

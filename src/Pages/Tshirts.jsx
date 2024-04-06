@@ -5,7 +5,22 @@ const Tshirts = () => {
   // Sample data for T-shirts products
   const tshirtsProducts = [
     {
-      id: 1,
+      image: "/gym_tee1_hover.jpg",
+      hoverImage: "/gym_tee1.jpg",
+      name: "Gym Tee 1",
+      sizes: ["S", "M", "L", "XL"],
+      price: "24.99",
+      discount: 10,
+    },
+    {
+      hoverImage: "/gym_tee2.jpg",
+      image: "/gym_tee2_hover.jpg",
+      name: "Gym Tee 2",
+      sizes: ["S", "M", "L", "XL"],
+      price: "29.99",
+      discount: 15,
+    },
+    {
       name: "Basic T-shirt",
       price: 15.99,
       discount: 0,
@@ -14,7 +29,6 @@ const Tshirts = () => {
       sizes: ["S", "M", "L", "XL"],
     },
     {
-      id: 3,
       name: "Berserk Logo T-shirt",
       price: 18.99,
       discount: 0,
@@ -23,7 +37,6 @@ const Tshirts = () => {
       sizes: ["S", "M", "L", "XL"],
     },
     {
-      id: 4,
       name: "Guts T-shirt",
       price: 22.99,
       discount: 10,
