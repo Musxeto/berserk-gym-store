@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import berserkLogo from "/berserk.png";
 import { FaBars, FaShoppingCart, FaChevronDown } from "react-icons/fa";
@@ -14,24 +14,38 @@ const Navbar = () => {
   const { cart } = useCart();
   const dropdownRef = useRef(null);
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowGymWear(false);
-        setShowNutrition(false);
-        setShowAccessories(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const closeDropdowns = () => {
+    setShowGymWear(false);
+    setShowNutrition(false);
+    setShowAccessories(false);
+  };
+
+  const handleOutsideClick = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      closeDropdowns();
+    }
+  };
+
+  const toggleGymWear = () => {
+    setShowGymWear(!showGymWear);
+    setShowNutrition(false);
+    setShowAccessories(false);
+  };
+
+  const toggleNutrition = () => {
+    setShowNutrition(!showNutrition);
+    setShowGymWear(false);
+    setShowAccessories(false);
+  };
+
+  const toggleAccessories = () => {
+    setShowAccessories(!showAccessories);
+    setShowGymWear(false);
+    setShowNutrition(false);
   };
 
   const gymWearSubTabs = [
@@ -90,11 +104,7 @@ const Navbar = () => {
           <div className="relative" ref={dropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={() => {
-                setShowGymWear(!showGymWear);
-                setShowAccessories(false);
-                setShowNutrition(false);
-              }}
+              onClick={toggleGymWear}
             >
               Gym Wear <FaChevronDown className="inline-block" />
             </span>
@@ -117,11 +127,7 @@ const Navbar = () => {
           <div className="relative" ref={dropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={() => {
-                setShowNutrition(!showNutrition);
-                setShowGymWear(false);
-                setShowAccessories(false);
-              }}
+              onClick={toggleNutrition}
             >
               Nutrition <FaChevronDown className="inline-block" />
             </span>
@@ -144,11 +150,7 @@ const Navbar = () => {
           <div className="relative" ref={dropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={() => {
-                setShowNutrition(false);
-                setShowGymWear(false);
-                setShowAccessories(!showAccessories);
-              }}
+              onClick={toggleAccessories}
             >
               Accessories <FaChevronDown className="inline-block" />
             </span>
@@ -202,7 +204,7 @@ const Navbar = () => {
           <li>
             <span
               className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
-              onClick={() => setShowGymWear(!showGymWear)}
+              onClick={toggleGymWear}
             >
               Gym Wear <FaChevronDown className="inline-block" />
             </span>
@@ -224,7 +226,7 @@ const Navbar = () => {
           <li>
             <span
               className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
-              onClick={() => setShowNutrition(!showNutrition)}
+              onClick={toggleNutrition}
             >
               Nutrition <FaChevronDown className="inline-block" />
             </span>
@@ -246,7 +248,7 @@ const Navbar = () => {
           <li>
             <span
               className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
-              onClick={() => setShowAccessories(!showAccessories)}
+              onClick={toggleAccessories}
             >
               Accessories <FaChevronDown className="inline-block" />
             </span>
