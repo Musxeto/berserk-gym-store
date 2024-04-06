@@ -12,22 +12,30 @@ const Navbar = () => {
   const [showAccessories, setShowAccessories] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const { cart } = useCart();
-  const dropdownRef = useRef(null);
+  const gymWearDropdownRef = useRef(null);
+  const nutritionDropdownRef = useRef(null);
+  const accessoriesDropdownRef = useRef(null);
 
   useEffect(() => {
     closeDropdown();
-    // Add event listener when the component mounts
+
     document.addEventListener("mousedown", handleClickOutside);
-    // Clean up event listener when the component unmounts
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
   const handleClickOutside = (event) => {
-    // Close dropdowns if the click occurred outside of the dropdowns
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      closeDropdowns();
+    if (
+      gymWearDropdownRef.current &&
+      !gymWearDropdownRef.current.contains(event.target) &&
+      nutritionDropdownRef.current &&
+      !nutritionDropdownRef.current.contains(event.target) &&
+      accessoriesDropdownRef.current &&
+      !accessoriesDropdownRef.current.contains(event.target)
+    ) {
+      closeDropdown();
     }
   };
 
@@ -35,7 +43,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const closeDropdowns = () => {
+  const closeDropdown = () => {
     setShowGymWear(false);
     setShowNutrition(false);
     setShowAccessories(false);
@@ -59,12 +67,6 @@ const Navbar = () => {
     setShowNutrition(false);
   };
 
-  const closeDropdown = () => {
-    setShowGymWear(false);
-    setShowNutrition(false);
-    setShowAccessories(false);
-  };
-
   // Sample data for dropdown menus
   const gymWearSubTabs = [
     { name: "T-Shirts", link: "/tshirts" },
@@ -76,14 +78,13 @@ const Navbar = () => {
   const nutritionSubTabs = [
     { name: "Protein Powder", link: "/proteinpowder" },
     { name: "Creatine", link: "/creatine" },
-    { name: "Vitamins", link: "/vitamins" },
+
     { name: "Pre-Workout", link: "/preworkout" },
   ];
 
   const accessoriesSubTabs = [
     { name: "Lifting Belts", link: "/accessories/lifting-belts" },
     { name: "Wrist Wraps", link: "/accessories/wrist-wraps" },
-    { name: "Wrist Wraps", link: "/accessories/gym-bvagh" },
   ];
 
   return (
@@ -120,7 +121,7 @@ const Navbar = () => {
 
         {/* Navigation links */}
         <div className="hidden md:flex flex-grow items-center justify-center space-x-6">
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative" ref={gymWearDropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
               onClick={toggleGymWear}
@@ -143,7 +144,7 @@ const Navbar = () => {
           </div>
 
           {/* Nutrition dropdown */}
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative" ref={nutritionDropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
               onClick={toggleNutrition}
@@ -166,7 +167,7 @@ const Navbar = () => {
           </div>
 
           {/* Accessories dropdown */}
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative" ref={accessoriesDropdownRef}>
             <span
               className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
               onClick={toggleAccessories}
@@ -243,7 +244,8 @@ const Navbar = () => {
                   <li key={index}>
                     <Link
                       to={item.link}
-                      className="block py-2                      px-4 text-gray-800 hover:bg-gray-100"
+                      className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       {item.name}
                     </Link>
@@ -266,6 +268,7 @@ const Navbar = () => {
                     <Link
                       to={item.link}
                       className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       {item.name}
                     </Link>
@@ -288,6 +291,7 @@ const Navbar = () => {
                     <Link
                       to={item.link}
                       className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       {item.name}
                     </Link>

@@ -8,7 +8,6 @@ import Shorts from "./Pages/Shorts"; // Import Shorts component/page
 import Leggings from "./Pages/Leggings"; // Import Leggings component/page
 import ProteinPowder from "./Pages/ProteinPowder"; // Import ProteinPowder component/page
 import Creatine from "./Pages/Creatine"; // Import Creatine component/page
-import Vitamins from "./Pages/Vitamins"; // Import Vitamins component/page
 import PreWorkout from "./Pages/PreWorkout"; // Import PreWorkout component/page
 import LiftingBelts from "./Pages/LiftingBelts"; // Import LiftingBelts component/page
 import WristWraps from "./Pages/WristWraps"; // Import WristWraps component/page
@@ -32,7 +31,7 @@ function App() {
           <Route path="/leggings" element={<Leggings />} />
           <Route path="/proteinpowder" element={<ProteinPowder />} />
           <Route path="/creatine" element={<Creatine />} />
-          <Route path="/vitamins" element={<Vitamins />} />
+
           <Route path="/preworkout" element={<PreWorkout />} />
           <Route path="/accessories/lifting-belts" element={<LiftingBelts />} />
           <Route path="/accessories/wrist-wraps" element={<WristWraps />} />
