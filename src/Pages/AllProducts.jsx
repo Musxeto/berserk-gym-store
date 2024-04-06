@@ -26,14 +26,7 @@ const AllProducts = () => {
       hoverImage: "/creatine_caps.webp",
       sizes: ["90 Capsules"],
     },
-    {
-      name: "Compression Leggings",
-      price: 24.99,
-      discount: 0,
-      image: "/compression_leggings.jpg",
-      hoverImage: "/compression_leggings_hover.jpg",
-      sizes: ["XS", "S", "M", "L", "XL"],
-    },
+
     {
       name: "Berserk Black Leather Lifting Belt",
       price: 39.99,
@@ -105,6 +98,14 @@ const AllProducts = () => {
       image: "/wristbands.jpg",
       hoverImage: "/wristbands.jpg",
       sizes: ["One Size"],
+    },
+    {
+      name: "Compression Leggings",
+      price: 24.99,
+      discount: 0,
+      image: "/compression_leggings.jpg",
+      hoverImage: "/compression_leggings_hover.jpg",
+      sizes: ["XS", "S", "M", "L", "XL"],
     },
   ];
 

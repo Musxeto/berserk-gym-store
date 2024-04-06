@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const hero = "/hero.jpg";
@@ -17,7 +18,7 @@ const HeroSection = () => {
               best in performance gymwear and supplements!
             </p>
             <button className="bg-gray-950 hover:bg-gray-800 text-white py-2 px-4 rounded-lg lg:text-lg">
-              Shop Now
+              <Link to={"/products"}>Shop Now</Link>
             </button>
           </div>
         </div>
