@@ -17,12 +17,11 @@ import Navbar from "./Components/Layout/Navbar/Navbar";
 import Footer from "./Components/Layout/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
 import AllProducts from "./Pages/AllProducts";
-
+import Admin from "./Pages/Admin/Admin";
 function App() {
   return (
     <CartProvider>
       <ToastProvider>
-        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} exact />
           <Route path="/about" element={<About />} />
@@ -36,10 +35,8 @@ function App() {
           <Route path="/preworkout" element={<PreWorkout />} />
           <Route path="/accessories/lifting-belts" element={<LiftingBelts />} />
           <Route path="/accessories/wrist-wraps" element={<WristWraps />} />
-
-          {/* <Route path="/admin" element={<Admin />} />*/}
+          <Route path="/admin" element={<Admin />} />
         </Routes>
-        <Footer />
       </ToastProvider>
     </CartProvider>
   );

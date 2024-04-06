@@ -12,9 +12,13 @@ const Footer = () => {
   return (
     <footer className="bg-white text-gray-950 py-8 border-t border-gray-900">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
-        <div className="text-center lg:text-left mb-4 lg:mb-0">
+        <div className="text-center lg:text-center mb-4 lg:mb-0">
           <Link to="/" className="flex items-center space-x-2 text-black">
-            <img src="/berserk.png" alt="Berserk Fit Logo" className="h-8" />
+            <img
+              src="/berserk.png"
+              alt="Berserk Fit Logo"
+              className="h-8 ml-5"
+            />
             <span className="text-xl font-bold">Berserk Fit</span>
           </Link>
           <div className="flex justify-center lg:justify-start mt-4">
