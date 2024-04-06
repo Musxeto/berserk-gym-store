@@ -16,7 +16,20 @@ const Navbar = () => {
 
   useEffect(() => {
     closeDropdown();
+    // Add event listener when the component mounts
+    document.addEventListener("mousedown", handleClickOutside);
+    // Clean up event listener when the component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [isOpen]);
+
+  const handleClickOutside = (event) => {
+    // Close dropdowns if the click occurred outside of the dropdowns
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      closeDropdowns();
+    }
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -45,6 +58,7 @@ const Navbar = () => {
     setShowGymWear(false);
     setShowNutrition(false);
   };
+
   const closeDropdown = () => {
     setShowGymWear(false);
     setShowNutrition(false);

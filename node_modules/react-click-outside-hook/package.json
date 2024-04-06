@@ -1,0 +1,60 @@
+{
+  "name": "react-click-outside-hook",
+  "version": "1.1.1",
+  "main": "build/index.js",
+  "description": "Simple to use React Hook with click outside functionality",
+  "author": {
+    "name": "Bryan Deloeste",
+    "email": "bryandeloeste@gmail.com"
+  },
+  "license": "MIT",
+  "files": [
+    "build/*"
+  ],
+  "keywords": [
+    "react",
+    "component",
+    "hooks",
+    "clickoutside",
+    "onClickOutside",
+    "useClickOutside"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bdeloeste/react-click-outside-hook"
+  },
+  "scripts": {
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "build": "neutrino build",
+    "start": "neutrino start",
+    "lint": "neutrino lint",
+    "test": "neutrino test",
+    "coverage": "neutrino test --coverage"
+  },
+  "devDependencies": {
+    "@neutrinojs/airbnb": "^8.3.0",
+    "@neutrinojs/jest": "^8.3.0",
+    "@neutrinojs/react-components": "^8.3.0",
+    "coveralls": "^3.0.3",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "lint-staged": "^8.1.5",
+    "neutrino": "^8.3.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,css,md}": [
+      "neutrino lint --fix",
+      "neutrino test --findRelatedTests",
+      "git add"
+    ]
+  }
+}

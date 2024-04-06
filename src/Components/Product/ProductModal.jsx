@@ -102,7 +102,7 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
             </button>
           </h2>
           <p className="text-gray-600 mb-4">{product.description}</p>
-          <p className="text-gray-800 font-semibold">
+          <div className="text-gray-800 font-semibold">
             {" "}
             {product.discount > 0 && (
               <div>
@@ -114,7 +114,7 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
                 </span>
               </div>
             )}
-          </p>
+          </div>
 
           {/* Size Selector */}
           <div className="mt-4">
