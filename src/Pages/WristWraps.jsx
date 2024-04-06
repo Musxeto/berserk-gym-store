@@ -5,7 +5,6 @@ const WristWraps = () => {
   // Sample data for wrist wraps products
   const wristWrapsProducts = [
     {
-      id: 1,
       name: "Heavy Duty Wrist Wraps",
       price: 9.99,
       discount: 0,

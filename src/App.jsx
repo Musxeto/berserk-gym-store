@@ -16,6 +16,7 @@ import { CartProvider } from "./Contexts/CartContext";
 import Navbar from "./Components/Layout/Navbar/Navbar";
 import Footer from "./Components/Layout/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
+import AllProducts from "./Pages/AllProducts";
 
 function App() {
   return (
@@ -25,13 +26,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} exact />
           <Route path="/about" element={<About />} />
+          <Route path="/products" element={<AllProducts />} />
           <Route path="/tshirts" element={<Tshirts />} />
           <Route path="/tanktops" element={<TankTops />} />
           <Route path="/shorts" element={<Shorts />} />
           <Route path="/leggings" element={<Leggings />} />
           <Route path="/proteinpowder" element={<ProteinPowder />} />
           <Route path="/creatine" element={<Creatine />} />
-
           <Route path="/preworkout" element={<PreWorkout />} />
           <Route path="/accessories/lifting-belts" element={<LiftingBelts />} />
           <Route path="/accessories/wrist-wraps" element={<WristWraps />} />
