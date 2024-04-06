@@ -80,9 +80,6 @@ const Footer = () => {
           <Link to="/about" className="text-black hover:text-gray-600 mx-2">
             About
           </Link>
-          <Link to="/contact" className="text-black hover:text-gray-600 mx-2">
-            Contact
-          </Link>
         </nav>
         <p className="text-black">
           &copy; {new Date().getFullYear()} Berserk Fit. All rights reserved.
