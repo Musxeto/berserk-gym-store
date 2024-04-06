@@ -12,9 +12,8 @@ const Navbar = () => {
   const [showAccessories, setShowAccessories] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const { cart } = useCart();
-  const gymWearDropdownRef = useRef(null);
-  const nutritionDropdownRef = useRef(null);
-  const accessoriesDropdownRef = useRef(null);
+  const [dropdownState, setDropdownState] = useState([false, false, false]);
+  const dropdownRefs = useRef([useRef(null), useRef(null), useRef(null)]);
 
   useEffect(() => {
     closeDropdown();
@@ -28,14 +27,11 @@ const Navbar = () => {
 
   const handleClickOutside = (event) => {
     if (
-      gymWearDropdownRef.current &&
-      !gymWearDropdownRef.current.contains(event.target) &&
-      nutritionDropdownRef.current &&
-      !nutritionDropdownRef.current.contains(event.target) &&
-      accessoriesDropdownRef.current &&
-      !accessoriesDropdownRef.current.contains(event.target)
+      !event.target.closest(".dropdown-toggle") &&
+      !event.target.closest(".dropdown-menu")
     ) {
       closeDropdown();
+      setIsOpen(false);
     }
   };
 
@@ -49,42 +45,38 @@ const Navbar = () => {
     setShowAccessories(false);
   };
 
-  const toggleGymWear = () => {
-    setShowGymWear(!showGymWear);
-    setShowNutrition(false);
-    setShowAccessories(false);
-  };
-
-  const toggleNutrition = () => {
-    setShowNutrition(!showNutrition);
-    setShowGymWear(false);
-    setShowAccessories(false);
-  };
-
-  const toggleAccessories = () => {
-    setShowAccessories(!showAccessories);
-    setShowGymWear(false);
-    setShowNutrition(false);
+  const toggleDropdown = (index) => {
+    const newState = [false, false, false];
+    newState[index] = !dropdownState[index];
+    setDropdownState(newState);
   };
 
   // Sample data for dropdown menus
-  const gymWearSubTabs = [
-    { name: "T-Shirts", link: "/tshirts" },
-    { name: "Tank Tops", link: "/tanktops" },
-    { name: "Shorts", link: "/shorts" },
-    { name: "Leggings", link: "/leggings" },
-  ];
-
-  const nutritionSubTabs = [
-    { name: "Protein Powder", link: "/proteinpowder" },
-    { name: "Creatine", link: "/creatine" },
-
-    { name: "Pre-Workout", link: "/preworkout" },
-  ];
-
-  const accessoriesSubTabs = [
-    { name: "Lifting Belts", link: "/accessories/lifting-belts" },
-    { name: "Wrist Wraps", link: "/accessories/wrist-wraps" },
+  const dropdownTabs = [
+    {
+      name: "Gym Wear",
+      subTabs: [
+        { name: "T-Shirts", link: "/tshirts" },
+        { name: "Tank Tops", link: "/tanktops" },
+        { name: "Shorts", link: "/shorts" },
+        { name: "Leggings", link: "/leggings" },
+      ],
+    },
+    {
+      name: "Nutrition",
+      subTabs: [
+        { name: "Protein Powder", link: "/proteinpowder" },
+        { name: "Creatine", link: "/creatine" },
+        { name: "Pre-Workout", link: "/preworkout" },
+      ],
+    },
+    {
+      name: "Accessories",
+      subTabs: [
+        { name: "Lifting Belts", link: "/accessories/lifting-belts" },
+        { name: "Wrist Wraps", link: "/accessories/wrist-wraps" },
+      ],
+    },
   ];
 
   return (
@@ -121,74 +113,29 @@ const Navbar = () => {
 
         {/* Navigation links */}
         <div className="hidden md:flex flex-grow items-center justify-center space-x-6">
-          <div className="relative" ref={gymWearDropdownRef}>
-            <span
-              className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={toggleGymWear}
-            >
-              Gym Wear <FaChevronDown className="inline-block" />
-            </span>
-            {showGymWear && (
-              <div className="absolute top-full left-0 mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
-                {gymWearSubTabs.map((item, index) => (
-                  <Link
-                    key={index}
-                    to={item.link}
-                    className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Nutrition dropdown */}
-          <div className="relative" ref={nutritionDropdownRef}>
-            <span
-              className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={toggleNutrition}
-            >
-              Nutrition <FaChevronDown className="inline-block" />
-            </span>
-            {showNutrition && (
-              <div className="absolute top-full left-0 mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
-                {nutritionSubTabs.map((item, index) => (
-                  <Link
-                    key={index}
-                    to={item.link}
-                    className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Accessories dropdown */}
-          <div className="relative" ref={accessoriesDropdownRef}>
-            <span
-              className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300"
-              onClick={toggleAccessories}
-            >
-              Accessories <FaChevronDown className="inline-block" />
-            </span>
-            {showAccessories && (
-              <div className="absolute top-full left-0 mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
-                {accessoriesSubTabs.map((item, index) => (
-                  <Link
-                    key={index}
-                    to={item.link}
-                    className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
+          {dropdownTabs.map((tab, index) => (
+            <div key={index} className="relative">
+              <span
+                className="text-gray-600 hover:text-gray-900 cursor-pointer transition duration-300 dropdown-toggle"
+                onClick={() => toggleDropdown(index)}
+              >
+                {tab.name} <FaChevronDown className="inline-block" />
+              </span>
+              {dropdownState[index] && (
+                <div className="absolute top-full left-0 mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg dropdown-menu">
+                  {tab.subTabs.map((item, subIndex) => (
+                    <Link
+                      key={subIndex}
+                      to={item.link}
+                      className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
           <Link
             to="/about"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
@@ -228,78 +175,34 @@ const Navbar = () => {
         </div>
       </div>
       {/*---------------------------------------M o b i l e   d r o p d o w n  m e n u----------------------------------------------------*/}
-      <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
+      <div className={`md:hidden ${isOpen ? "block" : "hidden"} `}>
         <ul className="text-center py-2">
           {/* Mobile dropdown menu items */}
-          <li>
-            <span
-              className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
-              onClick={toggleGymWear}
-            >
-              Gym Wear <FaChevronDown className="inline-block" />
-            </span>
-            {showGymWear && (
-              <ul className="pl-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
-                {gymWearSubTabs.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      to={item.link}
-                      className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-          <li>
-            <span
-              className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
-              onClick={toggleNutrition}
-            >
-              Nutrition <FaChevronDown className="inline-block" />
-            </span>
-            {showNutrition && (
-              <ul className="pl-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
-                {nutritionSubTabs.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      to={item.link}
-                      className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-          <li>
-            <span
-              className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer"
-              onClick={toggleAccessories}
-            >
-              Accessories <FaChevronDown className="inline-block" />
-            </span>
-            {showAccessories && (
-              <ul className="pl-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg">
-                {accessoriesSubTabs.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      to={item.link}
-                      className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
+          {dropdownTabs.map((tab, index) => (
+            <li key={index}>
+              <span
+                className="block py-2 px-4 text-gray-600 hover:text-gray-900 cursor-pointer dropdown-toggle"
+                onClick={() => toggleDropdown(index)}
+              >
+                {tab.name} <FaChevronDown className="inline-block" />
+              </span>
+              {dropdownState[index] && (
+                <ul className="pl-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg dropdown-menu">
+                  {tab.subTabs.map((item, subIndex) => (
+                    <li key={subIndex}>
+                      <Link
+                        to={item.link}
+                        className="block py-2 px-4 text-gray-800 hover:bg-gray-100"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
           <li>
             <Link
               to="/about"

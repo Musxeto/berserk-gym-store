@@ -67,9 +67,11 @@ const Layout = ({ pageTitle, pageDescription, products }) => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto py-8">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">{pageTitle}</h1>
-          <p className="text-gray-600">{pageDescription}</p>
+        <header className="mb-8  ">
+          <h1 className="text-3xl font-bold mb-2 text-center">{pageTitle}</h1>
+          <p className="text-gray-600 text-center pb-3  border-b-2">
+            {pageDescription}
+          </p>
         </header>
 
         <div className="flex items-center justify-between mb-8">
