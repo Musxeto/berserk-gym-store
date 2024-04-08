@@ -18,6 +18,11 @@ import Footer from "./Components/Layout/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
 import AllProducts from "./Pages/AllProducts";
 import Admin from "./Pages/Admin/Admin";
+import AdminLogin from "./Pages/Admin/AdminLogin";
+import AdminDashBoard from "./Pages/Admin/AdminDashBoard";
+import Orders from "./Pages/Admin/Orders";
+import Products from "./Pages/Admin/Products";
+import Settings from "./Pages/Admin/Settings";
 function App() {
   return (
     <CartProvider>
@@ -35,7 +40,12 @@ function App() {
           <Route path="/preworkout" element={<PreWorkout />} />
           <Route path="/accessories/lifting-belts" element={<LiftingBelts />} />
           <Route path="/accessories/wrist-wraps" element={<WristWraps />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashBoard />} />
+          <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/products" element={<Products />} />
+          <Route path="/admin/account" element={<Account />} />
+          <Route path="/admin/settings" element={<Settings />} />
         </Routes>
       </ToastProvider>
     </CartProvider>
