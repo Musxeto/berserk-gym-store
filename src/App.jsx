@@ -23,6 +23,7 @@ import AdminDashBoard from "./Pages/Admin/AdminDashBoard";
 import Orders from "./Pages/Admin/Orders";
 import Products from "./Pages/Admin/Products";
 import Settings from "./Pages/Admin/Settings";
+import Account from "./Pages/Admin/Account";
 function App() {
   return (
     <CartProvider>
