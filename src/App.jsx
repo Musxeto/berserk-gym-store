@@ -13,11 +13,10 @@ import LiftingBelts from "./Pages/LiftingBelts"; // Import LiftingBelts componen
 import WristWraps from "./Pages/WristWraps"; // Import WristWraps component/page
 import ToastProvider from "./Contexts/ToastProvider";
 import { CartProvider } from "./Contexts/CartContext";
-import Navbar from "./Components/Layout/Navbar/Navbar";
-import Footer from "./Components/Layout/Footer/Footer";
+
 import { Route, Routes } from "react-router-dom";
 import AllProducts from "./Pages/AllProducts";
-import Admin from "./Pages/Admin/Admin";
+
 import AdminLogin from "./Pages/Admin/AdminLogin";
 import AdminDashBoard from "./Pages/Admin/AdminDashBoard";
 import Orders from "./Pages/Admin/Orders";
