@@ -40,6 +40,7 @@ function App() {
           <Route path="/preworkout" element={<PreWorkout />} />
           <Route path="/accessories/lifting-belts" element={<LiftingBelts />} />
           <Route path="/accessories/wrist-wraps" element={<WristWraps />} />
+          {/*--------------------------------------------------------------- */}
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashBoard />} />
           <Route path="/admin/orders" element={<Orders />} />
