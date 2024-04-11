@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import OrderItem from "./OrderItem";
+import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
 
 const OrderList = () => {
   // Dummy data for demonstration
@@ -46,9 +47,7 @@ const OrderList = () => {
   return (
     <div className="container mx-auto">
       <div className="flex items-center justify-between mb-4">
-        <div className="flex justify-between space-x-4">
-          {" "}
-          {/* Updated class name */}
+        <div className="flex justify-center space-x-4 items-center">
           <input
             type="text"
             placeholder="Search by customer or status..."
@@ -72,6 +71,7 @@ const OrderList = () => {
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
+          {sortOrder === "asc" ? <FaSortAmountDown /> : <FaSortAmountUp />}
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4">
