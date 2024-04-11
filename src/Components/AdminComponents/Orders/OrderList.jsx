@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import OrderItem from "./OrderItem";
-import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
+import { FaSearch, FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
 
 const OrderList = () => {
-  // Dummy data for demonstration
   const [orders, setOrders] = useState([
     { id: 1, customer: "John Doe", total: 100, status: "Pending" },
     { id: 2, customer: "Jane Doe", total: 150, status: "Delivered" },
     { id: 3, customer: "Alice Smith", total: 200, status: "Canceled" },
-    // Add more orders as needed
   ]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,36 +43,43 @@ const OrderList = () => {
   });
 
   return (
-    <div className="container mx-auto">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex justify-center space-x-4 items-center">
-          <input
-            type="text"
-            placeholder="Search by customer or status..."
-            value={searchTerm}
-            onChange={handleSearch}
-            className="border border-gray-300 rounded-md px-3 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <select
-            value={sortField}
-            onChange={(e) => handleSort(e.target.value)}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="customer">Sort by Customer</option>
-            <option value="status">Sort by Status</option>
-          </select>
-          <select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-          {sortOrder === "asc" ? <FaSortAmountDown /> : <FaSortAmountUp />}
+    <div className="container mx-auto p-4">
+      <div className="flex items-center justify-between mb-4 bg-gray-100 p-4 rounded-lg border border-gray-200">
+        <input
+          type="text"
+          placeholder="Search by customer or status..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <FaSearch />
+        <div className="flex items-center">
+          <div className="mr-4">
+            <select
+              value={sortField}
+              onChange={(e) => handleSort(e.target.value)}
+              className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="customer">Sort by Customer</option>
+              <option value="status">Sort by Status</option>
+            </select>
+          </div>
+          <div>
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+          <div className="ml-2">
+            {sortOrder === "asc" ? <FaSortAmountDown /> : <FaSortAmountUp />}
+          </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-4  bg-gray-50 p-4 rounded-lg border border-gray-100">
         {sortedOrders.map((order) => (
           <OrderItem key={order.id} order={order} />
         ))}
