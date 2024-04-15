@@ -125,12 +125,15 @@ const Products = () => {
     },
   ]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  // State for update product modal
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleAddProduct = (newProduct) => {
     setProducts([...products, { id: products.length + 1, ...newProduct }]);
-    setIsModalOpen(false);
+    setIsAddModalOpen(false);
   };
 
   const handleUpdateProduct = (updatedProduct) => {
@@ -138,7 +141,7 @@ const Products = () => {
       product.id === updatedProduct.id ? updatedProduct : product
     );
     setProducts(updatedProducts);
-    setIsModalOpen(false);
+    setIsUpdateModalOpen(false);
   };
 
   const handleDeleteProduct = (id) => {
@@ -153,13 +156,13 @@ const Products = () => {
           <h2 className="text-2xl font-bold mb-4">Products</h2>
           <button
             className="button is-primary"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsAddModalOpen(true)}
           >
             Add Product
           </button>
           <ProductModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+            isOpen={isAddModalOpen}
+            onClose={() => setIsAddModalOpen(false)}
             onSubmit={handleAddProduct}
           />
           <ProductList
@@ -167,13 +170,13 @@ const Products = () => {
             onDelete={handleDeleteProduct}
             onUpdate={(product) => {
               setSelectedProduct(product);
-              setIsModalOpen(true);
+              setIsUpdateModalOpen(true);
             }}
           />
           {selectedProduct && (
             <ProductModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
+              isOpen={isUpdateModalOpen}
+              onClose={() => setIsUpdateModalOpen(false)}
               onSubmit={handleUpdateProduct}
               product={selectedProduct}
             />

@@ -1,3 +1,4 @@
+// ProductModal.js
 import React, { useState, useEffect } from "react";
 
 const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
@@ -24,7 +25,6 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-      id: product.id,
       name,
       price,
       discount,
@@ -32,6 +32,13 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
       image: imagePreview,
       hoverImage: hoverImagePreview,
     });
+    // Clear form fields after submission if needed
+    setName("");
+    setPrice("");
+    setDiscount(0);
+    setSizes([]);
+    setImagePreview(null);
+    setHoverImagePreview(null);
   };
 
   const handleImageChange = (e) => {
