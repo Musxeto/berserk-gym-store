@@ -3,6 +3,7 @@ import Sidebar from "../../Components/AdminComponents/Layout/Sidebar/Sidebar";
 import AddProductForm from "../../Components/AdminComponents/Product/AddProductForm";
 import ProductList from "../../Components/AdminComponents/Product/ProductsList";
 import ProductModal from "../../Components/AdminComponents/Product/ProductModal";
+import Header from "../../Components/AdminComponents/Layout/Header/Header";
 
 const Products = () => {
   const [products, setProducts] = useState([
@@ -153,13 +154,21 @@ const Products = () => {
       <Sidebar />
       <div className="flex-1 ml-2 md:ml-56 p-6">
         <div className="max-w-screen-lg mx-auto">
-          <h2 className="text-2xl font-bold mb-4">Products</h2>
-          <button
-            className="button is-primary"
-            onClick={() => setIsAddModalOpen(true)}
-          >
-            Add Product
-          </button>
+          <Header
+            pageTitle={"Products"}
+            pageDescription={"Manage all your site's products here"}
+          />
+          <hr />
+          <br />
+          <div className="flex justify-center">
+            <button
+              className="button mr-2 bg-black text-white px-3 py-1 rounded-md hover:bg-gray-900"
+              onClick={() => setIsAddModalOpen(true)}
+            >
+              Add Product
+            </button>
+          </div>
+
           <ProductModal
             isOpen={isAddModalOpen}
             onClose={() => setIsAddModalOpen(false)}

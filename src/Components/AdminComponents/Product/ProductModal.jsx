@@ -1,4 +1,3 @@
-// ProductModal.js
 import React, { useState, useEffect } from "react";
 
 const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
@@ -69,8 +68,8 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
     >
       <div className="modal-overlay absolute inset-0 bg-black opacity-50"></div>
 
-      <div className="modal-container fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md p-8 z-50 grid grid-cols-2 gap-8">
-        <div className="col-span-1">
+      <div className="modal-container fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md p-8 z-50 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="col-span-1 md:col-span-1">
           <div className="flex justify-between mb-4">
             <h2 className="text-lg font-bold">
               {product ? "Update Product" : "Add Product"}
@@ -147,13 +146,16 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
               </div>
             </div>
             <div className="flex justify-center mt-4">
-              <button type="submit" className="button is-primary">
+              <button
+                type="submit"
+                className="button mr-2 bg-black text-white px-3 py-1 rounded-md hover:bg-gray-800"
+              >
                 {product ? "Update" : "Add"}
               </button>
             </div>
           </form>
         </div>
-        <div className="col-span-1">
+        <div className="col-span-1 md:col-span-1">
           <div className="field">
             <label className="label">Image</label>
             <div className="control">

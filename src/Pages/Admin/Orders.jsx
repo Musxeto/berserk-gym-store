@@ -13,6 +13,8 @@ const Orders = () => {
             pageTitle={"Orders"}
             pageDescription={"All Orders will show here "}
           />
+          <hr />
+          <br />
           <div className="bg-white shadow-md rounded-md p-6">
             <OrderList />
           </div>
