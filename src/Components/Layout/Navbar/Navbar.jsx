@@ -228,7 +228,7 @@ const Navbar = () => {
               <span className="block py-2 px-4 cursor-pointer">About</span>
             </Link>
             <Link
-              to="/admin"
+              to="/admin/dashboard"
               className="text-gray-600 hover:text-gray-900 transition duration-300"
               onClick={(e) => {
                 closeDropdown();
