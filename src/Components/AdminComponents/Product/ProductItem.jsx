@@ -20,19 +20,22 @@ const ProductItem = ({ product, onUpdate, onDelete }) => {
           Available Sizes: {product.sizes.join(", ")}
         </p>
       </div>
-      <div className="flex-shrink-0">
-        <button
-          onClick={() => onUpdate(product)}
-          className="mr-2 bg-blue-500 text-white px-3 py-1 rounded-md"
-        >
-          Update
-        </button>
-        <button
-          onClick={() => onDelete(product.id)}
-          className="bg-red-500 text-white px-3 py-1 rounded-md"
-        >
-          Delete
-        </button>
+      <div className="flex-1">{/* Placeholder for product details */}</div>
+      <div className="flex flex-col justify-between">
+        <div className="flex flex-col max-w-min">
+          <button
+            onClick={() => onUpdate(product)}
+            className="bg-blue-500 text-white px-3 py-1 rounded-md mb-2"
+          >
+            Update
+          </button>
+          <button
+            onClick={() => onDelete(product.id)}
+            className="bg-red-500 text-white px-3 py-1 rounded-md"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
