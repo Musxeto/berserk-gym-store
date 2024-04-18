@@ -44,15 +44,17 @@ const OrderList = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex items-center justify-between mb-4 bg-gray-100 p-4 rounded-lg border border-gray-200">
-        <input
-          type="text"
-          placeholder="Search by customer or status..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <FaSearch />
+      <div className="flex flex-col md:flex-row items-center justify-between mb-4 bg-gray-100 p-4 rounded-lg border border-gray-200">
+        <div className="flex items-center mb-4 md:mb-0 flex-grow">
+          <FaSearch className="mr-2" />
+          <input
+            type="text"
+            placeholder="Search by customer or status..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="flex-grow border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
         <div className="flex items-center">
           <div className="mr-4">
             <select
@@ -79,7 +81,7 @@ const OrderList = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-4  bg-gray-50 p-4 rounded-lg border border-gray-100">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
         {sortedOrders.map((order) => (
           <OrderItem key={order.id} order={order} />
         ))}

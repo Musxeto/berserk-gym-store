@@ -159,7 +159,7 @@ const Navbar = () => {
             </span>
           </Link>
           <Link
-            to="/admin"
+            to="/admin/dashboard"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
             <span
