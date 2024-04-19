@@ -19,7 +19,7 @@ const SectionPreview = () => {
       name: "Protein Powders",
       description: "Find the perfect Protein Powder for your needs.",
       image: "/protien.jpg",
-      link: "/proteinpowders",
+      link: "/proteinpowder",
     },
     {
       name: "Wrist Wraps",
