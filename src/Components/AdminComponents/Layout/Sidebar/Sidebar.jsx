@@ -13,7 +13,7 @@ import {
 } from "react-icons/fi"; // Importing icons from react-icons
 import { IoSettingsOutline } from "react-icons/io5"; // Importing settings icon
 
-const Sidebar = () => {
+const Sidebar = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -66,7 +66,7 @@ const Sidebar = () => {
 
       <aside
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen overflow-y-auto transition-transform shadow-lg ${
+        className={`fixed top-0 left-0 z-40 w-64 h-screen overflow-y-auto transition-transform shadow-lg ${className} ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full "
         } sm:translate-x-0`}
         aria-label="Sidebar"

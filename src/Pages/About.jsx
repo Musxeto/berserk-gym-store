@@ -7,9 +7,9 @@ const About = () => {
     <>
       {" "}
       <Navbar />
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto p-8 ">
         <h1 className="text-3xl font-bold mb-4">About Us</h1>
-        <p className="text-gray-700 leading-relaxed">
+        <p className="text-gray-700 font-1xl leading-relaxed">
           Welcome to Berserk Fit! We are dedicated to providing high-quality
           fitness apparel, nutrition supplements, and accessories to support
           your fitness journey. At Berserk Fit, we believe in the power of
