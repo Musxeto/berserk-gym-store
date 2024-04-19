@@ -9,6 +9,31 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const showFailureToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const discountedPrice =
     product.price - (product.price * parseInt(product.discount)) / 100;
@@ -23,7 +48,7 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
 
   const handleAddToCart = async () => {
     if (!selectedSize || !quantity) {
-      toast.error("Please select both size and quantity.");
+      showFailureToast("Please select both size and quantity.");
       return;
     }
 
@@ -44,7 +69,7 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
     addToCart(item);
 
     setIsLoading(false);
-    toast.dark("Product added to cart!");
+    showSuccessToast("Product added to cart!");
     closeModal();
   };
 

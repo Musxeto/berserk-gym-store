@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../../Components/AdminComponents/Layout/Sidebar/Sidebar";
-import AddProductForm from "../../Components/AdminComponents/Product/AddProductForm";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ProductList from "../../Components/AdminComponents/Product/ProductsList";
 import ProductModal from "../../Components/AdminComponents/Product/ProductModal";
 import Header from "../../Components/AdminComponents/Layout/Header/Header";
@@ -133,20 +134,61 @@ const Products = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleAddProduct = (newProduct) => {
-    setProducts([...products, { id: products.length + 1, ...newProduct }]);
-    setIsAddModalOpen(false);
+    try {
+      setProducts([...products, { id: products.length + 1, ...newProduct }]);
+      setIsAddModalOpen(false);
+      showSuccessToast("Product added successfully!");
+    } catch (error) {
+      showFailureToast("Failed to add product. Please try again.");
+    }
   };
 
   const handleUpdateProduct = (updatedProduct) => {
-    const updatedProducts = products.map((product) =>
-      product.id === updatedProduct.id ? updatedProduct : product
-    );
-    setProducts(updatedProducts);
-    setIsUpdateModalOpen(false);
+    try {
+      const updatedProducts = products.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      );
+      setProducts(updatedProducts);
+      setIsUpdateModalOpen(false);
+      showSuccessToast("Product updated successfully!");
+    } catch (error) {
+      showFailureToast("Failed to update product. Please try again.");
+    }
   };
 
   const handleDeleteProduct = (id) => {
-    setProducts(products.filter((product) => product.id !== id));
+    try {
+      setProducts(products.filter((product) => product.id !== id));
+      showSuccessToast("Product deleted successfully!");
+    } catch (error) {
+      showFailureToast("Failed to delete product. Please try again.");
+    }
+  };
+
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const showFailureToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   return (

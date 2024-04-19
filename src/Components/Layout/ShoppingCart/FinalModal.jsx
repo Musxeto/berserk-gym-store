@@ -11,6 +11,31 @@ const FinalModal = ({
 }) => {
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const { clearCart, total } = useCart(); // Accessing clearCart function from the cart context
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const showFailureToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const confirmOrder = () => {
     orderDetails = { ...orderDetails, userData, total };
@@ -19,16 +44,12 @@ const FinalModal = ({
       orderDetails,
     });
 
-    setConfirmationMessage("Your order has been confirmed!");
-
+    showSuccessToast("Your order has been confirmed!");
     // Reset states and clear the shopping cart
     closeModal();
     clearCart();
 
     // Show toast notification
-    toast.dark("Your order has been confirmed!", {
-      autoClose: 3000,
-    });
   };
 
   return (
@@ -73,7 +94,7 @@ const FinalModal = ({
               className="bg-green-600 text-white py-2 px-4 rounded-lg mr-4"
               onClick={confirmOrder}
             >
-              Confirm Order
+              Done
             </button>
           )}
         </div>
