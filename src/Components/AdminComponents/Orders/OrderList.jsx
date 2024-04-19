@@ -44,7 +44,7 @@ const OrderList = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-4 bg-gray-100 p-4 rounded-lg border border-gray-200">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-4">
         <div className="flex items-center mb-4 md:mb-0 flex-grow">
           <FaSearch className="mr-2" />
           <input
@@ -81,10 +81,12 @@ const OrderList = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
-        {sortedOrders.map((order) => (
-          <OrderItem key={order.id} order={order} />
-        ))}
+      <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {sortedOrders.map((order) => (
+            <OrderItem key={order.id} order={order} />
+          ))}
+        </div>
       </div>
     </div>
   );

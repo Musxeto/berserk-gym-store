@@ -22,10 +22,10 @@ const OrderItem = ({ order }) => {
     <div
       className={`bg-white border border-gray-200 p-4 my-4 rounded-lg w-full ${
         status === "Pending"
-          ? "bg-yellow-200"
+          ? "bg-yellow-100" /* Yellow for pending */
           : status === "Delivered"
-          ? "bg-green-200"
-          : "bg-red-200"
+          ? "bg-green-100" /* Green for delivered */
+          : "bg-red-100" /* Red for canceled */
       }`}
     >
       <div className="flex items-center justify-between">
