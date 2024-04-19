@@ -12,7 +12,12 @@ const ProductItem = ({ product, onUpdate, onDelete }) => {
       </div>
       <div className="flex-1">
         <h3 className="text-lg font-semibold">{product.name}</h3>
-        <p className="text-gray-600">${product.price}</p>
+        <p className="text-gray-600">
+          $
+          {(product.price - product.price * (product.discount / 100)).toFixed(
+            2
+          )}
+        </p>
         {product.discount > 0 && (
           <p className="text-gray-500 line-through">${product.price}</p>
         )}

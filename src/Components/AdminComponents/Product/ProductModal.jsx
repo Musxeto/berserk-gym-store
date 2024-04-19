@@ -69,8 +69,13 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
       <div className="modal-overlay absolute inset-0 bg-black opacity-50"></div>
 
       <div
-        className="modal-container fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md p-8 z-50"
-        style={{ maxWidth: "95%", maxHeight: "90%" }}
+        className="modal-container fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md p-8 z-50 custom-scrollbar" // Add custom-scrollbar class
+        style={{
+          maxWidth: "95%",
+          maxHeight: "90%",
+          height: "fit-content",
+          overflowY: "auto",
+        }}
       >
         <div className="flex justify-between mb-4">
           <h2 className="text-lg font-bold">
@@ -97,6 +102,8 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
           </button>
         </div>
         <form id="productForm" onSubmit={handleSubmit}>
+          {/* Form fields */}
+          {/* Image inputs */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <div className="field">
