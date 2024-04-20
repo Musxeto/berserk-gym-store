@@ -1,8 +1,9 @@
+// ProductModal.jsx
 import React, { useState, useEffect } from "react";
 import { updateProduct } from "../../../firebase";
+import { storage } from "../../../firebase";
 import { ClipLoader } from "react-spinners";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../../../firebase";
 
 const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const [name, setName] = useState("");
@@ -15,6 +16,8 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [hoverImagePreview, setHoverImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false); // New state for image loading
+  const [hoverImageLoading, setHoverImageLoading] = useState(false); // New state for hover image loading
 
   useEffect(() => {
     if (product) {
@@ -88,9 +91,11 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
+    setImageLoading(true); // Set image loading state to true when image is being changed
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
+      setImageLoading(false); // Set image loading state to false when image is loaded
     };
     reader.readAsDataURL(file);
   };
@@ -98,9 +103,11 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const handleHoverImageChange = (e) => {
     const file = e.target.files[0];
     setHoverImageFile(file);
+    setHoverImageLoading(true); // Set hover image loading state to true when hover image is being changed
     const reader = new FileReader();
     reader.onloadend = () => {
       setHoverImagePreview(reader.result);
+      setHoverImageLoading(false); // Set hover image loading state to false when hover image is loaded
     };
     reader.readAsDataURL(file);
   };
@@ -224,11 +231,17 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
               />
             </div>
             {imagePreview && (
-              <img
-                src={imagePreview}
-                alt="Product Image Preview"
-                className="mt-2 w-40"
-              />
+              <div className="mt-2">
+                {imageLoading ? ( // Show loading spinner while image is loading
+                  <ClipLoader color={"#000"} loading={imageLoading} size={35} />
+                ) : (
+                  <img
+                    src={imagePreview}
+                    alt="Product Image Preview"
+                    className="w-40"
+                  />
+                )}
+              </div>
             )}
           </div>
           <div className="field mt-4">
@@ -241,11 +254,21 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
               />
             </div>
             {hoverImagePreview && (
-              <img
-                src={hoverImagePreview}
-                alt="Product Hover Image Preview"
-                className="mt-2 w-40"
-              />
+              <div className="mt-2">
+                {hoverImageLoading ? ( // Show loading spinner while hover image is loading
+                  <ClipLoader
+                    color={"#000"}
+                    loading={hoverImageLoading}
+                    size={35}
+                  />
+                ) : (
+                  <img
+                    src={hoverImagePreview}
+                    alt="Product Hover Image Preview"
+                    className="w-40"
+                  />
+                )}
+              </div>
             )}
           </div>
           <div className="flex justify-center mt-4">
