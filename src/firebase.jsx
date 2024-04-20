@@ -14,6 +14,7 @@ import {
   addDoc,
   getDoc,
   updateDoc,
+  deleteDoc,
   collection,
   getDocs,
 } from "firebase/firestore";
@@ -81,4 +82,14 @@ const addProduct = async (productData) => {
   }
 };
 
-export { updateProduct, addProduct };
+const deleteProduct = async (productId) => {
+  try {
+    await deleteDoc(doc(db, "products", productId));
+    return true;
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error;
+  }
+};
+
+export { updateProduct, addProduct, deleteProduct };

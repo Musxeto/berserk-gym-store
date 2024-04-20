@@ -5,7 +5,7 @@ import ProductList from "../../Components/AdminComponents/Product/ProductsList";
 import ProductModal from "../../Components/AdminComponents/Product/ProductModal";
 import Header from "../../Components/AdminComponents/Layout/Header/Header";
 import { showFailureToast, showSuccessToast } from "../../App";
-import { fetchProducts, updateProduct } from "../../firebase";
+import { fetchProducts, updateProduct, deleteProduct } from "../../firebase"; // Import the deleteProduct function
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -61,8 +61,9 @@ const Products = () => {
     }
   };
 
-  const handleDeleteProduct = (id) => {
+  const handleDeleteProduct = async (id) => {
     try {
+      await deleteProduct(id); // Call the deleteProduct function with the product ID
       setProducts(products.filter((product) => product.id !== id));
       showSuccessToast("Product deleted successfully!");
     } catch (error) {
@@ -103,7 +104,7 @@ const Products = () => {
           ) : (
             <ProductList
               products={products}
-              onDelete={handleDeleteProduct}
+              onDelete={handleDeleteProduct} // Pass the handleDeleteProduct function to ProductList
               onUpdate={(product) => {
                 setSelectedProduct(product);
                 setIsUpdateModalOpen(true);
