@@ -4,8 +4,9 @@ import { ClipLoader } from "react-spinners";
 import ProductList from "../../Components/AdminComponents/Product/ProductsList";
 import ProductModal from "../../Components/AdminComponents/Product/ProductModal";
 import Header from "../../Components/AdminComponents/Layout/Header/Header";
+import ConfirmationModal from "../../Components/AdminComponents/Product/ConfirmationModal";
 import { showFailureToast, showSuccessToast } from "../../App";
-import { fetchProducts, updateProduct, deleteProduct } from "../../firebase"; // Import the deleteProduct function
+import { fetchProducts, updateProduct, deleteProduct } from "../../firebase";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -13,6 +14,8 @@ const Products = () => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,14 +64,27 @@ const Products = () => {
     }
   };
 
-  const handleDeleteProduct = async (id) => {
+  const handleDeleteConfirmation = (productId) => {
+    setSelectedProductId(productId);
+    setIsConfirmationModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
     try {
-      await deleteProduct(id); // Call the deleteProduct function with the product ID
-      setProducts(products.filter((product) => product.id !== id));
+      await deleteProduct(selectedProductId);
+      setProducts(
+        products.filter((product) => product.id !== selectedProductId)
+      );
       showSuccessToast("Product deleted successfully!");
+      setIsConfirmationModalOpen(false);
     } catch (error) {
       showFailureToast("Failed to delete product. Please try again.");
+      console.error("Failed to delete product:", error);
     }
+  };
+
+  const handleCancelDelete = () => {
+    setIsConfirmationModalOpen(false);
   };
 
   return (
@@ -104,7 +120,7 @@ const Products = () => {
           ) : (
             <ProductList
               products={products}
-              onDelete={handleDeleteProduct} // Pass the handleDeleteProduct function to ProductList
+              onDelete={handleDeleteConfirmation}
               onUpdate={(product) => {
                 setSelectedProduct(product);
                 setIsUpdateModalOpen(true);
@@ -120,6 +136,12 @@ const Products = () => {
               product={selectedProduct}
             />
           )}
+
+          <ConfirmationModal
+            isOpen={isConfirmationModalOpen}
+            onCancel={handleCancelDelete}
+            onConfirm={handleConfirmDelete}
+          />
         </div>
       </div>
     </div>
