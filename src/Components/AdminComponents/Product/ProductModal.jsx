@@ -1,6 +1,6 @@
 // ProductModal.jsx
 import React, { useState, useEffect } from "react";
-import { updateProduct } from "../../../firebase";
+import { updateProduct, addProduct } from "../../../firebase";
 import { storage } from "../../../firebase";
 import { ClipLoader } from "react-spinners";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
@@ -51,7 +51,7 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
         hoverImageUrl = await uploadImageToStorage(hoverImageFile);
       }
 
-      await updateProduct(product.id, {
+      const productData = {
         name,
         price,
         discount,
@@ -59,21 +59,22 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
         category,
         image: imageUrl,
         hoverImage: hoverImageUrl,
-      });
+      };
+
+      if (product) {
+        await updateProduct(product.id, productData);
+      } else {
+        await addProduct(productData);
+      }
 
       if (onSubmit) {
         onSubmit({
-          id: product.id,
-          name,
-          price,
-          discount,
-          sizes: sizes.join(","),
-          category,
-          image: imageUrl,
-          hoverImage: hoverImageUrl,
+          id: product ? product.id : null,
+          ...productData,
         });
       }
 
+      // Reset form fields and state
       setName("");
       setPrice("");
       setDiscount(0);
@@ -82,7 +83,7 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
       setImagePreview(null);
       setHoverImagePreview(null);
     } catch (error) {
-      console.error("Failed to update product:", error);
+      console.error("Failed to save product:", error);
     } finally {
       setLoading(false);
     }

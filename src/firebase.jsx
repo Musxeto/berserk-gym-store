@@ -70,4 +70,15 @@ const updateProduct = async (productId, updatedProductData) => {
   }
 };
 
-export { updateProduct };
+const addProduct = async (productData) => {
+  try {
+    const docRef = await addDoc(collection(db, "products"), productData);
+    console.log("Product added with ID:", docRef.id);
+    return docRef.id;
+  } catch (error) {
+    console.error("Error adding product:", error);
+    throw new Error("Failed to add product");
+  }
+};
+
+export { updateProduct, addProduct };
