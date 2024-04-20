@@ -21,9 +21,7 @@ const ProductItem = ({ product, onUpdate, onDelete }) => {
         {product.discount > 0 && (
           <p className="text-gray-500 line-through">${product.price}</p>
         )}
-        <p className="text-gray-600">
-          Available Sizes: {product.sizes.join(", ")}
-        </p>
+        <p className="text-gray-600">Available Sizes: {product.sizes}</p>
       </div>
       <div className="flex-1">{/* Placeholder for product details */}</div>
       <div className="flex flex-col justify-between">
