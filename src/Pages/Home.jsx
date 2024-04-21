@@ -5,24 +5,36 @@ import SectionPreview from "../Components/Sections/Sections";
 import Products from "../Components/Product/Products";
 import Footer from "../Components/Layout/Footer/Footer";
 import { showFailureToast, showSuccessToast } from "../App";
-import { fetchProducts } from "../firebase";
+import { fetchProducts, fetchSettings } from "../firebase";
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
+
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  const [featuredProductsLimit, setFeaturedProductsLimit] = useState(4); // Default limit
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
+
+        // Fetch featured products limit from settings
+        const settingsData = await fetchSettings("allSettings");
+        if (settingsData && settingsData.featuredProductsLimit) {
+          setFeaturedProductsLimit(settingsData.featuredProductsLimit);
+        }
+
+        // Fetch products
         const productsData = await fetchProducts();
         if (Array.isArray(productsData)) {
-          const formattedProducts = productsData.map((product) => ({
-            ...product,
-            sizes: product.sizes.split(",").map((size) => size.trim()),
-          }));
+          const formattedProducts = productsData
+            .slice(0, featuredProductsLimit) // Slice the products array to the specified limit
+            .map((product) => ({
+              ...product,
+              sizes: product.sizes.split(",").map((size) => size.trim()),
+            }));
           setProducts(formattedProducts);
         } else {
           console.error("Invalid products data:", productsData);
@@ -36,7 +48,7 @@ const Home = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [featuredProductsLimit]); // Trigger the effect whenever the featuredProductsLimit changes
 
   return (
     <>
