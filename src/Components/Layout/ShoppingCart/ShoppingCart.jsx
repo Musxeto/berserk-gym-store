@@ -1,22 +1,46 @@
-import React, { useState } from "react";
-import { FaTrash } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../../../Contexts/CartContext";
+import { FaTrash } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
 import PlaceOrder from "./PlaceOrder";
+import { fetchSettings } from "../../../firebase";
 
 const ShoppingCart = ({ isOpen, closeSidebar }) => {
   const { cart, removeFromCart, clearCart } = useCart();
   const [checkoutMode, setCheckoutMode] = useState(false);
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+  useEffect(() => {
+    const fetchDeliveryCharges = async () => {
+      try {
+        const settingsData = await fetchSettings("allSettings");
+        if (settingsData && settingsData.deliveryCharge) {
+          setDeliveryCharges(settingsData.deliveryCharge);
+        }
+      } catch (error) {
+        console.error("Error fetching delivery charges:", error);
+      }
+    };
+
+    fetchDeliveryCharges();
+  }, []);
 
   const handleProceedToCheckout = () => {
     setCheckoutMode(true);
   };
 
   const calculateTotal = () => {
-    return cart
-      .reduce((total, item) => total + item.productTotal, 0)
-      .toFixed(2);
+    let total = 0;
+
+    for (const item of cart) {
+      total += item.productTotal;
+    }
+
+    total += deliveryCharges;
+
+    return total.toFixed(2);
   };
+
   return (
     <div
       className={`fixed top-0 right-0 w-96 h-full bg-white shadow-lg z-10 transition-transform duration-300 ${
@@ -34,7 +58,10 @@ const ShoppingCart = ({ isOpen, closeSidebar }) => {
         style={!checkoutMode ? { maxHeight: "calc(100% - 15rem)" } : {}}
       >
         {checkoutMode ? (
-          <PlaceOrder setCheckoutMode={setCheckoutMode} />
+          <PlaceOrder
+            setCheckoutMode={setCheckoutMode}
+            Charges={deliveryCharges}
+          />
         ) : (
           // Display shopping cart items
           <div>
@@ -84,9 +111,12 @@ const ShoppingCart = ({ isOpen, closeSidebar }) => {
             Clear Cart
           </button>
           <div>
+            <p>Subtotal: ${calculateTotal()}</p>
+            <p>Delivery Charges: ${deliveryCharges}</p>
             <p>Total: ${calculateTotal()}</p>
+
             <button
-              className="bg-blue-600 text-white py-2 px-4 rounded-lg"
+              className="bg-blue-600 mt-3 text-white py-2 px-4 rounded-lg"
               onClick={handleProceedToCheckout}
             >
               Proceed to Checkout

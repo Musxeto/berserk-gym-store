@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../../../Contexts/CartContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { storeOrder } from "../../../firebase";
+import { storeOrder, fetchSettings } from "../../../firebase";
 import { showFailureToast, showSuccessToast } from "../../../App";
 
-const FinalModal = ({ orderDetails, userData, closeModal }) => {
+const FinalModal = ({ orderDetails, userData, closeModal, Charges }) => {
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [deliveryCharges, setDeliveryCharges] = useState(Charges);
   const { clearCart, total } = useCart();
 
   const confirmOrder = async () => {
@@ -53,6 +54,7 @@ const FinalModal = ({ orderDetails, userData, closeModal }) => {
                     {item.name} - ${item.productTotal.toFixed(2)}
                   </li>
                 ))}
+              Delivery Charges: ${deliveryCharges}
             </ul>
             <p className="mt-4">Total: ${total}</p>
           </div>

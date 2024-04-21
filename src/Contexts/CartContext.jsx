@@ -1,43 +1,53 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-
-// Create a new context for the cart
+import { fetchSettings } from "../firebase";
 const CartContext = createContext();
 
-// Custom hook to access the cart context
 export const useCart = () => useContext(CartContext);
 
-// CartProvider component to wrap your application and provide the cart context
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
+  const [deliveryCharges, setDeliveryCharges] = useState(0); // State to store delivery charges
 
   useEffect(() => {
-    // Recalculate total whenever cart changes
-    calculateTotal();
-  }, [cart]);
+    // Fetch delivery charges from settings when component mounts
+    const fetchDeliveryCharges = async () => {
+      try {
+        const settings = await fetchSettings("allSettings");
+        if (settings && settings.deliveryCharge) {
+          setDeliveryCharges(settings.deliveryCharge);
+        }
+      } catch (error) {
+        console.error("Error fetching delivery charges:", error);
+        // Handle error
+      }
+    };
 
-  // Function to calculate total
+    fetchDeliveryCharges(); // Call the function to fetch delivery charges
+  }, []);
+
+  useEffect(() => {
+    calculateTotal(); // Recalculate total whenever cart or delivery charges change
+  }, [cart, deliveryCharges]);
+
   const calculateTotal = () => {
-    let newTotal = 0;
+    let newTotal = deliveryCharges;
     cart.forEach((item) => {
       newTotal += item.productTotal;
     });
     setTotal(newTotal);
   };
 
-  // Function to add an item to the cart
   const addToCart = (item) => {
     setCart([...cart, item]);
   };
 
-  // Function to remove an item from the cart
   const removeFromCart = (index) => {
     const newCart = [...cart];
     newCart.splice(index, 1);
     setCart(newCart);
   };
 
-  // Function to clear the cart
   const clearCart = () => {
     setCart([]);
   };

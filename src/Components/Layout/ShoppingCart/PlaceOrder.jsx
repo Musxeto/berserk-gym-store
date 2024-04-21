@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FinalModal from "./FinalModal";
 import { useCart } from "../../../Contexts/CartContext";
 
-const PlaceOrder = ({ setCheckoutMode }) => {
+const PlaceOrder = ({ setCheckoutMode, Charges }) => {
   const { cart, total } = useCart();
   const [formData, setFormData] = useState({
     email: "",
@@ -45,6 +45,7 @@ const PlaceOrder = ({ setCheckoutMode }) => {
           total={total}
           userData={formData}
           closeModal={closeModal}
+          Charges={Charges}
         />
       ) : (
         <div className="p-4">

@@ -80,103 +80,112 @@ const Settings = () => {
               pageDescription={"Change and customize your Website"}
             />
             <hr className="my-4" />
-            <form
-              className="bg-white p-1 md:p-1"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSaveSettings();
-              }}
-            >
-              {/* Featured Products Limit */}
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">
-                  Featured Products Limit
-                </h2>
-                <p>Set the maximum number of featured products to display.</p>
-                <div>
-                  <label className="block mt-4">
-                    <span className="text-gray-700">Limit:</span>
-                    <input
-                      type="number"
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                      value={settings.featuredProductsLimit}
-                      onChange={(e) =>
-                        handleSettingChange(
-                          "featuredProductsLimit",
-                          parseInt(e.target.value)
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
 
-              {/* Social Links */}
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Social Links</h2>
-                <p>Update the links to your social media accounts.</p>
-                <div>
-                  {settings.socialLinks &&
-                    Object.entries(settings.socialLinks).map(
-                      ([platform, link], index) => (
-                        <label key={index} className="block mt-4">
-                          <span className="text-gray-700 capitalize">
-                            {platform}:
-                          </span>
-                          <input
-                            type="text"
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                            value={link}
-                            onChange={(e) =>
-                              handleSettingChange("socialLinks", {
-                                ...settings.socialLinks,
-                                [platform]: e.target.value,
-                              })
-                            }
-                          />
-                        </label>
-                      )
+            {isLoading ? (
+              <div className="flex justify-center mt-8">
+                <ClipLoader color={"#000"} loading={isLoading} size={35} />
+              </div>
+            ) : (
+              <form
+                className="bg-white p-1 md:p-1"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSaveSettings();
+                }}
+              >
+                {/* Featured Products Limit */}
+                <div className="mb-6">
+                  <h2 className="text-lg font-semibold mb-2">
+                    Featured Products Limit
+                  </h2>
+                  <p>Set the maximum number of featured products to display.</p>
+                  <div>
+                    <label className="block mt-4">
+                      <span className="text-gray-700">Limit:</span>
+                      <input
+                        type="number"
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        value={settings.featuredProductsLimit}
+                        onChange={(e) =>
+                          handleSettingChange(
+                            "featuredProductsLimit",
+                            parseInt(e.target.value)
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                {/* Social Links */}
+                <div className="mb-6">
+                  <h2 className="text-lg font-semibold mb-2">Social Links</h2>
+                  <p>Update the links to your social media accounts.</p>
+                  <div>
+                    {settings.socialLinks &&
+                      Object.entries(settings.socialLinks).map(
+                        ([platform, link], index) => (
+                          <label key={index} className="block mt-4">
+                            <span className="text-gray-700 capitalize">
+                              {platform}:
+                            </span>
+                            <input
+                              type="text"
+                              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                              value={link}
+                              onChange={(e) =>
+                                handleSettingChange("socialLinks", {
+                                  ...settings.socialLinks,
+                                  [platform]: e.target.value,
+                                })
+                              }
+                            />
+                          </label>
+                        )
+                      )}
+                  </div>
+                </div>
+
+                {/* Delivery Charges */}
+                <div className="mb-6">
+                  <h2 className="text-lg font-semibold mb-2">
+                    Delivery Charge
+                  </h2>
+                  <p>Set the delivery charge for all orders.</p>
+                  <div>
+                    <label className="block mt-4">
+                      <span className="text-gray-700">Charge:</span>
+                      <input
+                        type="number"
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        value={settings.deliveryCharge}
+                        onChange={(e) =>
+                          handleSettingChange(
+                            "deliveryCharge",
+                            parseInt(e.target.value)
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                {/* Save Settings Button */}
+                <div className="text-right md:text-center">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    {isLoading ? (
+                      <ClipLoader color={"#ffffff"} loading={isLoading} />
+                    ) : (
+                      "Save Settings"
                     )}
+                  </button>
                 </div>
-              </div>
-
-              {/* Delivery Charges */}
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Delivery Charge</h2>
-                <p>Set the delivery charge for all orders.</p>
-                <div>
-                  <label className="block mt-4">
-                    <span className="text-gray-700">Charge:</span>
-                    <input
-                      type="number"
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                      value={settings.deliveryCharge}
-                      onChange={(e) =>
-                        handleSettingChange(
-                          "deliveryCharge",
-                          parseInt(e.target.value)
-                        )
-                      }
-                    />
-                  </label>
-                </div>
-              </div>
-
-              {/* Save Settings Button */}
-              <div className="text-right md:text-center">
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  {isLoading ? (
-                    <ClipLoader color={"#ffffff"} loading={isLoading} />
-                  ) : (
-                    "Save Settings"
-                  )}
-                </button>
-              </div>
-            </form>
+              </form>
+            )}
           </div>
         </div>
       </div>
