@@ -113,6 +113,18 @@ const fetchOrders = async () => {
     throw new Error("Failed to fetch Orders");
   }
 };
+
+const updateOrderStatus = async (orderId, newStatus) => {
+  try {
+    const orderRef = doc(db, "orders", orderId);
+    await updateDoc(orderRef, {
+      deliveryStatus: newStatus,
+    });
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    throw new Error("Failed to update order status");
+  }
+};
 export {
   fetchProducts,
   updateProduct,
@@ -120,4 +132,5 @@ export {
   deleteProduct,
   storeOrder,
   fetchOrders,
+  updateOrderStatus,
 };

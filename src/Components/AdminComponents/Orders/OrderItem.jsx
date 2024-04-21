@@ -1,31 +1,50 @@
 import React, { useState } from "react";
+import { updateOrderStatus } from "../../../firebase";
+import { css } from "@emotion/react";
+import { ClipLoader } from "react-spinners";
 
 const OrderItem = ({ order }) => {
   const [expanded, setExpanded] = useState(false);
   const [status, setStatus] = useState(order.deliveryStatus);
+  const [loading, setLoading] = useState(false);
 
   const toggleAccordion = () => {
     setExpanded(!expanded);
   };
 
-  const handleDeliver = () => {
-    console.log(`Order ${order.id} delivered.`);
-    setStatus("Delivered");
+  const handleDeliver = async () => {
+    try {
+      setLoading(true);
+      await updateOrderStatus(order.id, "Delivered");
+      setStatus("Delivered");
+      await updateAnalytics(order);
+    } catch (error) {
+      console.error("Error delivering order:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleCancel = () => {
-    console.log(`Order ${order.id} canceled.`);
-    setStatus("Canceled");
+  const handleCancel = async () => {
+    try {
+      setLoading(true);
+      await updateOrderStatus(order.id, "Canceled");
+      setStatus("Canceled");
+    } catch (error) {
+      console.error("Error canceling order:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div
       className={`bg-white border border-gray-200 p-4 my-4 rounded-lg w-full ${
-        status === "pending"
-          ? "bg-yellow-100" /* Yellow for pending */
-          : status === "delivered"
-          ? "bg-green-100" /* Green for delivered */
-          : "bg-red-100" /* Red for canceled */
+        status === "pending" || status === "Pending"
+          ? "bg-yellow-100"
+          : status === "delivered" || status === "Delivered"
+          ? "bg-green-200"
+          : "bg-red-200"
       }`}
     >
       <div className="flex items-center justify-between">
@@ -66,7 +85,6 @@ const OrderItem = ({ order }) => {
                   <p>Category: {product.category}</p>
                   <p>Price: ${product.price}</p>
                   <p>Quantity: {product.quantity}</p>
-                  {/* Add more product details as needed */}
                 </div>
               ))
             ) : (
@@ -77,19 +95,29 @@ const OrderItem = ({ order }) => {
           <p className="text-gray-600 mb-2">Total: ${order.total}</p>
           <p className="text-gray-600 mb-2">Status: {status}</p>
           <div className="flex justify-between">
-            {status === "pending" && (
+            {(status === "pending" || status === "Pending") && (
               <>
                 <button
                   onClick={handleDeliver}
+                  disabled={loading}
                   className="px-2 py-1 rounded bg-green-500 text-white hover:bg-green-600"
                 >
-                  Deliver
+                  {loading ? (
+                    <ClipLoader color={"#ffffff"} loading={true} size={20} />
+                  ) : (
+                    "Deliver"
+                  )}
                 </button>
                 <button
                   onClick={handleCancel}
+                  disabled={loading}
                   className="px-2 py-1 rounded bg-red-500 text-white hover:bg-red-600"
                 >
-                  Cancel
+                  {loading ? (
+                    <ClipLoader color={"#ffffff"} loading={true} size={20} />
+                  ) : (
+                    "Cancel"
+                  )}
                 </button>
               </>
             )}
