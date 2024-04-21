@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const OrderItem = ({ order }) => {
   const [expanded, setExpanded] = useState(false);
-  const [status, setStatus] = useState(order.status);
+  const [status, setStatus] = useState(order.deliveryStatus);
 
   const toggleAccordion = () => {
     setExpanded(!expanded);
@@ -21,9 +21,9 @@ const OrderItem = ({ order }) => {
   return (
     <div
       className={`bg-white border border-gray-200 p-4 my-4 rounded-lg w-full ${
-        status === "Pending"
+        status === "pending"
           ? "bg-yellow-100" /* Yellow for pending */
-          : status === "Delivered"
+          : status === "delivered"
           ? "bg-green-100" /* Green for delivered */
           : "bg-red-100" /* Red for canceled */
       }`}
@@ -31,9 +31,9 @@ const OrderItem = ({ order }) => {
       <div className="flex items-center justify-between">
         <h3
           className={`text-lg font-semibold mb-2 ${
-            status === "Delivered"
+            status === "delivered"
               ? "line-through text-green-500"
-              : status === "Canceled"
+              : status === "canceled"
               ? "line-through text-red-500"
               : ""
           }`}
@@ -49,12 +49,35 @@ const OrderItem = ({ order }) => {
       </div>
       {expanded && (
         <div>
-          <p className="text-gray-600 mb-2">Customer: {order.customer}</p>
+          <div className="text-gray-600 mb-2">
+            <h4>User Data:</h4>
+            <p>Name: {order.userData.name}</p>
+            <p>Email: {order.userData.email}</p>
+            <p>Phone Number: {order.userData.phoneNumber}</p>
+            <p>Address: {order.userData.address}</p>
+            <p>Additional Info: {order.userData.additionalInfo}</p>
+          </div>
+          <div className="text-gray-600 mb-2">
+            <h4>Products:</h4>
+            {order.products && order.products.length > 0 ? (
+              order.products.map((product) => (
+                <div key={product.id}>
+                  <p>Name: {product.name}</p>
+                  <p>Category: {product.category}</p>
+                  <p>Price: ${product.price}</p>
+                  <p>Quantity: {product.quantity}</p>
+                  {/* Add more product details as needed */}
+                </div>
+              ))
+            ) : (
+              <p>No products found.</p>
+            )}
+          </div>
+
           <p className="text-gray-600 mb-2">Total: ${order.total}</p>
           <p className="text-gray-600 mb-2">Status: {status}</p>
-          {/* Add more details as needed */}
           <div className="flex justify-between">
-            {status === "Pending" && (
+            {status === "pending" && (
               <>
                 <button
                   onClick={handleDeliver}
@@ -70,10 +93,10 @@ const OrderItem = ({ order }) => {
                 </button>
               </>
             )}
-            {status === "Delivered" && (
+            {status === "delivered" && (
               <p className="text-green-500">Delivered</p>
             )}
-            {status === "Canceled" && <p className="text-red-500">Canceled</p>}
+            {status === "canceled" && <p className="text-red-500">Canceled</p>}
           </div>
         </div>
       )}

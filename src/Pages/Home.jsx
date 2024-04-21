@@ -4,67 +4,40 @@ import HeroSection from "../Components/HeroSection/HeroSection";
 import SectionPreview from "../Components/Sections/Sections";
 import Products from "../Components/Product/Products";
 import Footer from "../Components/Layout/Footer/Footer";
-
-const productsData = [
-  {
-    image: "/gym_tee1_hover.jpg",
-    hoverImage: "/gym_tee1.jpg",
-    name: "Gym Tee 1",
-    sizes: ["S", "M", "L", "XL"],
-    price: "24.99",
-    discount: 10,
-  },
-  {
-    hoverImage: "/gym_tee2.jpg",
-    image: "/gym_tee2_hover.jpg",
-    name: "Gym Tee 2",
-    sizes: ["S", "M", "L", "XL"],
-    price: "29.99",
-    discount: 15,
-  },
-  {
-    image: "/product2_hover.jpg",
-    hoverImage: "/product2.jpg",
-    name: "Gym Shorts 1",
-    sizes: ["S", "M", "L", "XL"],
-    price: "34.99",
-    discount: 5,
-  },
-  {
-    image: "/product1_hover.jpg",
-    hoverImage: "/product1.jpg",
-    name: "Gym Shorts 2",
-    sizes: ["S", "M", "L", "XL"],
-    price: "39.99",
-    discount: 0,
-  },
-  {
-    image: "/bag_hover.webp",
-    hoverImage: "/bag.webp",
-    name: "Gym Accessory",
-    sizes: ["One Size"],
-    price: "14.99",
-    discount: 0,
-  },
-  {
-    image: "/protienpowder.jpg",
-    hoverImage: "/protienpowder_hover.jpg",
-    name: "Protein Powder",
-    sizes: ["1kg"],
-    price: "49.99",
-    discount: 20,
-  },
-  {
-    image: "/tanktop1_hover.jpg",
-    hoverImage: "/tanktop1.jpg",
-    name: "Gym Tanktop",
-    sizes: ["S", "M", "L", "XL"],
-    price: "27.99",
-    discount: 0,
-  },
-];
-
+import { showFailureToast, showSuccessToast } from "../App";
+import { fetchProducts } from "../firebase";
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const productsData = await fetchProducts();
+        if (Array.isArray(productsData)) {
+          const formattedProducts = productsData.map((product) => ({
+            ...product,
+            sizes: product.sizes.split(",").map((size) => size.trim()),
+          }));
+          setProducts(formattedProducts);
+        } else {
+          console.error("Invalid products data:", productsData);
+          setError("Invalid products data. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setError("Failed to fetch products. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -74,7 +47,14 @@ const Home = () => {
         <h2 className="text-3xl font-bold mb-4 text-center">
           Featured Products
         </h2>
-        <Products products={productsData} />
+        {error && <div className="text-red-500 text-center">{error}</div>}
+        {!isLoading ? (
+          <Products products={products} />
+        ) : (
+          <div className="flex justify-center">
+            <ClipLoader color={"#000"} loading={true} size={50} />
+          </div>
+        )}
       </div>
       <Footer />
     </>

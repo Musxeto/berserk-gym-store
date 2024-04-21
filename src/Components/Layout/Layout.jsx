@@ -34,7 +34,15 @@ const Layout = ({ pageTitle, pageDescription, products, loading }) => {
             </div>
           ) : products.length === 0 ? (
             <div className="flex items-center justify-center h-screen">
-              <p className="text-gray-600 text-4xl">No products found.</p>
+              <p className="text-gray-600 text-4xl">
+                {" "}
+                <ClipLoader
+                  color={"#000"}
+                  loading={true}
+                  css={override}
+                  size={50}
+                />
+              </p>
             </div>
           ) : (
             <Products products={products} />

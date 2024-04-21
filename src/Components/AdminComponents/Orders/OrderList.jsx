@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OrderItem from "./OrderItem";
 import { FaSearch, FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
 
-const OrderList = () => {
-  const [orders, setOrders] = useState([
-    { id: 1, customer: "John Doe", total: 100, status: "Pending" },
-    { id: 2, customer: "Jane Doe", total: 150, status: "Delivered" },
-    { id: 3, customer: "Alice Smith", total: 200, status: "Canceled" },
-  ]);
-
-  const [searchTerm, setSearchTerm] = useState("");
+const OrderList = ({ orders }) => {
   const [filteredOrders, setFilteredOrders] = useState(orders);
+  const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState("customer");
   const [sortOrder, setSortOrder] = useState("asc");
+
+  useEffect(() => {
+    setFilteredOrders(orders);
+  }, [orders]);
 
   const handleSearch = (event) => {
     const term = event.target.value;
@@ -34,13 +32,16 @@ const OrderList = () => {
     }
   };
 
-  const sortedOrders = [...filteredOrders].sort((a, b) => {
-    const aValue = a[sortField].toLowerCase();
-    const bValue = b[sortField].toLowerCase();
-    if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
-    if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
-    return 0;
-  });
+  const sortedOrders =
+    orders.length > 0
+      ? [...filteredOrders].sort((a, b) => {
+          const aValue = a[sortField]?.toLowerCase();
+          const bValue = b[sortField]?.toLowerCase();
+          if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
+          if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
+          return 0;
+        })
+      : [];
 
   return (
     <div className="container mx-auto p-4">

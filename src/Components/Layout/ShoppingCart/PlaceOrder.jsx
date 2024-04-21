@@ -29,7 +29,11 @@ const PlaceOrder = ({ setCheckoutMode }) => {
     setCheckoutMode(false);
   };
 
-  const orderDetails = cart.map((item) => ({
+  const orderDetails = {
+    products: null,
+  };
+
+  orderDetails.products = cart.map((item) => ({
     ...item,
   }));
 

@@ -7,32 +7,35 @@ import { showFailureToast, showSuccessToast } from "../../../App";
 
 const FinalModal = ({ orderDetails, userData, closeModal }) => {
   const [confirmationMessage, setConfirmationMessage] = useState("");
-  const [loading, setLoading] = useState(false); // State to track loading
-  const { clearCart, total } = useCart(); // Accessing clearCart function from the cart context
+  const [loading, setLoading] = useState(false);
+  const { clearCart, total } = useCart();
 
   const confirmOrder = async () => {
-    setLoading(true); // Set loading to true when confirming order
+    setLoading(true);
 
     const orderDetailsWithTimestamp = {
       ...orderDetails,
       userData,
       total,
-      timestamp: new Date(), // Add a timestamp to the order details
-      deliveryStatus: "pending", // Add delivery status field
+      timestamp: new Date(),
+      deliveryStatus: "pending",
     };
 
     try {
       const orderId = await storeOrder(orderDetailsWithTimestamp);
-      console.log("Order placed successfully with ID:", orderId);
+      console.log(
+        "Order placed successfully with ID:",
+        orderId,
+        orderDetailsWithTimestamp
+      );
       showSuccessToast("Your order has been confirmed!");
-      // Reset states and clear the shopping cart
       closeModal();
       clearCart();
     } catch (error) {
       console.error("Error placing order:", error);
       showFailureToast("Failed to place order. Please try again later.");
     } finally {
-      setLoading(false); // Reset loading state regardless of success or failure
+      setLoading(false);
     }
   };
 
@@ -43,11 +46,13 @@ const FinalModal = ({ orderDetails, userData, closeModal }) => {
           <div>
             <h2 className="text-lg font-semibold mb-4">Order Details</h2>
             <ul>
-              {orderDetails.map((item, index) => (
-                <li key={index}>
-                  {item.name} - ${item.productTotal.toFixed(2)}
-                </li>
-              ))}
+              {/* Check if orderDetails.products is an array before mapping */}
+              {Array.isArray(orderDetails.products) &&
+                orderDetails.products.map((item, index) => (
+                  <li key={index}>
+                    {item.name} - ${item.productTotal.toFixed(2)}
+                  </li>
+                ))}
             </ul>
             <p className="mt-4">Total: ${total}</p>
           </div>
@@ -77,12 +82,11 @@ const FinalModal = ({ orderDetails, userData, closeModal }) => {
             <button
               className={`bg-green-600 text-white py-2 px-4 rounded-lg mr-4 ${
                 loading && "opacity-50 cursor-not-allowed"
-              }`} // Disable button and change cursor when loading
+              }`}
               onClick={confirmOrder}
-              disabled={loading} // Disable button when loading
+              disabled={loading}
             >
-              {loading ? "Loading..." : "Done"}{" "}
-              {/* Change button text when loading */}
+              {loading ? "Loading..." : "Done"}
             </button>
           )}
         </div>
