@@ -1,4 +1,3 @@
-// Product.jsx
 import React, { useState } from "react";
 import ModalBtn from "./ModalBtn.jsx";
 import ProductModal from "./ProductModal.jsx";
@@ -24,11 +23,16 @@ const Product = ({ product }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg p-4">
       <div className="relative w-full h-0" style={{ paddingBottom: "100%" }}>
+        {/* Loading placeholder */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse rounded-lg"></div>
+        {/* Actual image */}
         <img
           src={product.image}
           alt={product.name}
           className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
+          onLoad={() => console.log("Image loaded")} // Log when image is loaded
         />
+        {/* Hover image */}
         <img
           src={product.hoverImage}
           alt={product.name}

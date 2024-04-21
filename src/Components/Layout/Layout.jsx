@@ -4,6 +4,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Products from "../Product/Products";
 import Footer from "./Footer/Footer";
 import Navbar from "./Navbar/Navbar";
+import { fetchProducts } from "../../firebase";
 
 const override = css`
   display: block;
@@ -11,22 +12,37 @@ const override = css`
   border-color: red;
 `;
 
-const Layout = ({ pageTitle, pageDescription, products, Loading }) => {
+const Layout = ({ pageTitle, pageDescription }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(null);
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
-  const [isLoading, setIsLoading] = useState(Loading);
+  const [isLoading, setIsLoading] = useState(true); // Initially set to true
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productsData = await fetchProducts();
+        setProducts(productsData);
+        setIsLoading(false); // Set loading to false once products are fetched
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setIsLoading(false); // Handle errors by setting loading to false
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setFilteredProducts(products);
   }, [products]);
 
   useEffect(() => {
-    if (!isLoading) {
+    if (products.length > 0) {
       filterProducts();
     }
-  }, [searchQuery, sortBy, sortOrder]);
+  }, [searchQuery, sortBy, sortOrder, products]);
 
   const filterProducts = () => {
     let tempProducts = [...products];
@@ -95,7 +111,7 @@ const Layout = ({ pageTitle, pageDescription, products, Loading }) => {
             </div>
           </div>
 
-          {isLoading ? (
+          {isLoading ? ( // Display spinner while loading
             <div className="flex items-center justify-center h-screen">
               <ClipLoader
                 color={"#000"}
