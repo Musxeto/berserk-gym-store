@@ -7,10 +7,9 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
-  const [deliveryCharges, setDeliveryCharges] = useState(0); // State to store delivery charges
+  const [deliveryCharges, setDeliveryCharges] = useState(0);
 
   useEffect(() => {
-    // Fetch delivery charges from settings when component mounts
     const fetchDeliveryCharges = async () => {
       try {
         const settings = await fetchSettings("allSettings");
@@ -19,15 +18,14 @@ export const CartProvider = ({ children }) => {
         }
       } catch (error) {
         console.error("Error fetching delivery charges:", error);
-        // Handle error
       }
     };
 
-    fetchDeliveryCharges(); // Call the function to fetch delivery charges
+    fetchDeliveryCharges();
   }, []);
 
   useEffect(() => {
-    calculateTotal(); // Recalculate total whenever cart or delivery charges change
+    calculateTotal();
   }, [cart, deliveryCharges]);
 
   const calculateTotal = () => {
