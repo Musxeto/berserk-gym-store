@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { updateOrderStatus, updateAnalytics } from "../../../firebase";
-
 import { ClipLoader } from "react-spinners";
 
 const OrderItem = ({ order }) => {
@@ -78,18 +77,23 @@ const OrderItem = ({ order }) => {
           </div>
           <div className="text-gray-600 mb-2">
             <h4>Products:</h4>
-            {order.products && order.products.length > 0 ? (
-              order.products.map((product) => (
-                <div key={product.id}>
-                  <p>Name: {product.name}</p>
-                  <p>Category: {product.category}</p>
-                  <p>Price: ${product.price}</p>
-                  <p>Quantity: {product.quantity}</p>
-                </div>
-              ))
-            ) : (
-              <p>No products found.</p>
-            )}
+            <div className="grid grid-cols-3 mx-10  gap-4 ">
+              {order.products && order.products.length > 0 ? (
+                order.products.map((product) => (
+                  <div
+                    className="bg-gray-50 p-4 rounded-lg border border-black"
+                    key={product.id}
+                  >
+                    <p>Name: {product.name}</p>
+                    <p>Category: {product.category}</p>
+                    <p>Price: ${product.price}</p>
+                    <p>Quantity: {product.quantity}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No products found.</p>
+              )}
+            </div>
           </div>
 
           <p className="text-gray-600 mb-2">Total: ${order.total}</p>

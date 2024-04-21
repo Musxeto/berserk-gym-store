@@ -7,6 +7,7 @@ const OrderList = ({ orders }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortField, setSortField] = useState("customer");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [expandedOrderId, setExpandedOrderId] = useState(null); // Track the expanded order ID
 
   useEffect(() => {
     setFilteredOrders(orders);
@@ -43,9 +44,15 @@ const OrderList = ({ orders }) => {
         })
       : [];
 
+  // Function to toggle the expanded state of an order
+  const toggleExpanded = (orderId) => {
+    setExpandedOrderId(expandedOrderId === orderId ? null : orderId);
+  };
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col md:flex-row items-center justify-between mb-4  ">
+        {/* Search input */}
         <div className="flex items-center mb-4 md:mb-0 flex-grow">
           <FaSearch className="mr-2" />
           <input
@@ -56,6 +63,7 @@ const OrderList = ({ orders }) => {
             className="flex-grow border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+        {/* Sort and order select */}
         <div className="flex items-center">
           <div className="mr-4">
             <select
@@ -84,9 +92,15 @@ const OrderList = ({ orders }) => {
       </div>
       <hr />
       <br />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
+      {/* Order items */}
+      <div className="grid grid-cols-1  gap-4 bg-gray-50 p-4 rounded-lg border border-gray-100">
         {sortedOrders.map((order) => (
-          <OrderItem key={order.id} order={order} />
+          <OrderItem
+            key={order.id}
+            order={order}
+            expanded={expandedOrderId === order.id} // Pass the expanded state to each OrderItem
+            toggleExpanded={toggleExpanded} // Pass the toggle function to each OrderItem
+          />
         ))}
       </div>
     </div>
