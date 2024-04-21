@@ -6,7 +6,12 @@ import ProductModal from "../../Components/AdminComponents/Product/ProductModal"
 import Header from "../../Components/AdminComponents/Layout/Header/Header";
 import ConfirmationModal from "../../Components/AdminComponents/Product/ConfirmationModal";
 import { showFailureToast, showSuccessToast } from "../../App";
-import { fetchProducts, updateProduct, deleteProduct } from "../../firebase";
+import {
+  fetchProducts,
+  updateProduct,
+  deleteProduct,
+  updateAnalytics,
+} from "../../firebase";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -23,6 +28,7 @@ const Products = () => {
         const productsData = await fetchProducts();
         setProducts(productsData);
         setIsLoading(false);
+        updateAnalytics(products);
       } catch (error) {
         console.error("Error fetching products:", error);
         setIsLoading(false);

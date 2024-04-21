@@ -134,3 +134,78 @@ export {
   fetchOrders,
   updateOrderStatus,
 };
+
+const updateAnalytics = async (order) => {
+  try {
+    const totalMoneyMade = await calculateTotalMoneyMade();
+    const totalOrders = await fetchTotalOrders();
+    const totalProducts = await fetchTotalProducts();
+
+    await updateAnalyticsData(totalMoneyMade, totalOrders, totalProducts);
+  } catch (error) {
+    console.error("Error updating analytics:", error);
+    throw new Error("Failed to update analytics");
+  }
+};
+
+const calculateTotalMoneyMade = async () => {
+  try {
+    const ordersSnapshot = await getDocs(collection(db, "orders"));
+    let totalMoney = 0;
+    ordersSnapshot.forEach((doc) => {
+      const orderData = doc.data();
+      if (orderData.deliveryStatus === "Delivered") {
+        totalMoney += orderData.total;
+      }
+    });
+    return totalMoney;
+  } catch (error) {
+    console.error("Error calculating total money made:", error);
+    throw new Error("Failed to calculate total money made");
+  }
+};
+
+const fetchTotalOrders = async () => {
+  try {
+    const ordersSnapshot = await getDocs(collection(db, "orders"));
+    return ordersSnapshot.size;
+  } catch (error) {
+    console.error("Error fetching total orders:", error);
+    throw error;
+  }
+};
+
+const fetchTotalProducts = async () => {
+  try {
+    const productsSnapshot = await getDocs(collection(db, "products"));
+    return productsSnapshot.size;
+  } catch (error) {
+    console.error("Error fetching total products:", error);
+    throw error;
+  }
+};
+
+const updateAnalyticsData = async (
+  totalMoneyMade,
+  totalOrders,
+  totalProducts
+) => {
+  try {
+    const analyticsRef = doc(db, "analytics", "summary");
+    await setDoc(analyticsRef, {
+      totalMoneyMade,
+      totalOrders,
+      totalProducts,
+    });
+  } catch (error) {
+    console.error("Error updating analytics data:", error);
+    throw new Error("Failed to update analytics data");
+  }
+};
+
+export {
+  updateAnalytics,
+  fetchTotalOrders,
+  fetchTotalProducts,
+  calculateTotalMoneyMade,
+};

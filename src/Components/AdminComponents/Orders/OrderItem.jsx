@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { updateOrderStatus } from "../../../firebase";
-import { css } from "@emotion/react";
+import { updateOrderStatus, updateAnalytics } from "../../../firebase";
+
 import { ClipLoader } from "react-spinners";
 
 const OrderItem = ({ order }) => {
@@ -17,7 +17,7 @@ const OrderItem = ({ order }) => {
       setLoading(true);
       await updateOrderStatus(order.id, "Delivered");
       setStatus("Delivered");
-      await updateAnalytics(order);
+      await updateAnalytics(order); // Update analytics after delivering order
     } catch (error) {
       console.error("Error delivering order:", error);
     } finally {
