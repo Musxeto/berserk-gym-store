@@ -14,7 +14,12 @@ const Creatine = () => {
         const creatineProducts = productsData.filter(
           (product) => product.category === "creatine"
         );
-        setProducts(creatineProducts);
+        const formattedProducts = creatineProducts.map((product) => ({
+          ...product,
+          sizes: product.sizes.split(",").map((size) => size.trim()), // Trim to remove whitespace
+        }));
+        setProducts(formattedProducts);
+
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);

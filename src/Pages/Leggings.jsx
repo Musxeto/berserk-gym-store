@@ -14,7 +14,11 @@ const Leggings = () => {
         const leggingsProducts = productsData.filter(
           (product) => product.category === "leggings"
         );
-        setProducts(leggingsProducts);
+        const formattedProducts = leggingsProducts.map((product) => ({
+          ...product,
+          sizes: product.sizes.split(",").map((size) => size.trim()), // Trim to remove whitespace
+        }));
+        setProducts(formattedProducts);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);

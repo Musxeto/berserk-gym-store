@@ -14,7 +14,11 @@ const WristWraps = () => {
         const wrapsProducts = productsData.filter(
           (product) => product.category === "wraps"
         );
-        setProducts(wrapsProducts);
+        const formattedProducts = wrapsProducts.map((product) => ({
+          ...product,
+          sizes: product.sizes.split(",").map((size) => size.trim()), // Trim to remove whitespace
+        }));
+        setProducts(formattedProducts);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);

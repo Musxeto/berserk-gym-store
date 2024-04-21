@@ -14,7 +14,11 @@ const LiftingBelts = () => {
         const beltsProducts = productsData.filter(
           (product) => product.category === "belts"
         );
-        setProducts(beltsProducts);
+        const formattedProducts = beltsProducts.map((product) => ({
+          ...product,
+          sizes: product.sizes.split(",").map((size) => size.trim()), // Trim to remove whitespace
+        }));
+        setProducts(formattedProducts);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);

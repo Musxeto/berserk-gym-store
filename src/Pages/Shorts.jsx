@@ -14,7 +14,11 @@ const Shorts = () => {
         const shortsProducts = productsData.filter(
           (product) => product.category === "shorts"
         );
-        setProducts(shortsProducts);
+        const formattedProducts = shortsProducts.map((product) => ({
+          ...product,
+          sizes: product.sizes.split(",").map((size) => size.trim()), // Trim to remove whitespace
+        }));
+        setProducts(formattedProducts);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);

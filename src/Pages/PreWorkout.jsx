@@ -14,7 +14,11 @@ const PreWorkout = () => {
         const preWorkoutProducts = productsData.filter(
           (product) => product.category === "preworkout"
         );
-        setProducts(preWorkoutProducts);
+        const formattedProducts = preWorkoutProducts.map((product) => ({
+          ...product,
+          sizes: product.sizes.split(",").map((size) => size.trim()), // Trim to remove whitespace
+        }));
+        setProducts(formattedProducts);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);

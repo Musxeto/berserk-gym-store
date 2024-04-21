@@ -14,7 +14,11 @@ const ProteinPowder = () => {
         const proteinPowderProducts = productsData.filter(
           (product) => product.category === "proteinpowder"
         );
-        setProducts(proteinPowderProducts);
+        const formattedProducts = proteinPowderProducts.map((product) => ({
+          ...product,
+          sizes: product.sizes.split(",").map((size) => size.trim()), // Trim to remove whitespace
+        }));
+        setProducts(formattedProducts);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
