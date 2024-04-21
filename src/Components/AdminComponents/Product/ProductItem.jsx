@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ProductItem = ({ product, onUpdate, onDelete }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <div className="flex items-center border-b py-4">
       <div className="flex-shrink-0 mr-4">
+        {!imageLoaded && (
+          <div className="w-24 h-24 bg-gray-200 rounded-lg"></div>
+        )}
         <img
           src={product.image}
           alt={product.name}
-          className="w-24 h-24 object-cover rounded-lg"
+          className={`w-24 h-24 object-cover rounded-lg ${
+            !imageLoaded ? "hidden" : ""
+          }`}
+          onLoad={handleImageLoad}
         />
       </div>
       <div className="flex-1">

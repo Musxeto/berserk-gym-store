@@ -1,4 +1,3 @@
-// ProductModal.jsx
 import React, { useState, useEffect } from "react";
 import { updateProduct, addProduct } from "../../../firebase";
 import { storage } from "../../../firebase";
@@ -16,8 +15,8 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [hoverImagePreview, setHoverImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [imageLoading, setImageLoading] = useState(false); // New state for image loading
-  const [hoverImageLoading, setHoverImageLoading] = useState(false); // New state for hover image loading
+  const [imageLoading, setImageLoading] = useState(false);
+  const [hoverImageLoading, setHoverImageLoading] = useState(false);
 
   useEffect(() => {
     if (product) {
@@ -92,11 +91,11 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
-    setImageLoading(true); // Set image loading state to true when image is being changed
+    setImageLoading(true);
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
-      setImageLoading(false); // Set image loading state to false when image is loaded
+      setImageLoading(false);
     };
     reader.readAsDataURL(file);
   };
@@ -104,11 +103,11 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const handleHoverImageChange = (e) => {
     const file = e.target.files[0];
     setHoverImageFile(file);
-    setHoverImageLoading(true); // Set hover image loading state to true when hover image is being changed
+    setHoverImageLoading(true);
     const reader = new FileReader();
     reader.onloadend = () => {
       setHoverImagePreview(reader.result);
-      setHoverImageLoading(false); // Set hover image loading state to false when hover image is loaded
+      setHoverImageLoading(false);
     };
     reader.readAsDataURL(file);
   };
@@ -231,9 +230,10 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
                 onChange={handleImageChange}
               />
             </div>
+            {/* Image preview with loading placeholder */}
             {imagePreview && (
               <div className="mt-2">
-                {imageLoading ? ( // Show loading spinner while image is loading
+                {imageLoading ? (
                   <ClipLoader color={"#000"} loading={imageLoading} size={35} />
                 ) : (
                   <img
@@ -242,6 +242,12 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
                     className="w-40"
                   />
                 )}
+              </div>
+            )}
+            {/* Loading placeholder when image is not yet loaded */}
+            {!imagePreview && imageLoading && (
+              <div className="mt-2">
+                <div className="w-40 h-40 bg-gray-200 animate-pulse"></div>
               </div>
             )}
           </div>
@@ -254,9 +260,10 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
                 onChange={handleHoverImageChange}
               />
             </div>
+            {/* Hover image preview with loading placeholder */}
             {hoverImagePreview && (
               <div className="mt-2">
-                {hoverImageLoading ? ( // Show loading spinner while hover image is loading
+                {hoverImageLoading ? (
                   <ClipLoader
                     color={"#000"}
                     loading={hoverImageLoading}
@@ -271,7 +278,15 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
                 )}
               </div>
             )}
+            {/* Loading placeholder when hover image is not yet loaded */}
+            {!hoverImagePreview && hoverImageLoading && (
+              <div className="mt-2">
+                <div className="w-40 h-40 bg-gray-200 animate-pulse"></div>
+              </div>
+            )}
           </div>
+          {/* Other form fields... */}
+          {/* Submit button with loading spinner */}
           <div className="flex justify-center mt-4">
             <button
               type="submit"
