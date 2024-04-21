@@ -1,10 +1,11 @@
+// ProductModal.jsx
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useCart } from "../../Contexts/CartContext";
 
-const ProductModal = ({ isOpen, closeModal, product }) => {
+const ProductModal = ({ isOpen, closeModal, openModal, product }) => {
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -145,19 +146,19 @@ const ProductModal = ({ isOpen, closeModal, product }) => {
           <div className="mt-4">
             <label className="text-gray-700">Select Size:</label>
             <div className="flex mt-2">
-              {product.sizes.map((size) => (
-                <button
-                  key={size}
-                  className={`px-3 py-1 rounded-full mr-2 ${
-                    selectedSize === size
-                      ? "bg-gray-900 text-white"
-                      : "bg-gray-200 text-gray-700"
-                  }`}
-                  onClick={() => handleSizeSelect(size)}
-                >
-                  {size}
-                </button>
-              ))}
+              {Array.isArray(product.sizes) ? (
+                product.sizes.map((size) => (
+                  <button
+                    key={size}
+                    className="bg-white hover:bg-black transition-opacity hover:text-white rounded-full px-2 py-1 mr-1 mb-1 text-xs"
+                    onClick={() => handleSizeSelect(size)}
+                  >
+                    {size}
+                  </button>
+                ))
+              ) : (
+                <p>Sizes not available</p>
+              )}
             </div>
           </div>
 

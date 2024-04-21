@@ -1,36 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Components/Layout/Layout";
+import { fetchProducts } from "../firebase";
 
 const Creatine = () => {
-  // Sample data for creatine products
-  const creatineProducts = [
-    {
-      id: 1,
-      name: "Creatine Monohydrate Powder",
-      price: 19.99,
-      discount: 10,
-      image: "/creatine.webp",
-      hoverImage: "/creatine.webp",
-      sizes: ["500g"],
-    },
-    {
-      id: 2,
-      name: "Creatine Capsules",
-      price: 10.99,
-      discount: 0, // Set discount to 0 for products with no discount
-      image: "/creatine_caps.webp",
-      hoverImage: "/creatine_caps.webp",
-      sizes: ["90 Capsules"],
-    },
-    // Add more creatine products as needed
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const productsData = await fetchProducts();
+        if (Array.isArray(productsData)) {
+          // Filter products based on category
+          const creatineProducts = productsData.filter(
+            (product) => product.category === "creatine"
+          );
+          // Format sizes for each product in the array
+          const formattedProducts = creatineProducts.map((product) => ({
+            ...product,
+            sizes: product.sizes.split(",").map((size) => size.trim()),
+          }));
+          setProducts(formattedProducts);
+        } else {
+          console.error("Invalid products data:", productsData);
+          // Handle invalid data
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        // Handle error
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
       <Layout
         pageTitle="Creatine Products"
-        pageDescription="Browse our collection of creatine supplements."
-        products={creatineProducts}
+        pageDescription="Browse our collection of creatine products."
+        products={products}
+        loading={isLoading}
       />
     </div>
   );

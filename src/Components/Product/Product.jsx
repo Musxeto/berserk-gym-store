@@ -1,3 +1,4 @@
+// Product.jsx
 import React, { useState } from "react";
 import ModalBtn from "./ModalBtn.jsx";
 import ProductModal from "./ProductModal.jsx";
@@ -53,15 +54,19 @@ const Product = ({ product }) => {
         </div>
         {/* Display sizes */}
         <div className="mt-4 flex flex-wrap">
-          {product.sizes.map((size) => (
-            <button
-              key={size}
-              className="bg-white hover:bg-black transition-opacity hover:text-white rounded-full px-2 py-1 mr-1 mb-1 text-xs"
-              onClick={openModal}
-            >
-              {size}
-            </button>
-          ))}
+          {Array.isArray(product.sizes) ? (
+            product.sizes.map((size) => (
+              <button
+                key={size}
+                className="bg-white hover:bg-black transition-opacity hover:text-white rounded-full px-2 py-1 mr-1 mb-1 text-xs"
+                onClick={openModal}
+              >
+                {size}
+              </button>
+            ))
+          ) : (
+            <p>Sizes not available</p>
+          )}
         </div>
         {/* Add the AddToCartButton component */}
         <div className="mt-4">
@@ -72,6 +77,7 @@ const Product = ({ product }) => {
         <ProductModal
           isOpen={modalOpen}
           closeModal={closeModal}
+          openModal={openModal} // Pass openModal function down
           product={product}
         />
       </div>
