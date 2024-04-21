@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Layout/Navbar/Navbar";
 import HeroSection from "../Components/HeroSection/HeroSection";
 import SectionPreview from "../Components/Sections/Sections";
