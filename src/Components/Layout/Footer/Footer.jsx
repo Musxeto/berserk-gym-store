@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaFacebook,
   FaTwitter,
@@ -7,8 +7,26 @@ import {
   FaGithub,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { fetchSettings } from "../../../firebase";
 
 const Footer = () => {
+  const [socialLinks, setSocialLinks] = useState(null);
+
+  useEffect(() => {
+    const fetchSocialLinks = async () => {
+      try {
+        const settingsData = await fetchSettings("allSettings");
+        if (settingsData && settingsData.socialLinks) {
+          setSocialLinks(settingsData.socialLinks);
+        }
+      } catch (error) {
+        console.error("Error fetching social links:", error);
+      }
+    };
+
+    fetchSocialLinks();
+  }, []);
+
   return (
     <footer className="bg-white text-gray-950 py-8 border-t border-gray-900">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
@@ -22,37 +40,31 @@ const Footer = () => {
             <span className="text-xl font-bold">Berserk Fit</span>
           </Link>
           <div className="flex justify-center lg:justify-start mt-4">
-            <a
-              href="https://www.facebook.com/BerserkFit/"
-              target="_blank"
-              className="mr-4"
-            >
-              <FaFacebook className="w-6 h-6" />
-            </a>
-            <a
-              href="https://twitter.com/itxgm/"
-              target="_blank"
-              className="mr-4"
-            >
-              <FaTwitter className="w-6 h-6" />
-            </a>
-            <a href="#" target="_blank" className="mr-4">
-              <FaInstagram className="w-6 h-6" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/mustafa-gm/"
-              target="_blank"
-              className="mr-4"
-            >
-              <FaLinkedin className="w-6 h-6" />
-            </a>
-            <a
-              href="https://github.com/Musxeto"
-              target="_blank"
-              className="mr-4"
-            >
-              <FaGithub className="w-6 h-6" />
-            </a>
+            {socialLinks && socialLinks.facebook && (
+              <a href={socialLinks.facebook} target="_blank" className="mr-4">
+                <FaFacebook className="w-6 h-6" />
+              </a>
+            )}
+            {socialLinks && socialLinks.twitter && (
+              <a href={socialLinks.twitter} target="_blank" className="mr-4">
+                <FaTwitter className="w-6 h-6" />
+              </a>
+            )}
+            {socialLinks && socialLinks.instagram && (
+              <a href={socialLinks.instagram} target="_blank" className="mr-4">
+                <FaInstagram className="w-6 h-6" />
+              </a>
+            )}
+            {socialLinks && socialLinks.linkedin && (
+              <a href={socialLinks.linkedin} target="_blank" className="mr-4">
+                <FaLinkedin className="w-6 h-6" />
+              </a>
+            )}
+            {socialLinks && socialLinks.github && (
+              <a href={socialLinks.github} target="_blank" className="mr-4">
+                <FaGithub className="w-6 h-6" />
+              </a>
+            )}
           </div>
         </div>
         <div className="text-center lg:text-right">
