@@ -209,3 +209,39 @@ export {
   fetchTotalProducts,
   calculateTotalMoneyMade,
 };
+
+const fetchSettings = async (settingsId) => {
+  try {
+    const settingsDoc = await getDoc(doc(db, "settings", "allSettings"));
+    if (settingsDoc.exists()) {
+      return settingsDoc.data();
+    } else {
+      throw new Error("Settings document does not exist");
+    }
+  } catch (error) {
+    console.error("Error fetching settings:", error);
+    throw new Error("Failed to fetch settings");
+  }
+};
+
+const updateSettings = async (settingsId, updatedSettings) => {
+  try {
+    await updateDoc(doc(db, "settings", settingsId), updatedSettings);
+    showSuccessToast("Settings updated successfully!");
+  } catch (error) {
+    console.error("Error updating settings:", error);
+    throw new Error("Failed to update settings");
+  }
+};
+
+const saveSettings = async (settingsId, settingsData) => {
+  try {
+    await setDoc(doc(db, "settings", settingsId), settingsData);
+    showSuccessToast("Settings saved successfully!");
+  } catch (error) {
+    console.error("Error saving settings:", error);
+    throw new Error("Failed to save settings");
+  }
+};
+
+export { fetchSettings, updateSettings, saveSettings };
