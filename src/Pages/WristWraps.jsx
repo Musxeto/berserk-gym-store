@@ -16,7 +16,7 @@ const WristWraps = () => {
         );
         const formattedProducts = wrapsProducts.map((product) => ({
           ...product,
-          sizes: product.sizes.split(",").map((size) => size.trim()), // Trim to remove whitespace
+          sizes: product.sizes.split(",").map((size) => size.trim()),
         }));
         setProducts(formattedProducts);
         setIsLoading(false);

@@ -2,54 +2,38 @@ import React, { useState } from "react";
 import { useCart } from "../../../Contexts/CartContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { storeOrder } from "../../../firebase";
+import { showFailureToast, showSuccessToast } from "../../../App";
 
-const FinalModal = ({
-  orderDetails,
-  userData,
-  closeModal,
-  onCheckoutModeChange,
-}) => {
+const FinalModal = ({ orderDetails, userData, closeModal }) => {
   const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [loading, setLoading] = useState(false); // State to track loading
   const { clearCart, total } = useCart(); // Accessing clearCart function from the cart context
-  const showSuccessToast = (message) => {
-    toast.success(message, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
 
-  const showFailureToast = (message) => {
-    toast.error(message, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
+  const confirmOrder = async () => {
+    setLoading(true); // Set loading to true when confirming order
 
-  const confirmOrder = () => {
-    orderDetails = { ...orderDetails, userData, total };
+    const orderDetailsWithTimestamp = {
+      ...orderDetails,
+      userData,
+      total,
+      timestamp: new Date(), // Add a timestamp to the order details
+      deliveryStatus: "pending", // Add delivery status field
+    };
 
-    console.log("Complete Order Details:", {
-      orderDetails,
-    });
-
-    showSuccessToast("Your order has been confirmed!");
-    // Reset states and clear the shopping cart
-    closeModal();
-    clearCart();
-
-    // Show toast notification
+    try {
+      const orderId = await storeOrder(orderDetailsWithTimestamp);
+      console.log("Order placed successfully with ID:", orderId);
+      showSuccessToast("Your order has been confirmed!");
+      // Reset states and clear the shopping cart
+      closeModal();
+      clearCart();
+    } catch (error) {
+      console.error("Error placing order:", error);
+      showFailureToast("Failed to place order. Please try again later.");
+    } finally {
+      setLoading(false); // Reset loading state regardless of success or failure
+    }
   };
 
   return (
@@ -91,10 +75,14 @@ const FinalModal = ({
             <p className="text-green-600">{confirmationMessage}</p>
           ) : (
             <button
-              className="bg-green-600 text-white py-2 px-4 rounded-lg mr-4"
+              className={`bg-green-600 text-white py-2 px-4 rounded-lg mr-4 ${
+                loading && "opacity-50 cursor-not-allowed"
+              }`} // Disable button and change cursor when loading
               onClick={confirmOrder}
+              disabled={loading} // Disable button when loading
             >
-              Done
+              {loading ? "Loading..." : "Done"}{" "}
+              {/* Change button text when loading */}
             </button>
           )}
         </div>

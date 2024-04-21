@@ -57,8 +57,6 @@ const fetchProducts = async () => {
   }
 };
 
-export { fetchProducts };
-
 const updateProduct = async (productId, updatedProductData) => {
   try {
     const productRef = doc(db, "products", productId);
@@ -92,4 +90,34 @@ const deleteProduct = async (productId) => {
   }
 };
 
-export { updateProduct, addProduct, deleteProduct };
+const storeOrder = async (orderDetails) => {
+  try {
+    const orderRef = await addDoc(collection(db, "orders"), orderDetails);
+    console.log("Order stored with ID:", orderRef.id);
+    return orderRef.id;
+  } catch (error) {
+    console.error("Error storing order:", error);
+    throw new Error("Failed to store order");
+  }
+};
+const fetchOrders = async () => {
+  try {
+    const ordersSnapshot = await getDocs(collection(db, "orders"));
+    const ordersData = ordersSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return ordersData;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw new Error("Failed to fetch Orders");
+  }
+};
+export {
+  fetchProducts,
+  updateProduct,
+  addProduct,
+  deleteProduct,
+  storeOrder,
+  fetchOrders,
+};

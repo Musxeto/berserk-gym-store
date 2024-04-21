@@ -30,7 +30,6 @@ const Product = ({ product }) => {
           src={product.image}
           alt={product.name}
           className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
-          onLoad={() => console.log("Image loaded")} // Log when image is loaded
         />
         {/* Hover image */}
         <img
