@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../Components/AdminComponents/Layout/Sidebar/Sidebar";
 import OrderList from "../../Components/AdminComponents/Orders/OrderList";
 import Header from "../../Components/AdminComponents/Layout/Header/Header";
-
 import { fetchOrders } from "../../firebase";
+import { ClipLoader } from "react-spinners";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading status
 
   useEffect(() => {
     const fetchOrdersData = async () => {
@@ -16,6 +17,8 @@ const Orders = () => {
       } catch (error) {
         console.error("Error fetching orders:", error);
         // Handle error
+      } finally {
+        setLoading(false); // Set loading to false when data fetching is completed
       }
     };
 
@@ -34,7 +37,14 @@ const Orders = () => {
             />
             <hr className="my-4" />
             <div className="bg-white  p-1 md:p-1">
-              <OrderList orders={orders} />
+              {/* Render the ClipLoader if loading is true */}
+              {loading ? (
+                <div className="flex justify-center my-8">
+                  <ClipLoader color={"#000"} loading={loading} size={35} />
+                </div>
+              ) : (
+                <OrderList orders={orders} />
+              )}
             </div>
           </div>
         </div>
