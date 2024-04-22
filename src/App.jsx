@@ -25,6 +25,7 @@ import Orders from "./Pages/Admin/Orders";
 import Products from "./Pages/Admin/Products";
 import Settings from "./Pages/Admin/Settings";
 import Account from "./Pages/Admin/Account";
+import AdminForgotPassword from "./Pages/Admin/AdminForgotPassword";
 function App() {
   return (
     <CartProvider>
@@ -44,6 +45,7 @@ function App() {
           <Route path="/accessories/wrist-wraps" element={<WristWraps />} />
           {/*--------------------------------------------------------------- */}
           <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/forgot-password" element={<AdminForgotPassword />} />
           <Route path="/admin/dashboard" element={<AdminDashBoard />} />
           <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/products" element={<Products />} />

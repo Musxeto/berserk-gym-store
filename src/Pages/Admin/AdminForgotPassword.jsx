@@ -7,28 +7,29 @@ import { RingLoader } from "react-spinners";
 import "react-toastify/dist/ReactToastify.css";
 import { showSuccessToast, showFailureToast } from "../../App";
 
-const AdminLogin = () => {
+const AdminForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sent, setSent] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await login(email, password);
+      // Add your forgot password logic here
+      await forgotPassword(email);
       setLoading(false);
       setEmail("");
-      setPassword("");
-      showSuccessToast("Signed in successfully!");
+      setSent(true);
+      showSuccessToast("Password reset email sent successfully!");
     } catch (error) {
       setLoading(false);
-      showFailureToast("Failed to sign in. Please try again.");
+      showFailureToast("Failed to send reset email. Please try again.");
     }
   };
 
-  const login = (email, password) => {
+  const forgotPassword = (email) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (Math.random() < 0.8) {
@@ -79,38 +80,22 @@ const AdminLogin = () => {
                 required
               />
             </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <Link
-              to="/forgot-password"
-              className="text-gray-700 no-underline hover:no-underline hover:text-gray-600"
-            >
-              Forgot Password?
-            </Link>
-
-            <div className="flex items-center justify-between ">
-              <button
-                className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Sign In
-              </button>
-            </div>
+            {!sent && (
+              <div className="flex items-center justify-between ">
+                <button
+                  className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Reset Password
+                </button>
+              </div>
+            )}
+            {sent && (
+              <p className="text-gray-700 text-sm mt-4">
+                Password reset email has been sent to {email}. Please check your
+                email inbox.
+              </p>
+            )}
           </form>
         )}
       </div>
@@ -119,4 +104,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default AdminForgotPassword;

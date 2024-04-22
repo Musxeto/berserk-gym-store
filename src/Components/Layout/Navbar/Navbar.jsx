@@ -159,7 +159,7 @@ const Navbar = () => {
             </span>
           </Link>
           <Link
-            to="/admin/dashboard"
+            to="/admin"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
             <span
@@ -169,11 +169,10 @@ const Navbar = () => {
               Admin
             </span>
           </Link>
-          {/* Add more navigation links as necessary */}
         </div>
 
         <div className="hidden md:flex items-center space-x-3">
-          {/* Shopping cart icon */}
+          {/* Shopping cart */}
           <FaShoppingCart
             className="w-6 h-6 text-gray-600 relative"
             onClick={() => setShowCart(!showCart)}
