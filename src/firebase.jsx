@@ -1,10 +1,4 @@
 import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   Firestore,
@@ -18,6 +12,12 @@ import {
   collection,
   getDocs,
 } from "firebase/firestore";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 import { showFailureToast, showSuccessToast } from "./App";
 
 const firebaseConfig = {
@@ -245,3 +245,43 @@ const saveSettings = async (settingsId, settingsData) => {
 };
 
 export { fetchSettings, updateSettings, saveSettings };
+
+// Function to sign in an existing user with email and password
+const signIn = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    return user;
+  } catch (error) {
+    console.error("Error signing in:", error);
+    throw new Error("Failed to sign in");
+  }
+};
+
+// Function to sign out the current user
+const logout = async () => {
+  try {
+    await signOut(auth);
+    showSuccessToast("Logged out successfully!");
+  } catch (error) {
+    console.error("Error logging out:", error);
+    throw new Error("Failed to log out");
+  }
+};
+
+// Function to update the user's profile (e.g., display name)
+const updateProfileInfo = async (displayName) => {
+  try {
+    await updateProfile(auth.currentUser, { displayName });
+    showSuccessToast("Profile updated successfully!");
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw new Error("Failed to update profile");
+  }
+};
+
+export { signIn, logout, updateProfileInfo };

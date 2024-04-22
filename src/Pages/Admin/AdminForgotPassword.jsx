@@ -88,13 +88,13 @@ const AdminForgotPassword = () => {
                 >
                   Reset Password
                 </button>
+                <Link
+                  to="/admin"
+                  className="text-gray-700 no-underline hover:no-underline hover:text-gray-600"
+                >
+                  Forgot Password?
+                </Link>
               </div>
-            )}
-            {sent && (
-              <p className="text-gray-700 text-sm mt-4">
-                Password reset email has been sent to {email}. Please check your
-                email inbox.
-              </p>
             )}
           </form>
         )}
