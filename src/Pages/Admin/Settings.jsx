@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../Components/AdminComponents/Layout/Sidebar/Sidebar";
 import Header from "../../Components/AdminComponents/Layout/Header/Header";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClipLoader } from "react-spinners";
 import { fetchSettings, updateSettings, saveSettings } from "../../firebase";

@@ -45,12 +45,14 @@ const AdminForgotPassword = () => {
       <Navbar />
       <div className="flex p-5 justify-center items-center min-h-screen bg-gray-200">
         {loading ? (
-          <RingLoader
-            color={"#000"}
-            loading={loading}
-            css={override}
-            size={150}
-          />
+          <div className="flex p-5 justify-center items-center min-h-screen bg-gray-200">
+            <RingLoader
+              color={"#000"}
+              loading={loading}
+              css={override}
+              size={150}
+            />
+          </div>
         ) : (
           <form
             onSubmit={handleSubmit}
