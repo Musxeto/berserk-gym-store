@@ -17,6 +17,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  updateEmail,
+  updatePassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { showFailureToast, showSuccessToast } from "./App";
 
@@ -273,15 +276,38 @@ const logout = async () => {
   }
 };
 
-// Function to update the user's profile (e.g., display name)
-const updateProfileInfo = async (displayName) => {
+// Function to update user profile information
+const updateUserProfile = async (email, password) => {
   try {
-    await updateProfile(auth.currentUser, { displayName });
-    showSuccessToast("Profile updated successfully!");
+    // Get the current user
+    const user = auth.currentUser;
+
+    // Update the user's email if provided
+    if (email) {
+      await updateEmail(user, email);
+    }
+
+    // Update the user's password if provided
+    if (password) {
+      await updatePassword(user, password);
+    }
+
+    // Show success message or handle appropriately
+    console.log("Profile updated successfully!");
   } catch (error) {
     console.error("Error updating profile:", error);
     throw new Error("Failed to update profile");
   }
 };
 
-export { signIn, logout, updateProfileInfo };
+const sendPassResetEmail = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showSuccessToast("Password reset email sent successfully!");
+  } catch (error) {
+    console.error("Error sending password reset email:", error);
+    throw new Error("Failed to send password reset email");
+  }
+};
+
+export { signIn, logout, updateUserProfile, sendPassResetEmail };

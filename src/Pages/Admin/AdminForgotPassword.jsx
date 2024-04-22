@@ -4,7 +4,7 @@ import Footer from "../../Components/Layout/Footer/Footer";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import { RingLoader } from "react-spinners";
-import "react-toastify/dist/ReactToastify.css";
+import { sendPassResetEmail } from "../../firebase";
 import { showSuccessToast, showFailureToast } from "../../App";
 
 const AdminForgotPassword = () => {
@@ -17,8 +17,8 @@ const AdminForgotPassword = () => {
     setLoading(true);
 
     try {
-      // Add your forgot password logic here
-      await forgotPassword(email);
+      // Call resetPassword function to send password reset email
+      await resetPassword(email);
       setLoading(false);
       setEmail("");
       setSent(true);
@@ -29,16 +29,9 @@ const AdminForgotPassword = () => {
     }
   };
 
-  const forgotPassword = (email) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() < 0.8) {
-          resolve();
-        } else {
-          reject();
-        }
-      }, 2000);
-    });
+  const resetPassword = (email) => {
+    // Call Firebase's sendPassResetEmail function
+    return sendPassResetEmail(email);
   };
 
   const override = css`

@@ -4,7 +4,7 @@ import Footer from "../../Components/Layout/Footer/Footer";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import { RingLoader } from "react-spinners";
-import "react-toastify/dist/ReactToastify.css";
+import { signIn } from "../../firebase.jsx";
 import { showSuccessToast, showFailureToast } from "../../App";
 
 const AdminLogin = () => {
@@ -17,27 +17,16 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      await login(email, password);
+      // Call the signIn function with email and password
+      await signIn(email, password);
       setLoading(false);
       setEmail("");
       setPassword("");
       showSuccessToast("Signed in successfully!");
     } catch (error) {
       setLoading(false);
-      showFailureToast("Failed to sign in. Please try again.");
+      showFailureToast(`Failed to sign in: ${error.message}`);
     }
-  };
-
-  const login = (email, password) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() < 0.8) {
-          resolve();
-        } else {
-          reject();
-        }
-      }, 2000);
-    });
   };
 
   const override = css`

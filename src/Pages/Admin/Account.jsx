@@ -3,20 +3,23 @@ import Sidebar from "../../Components/AdminComponents/Layout/Sidebar/Sidebar";
 import Header from "../../Components/AdminComponents/Layout/Header/Header";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { auth, updateUserProfile, sendPassResetEmail } from "../../firebase";
+import { showFailureToast } from "../../App";
 
 const Account = () => {
-  // State for managing form inputs and validation
   const [formData, setFormData] = useState({
     newEmail: "",
     newPassword: "",
     confirmPassword: "",
   });
+
   const [errors, setErrors] = useState({
     emailError: "",
     passwordError: "",
   });
 
-  // Handler for form input changes
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -25,53 +28,61 @@ const Account = () => {
     }));
   };
 
-  // Handler for form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validation
+    let newErrors = {};
     if (!validateEmail(formData.newEmail)) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        emailError: "Enter a valid email",
-      }));
-      return;
+      newErrors.emailError = "Enter a valid email";
     }
     if (formData.newPassword.length < 8) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        passwordError: "At least 8 characters required",
-      }));
-      return;
+      newErrors.passwordError = "At least 8 characters required";
     }
     if (formData.newPassword !== formData.confirmPassword) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        passwordError: "Passwords do not match",
-      }));
+      newErrors.passwordError = "Passwords do not match";
+    }
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
       return;
     }
-    // Reset error messages
-    setErrors({
-      emailError: "",
-      passwordError: "",
-    });
-    // Submission logic here (could be API call or local storage)
-    // For now, just show a toast notification
-    toast.success("Changes saved successfully!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+
+    setLoading(true);
+
+    try {
+      await handleProfileUpdate();
+      setLoading(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setLoading(false);
+      if (error.code === "auth/user-token-expired") {
+        console.log("User token expired. Refreshing token...");
+      } else {
+        showFailureToast("Failed to update profile. Please try again.");
+      }
+    }
   };
 
-  // Function to validate email
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
+  };
+
+  const handleProfileUpdate = async () => {
+    if (!auth.currentUser) {
+      throw new Error("User is not authenticated");
+    }
+    await updateUserProfile(formData.newEmail, formData.newPassword);
+    showSuccessToast("Profile updated successfully!");
+  };
+
+  const handlePasswordReset = async () => {
+    try {
+      await sendPassResetEmail(formData.newEmail);
+      showSuccessToast("Password reset email sent successfully");
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      toast.error("Failed to send password reset email. Please try again.");
+    }
   };
 
   return (
@@ -116,6 +127,9 @@ const Account = () => {
                   className="border border-gray-300 rounded-md px-3 py-2 w-full"
                   required
                 />
+                {errors.passwordError && (
+                  <p className="text-red-500 text-sm">{errors.passwordError}</p>
+                )}
               </div>
               <div className="mb-4">
                 <label
@@ -133,16 +147,23 @@ const Account = () => {
                   className="border border-gray-300 rounded-md px-3 py-2 w-full"
                   required
                 />
-                {errors.passwordError && (
-                  <p className="text-red-500 text-sm">{errors.passwordError}</p>
-                )}
               </div>
               <div className="text-right md:text-center">
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                    loading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={loading}
                 >
-                  Update
+                  {loading ? "Updating..." : "Update Profile"}
+                </button>
+                <button
+                  type="button"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
+                  onClick={handlePasswordReset}
+                >
+                  Reset Password
                 </button>
               </div>
             </form>
