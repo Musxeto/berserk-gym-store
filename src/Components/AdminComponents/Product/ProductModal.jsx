@@ -4,6 +4,18 @@ import { storage } from "../../../firebase";
 import { ClipLoader } from "react-spinners";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 
+const categories = [
+  "creatine",
+  "leggings",
+  "belts",
+  "preworkout",
+  "proteinpowder",
+  "shorts",
+  "tanktops",
+  "tshirt",
+  "wraps",
+];
+
 const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -210,13 +222,18 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
               <div className="field">
                 <label className="label">Category</label>
                 <div className="control">
-                  <input
-                    type="text"
+                  <select
                     className="input"
-                    placeholder="Category"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                  />
+                  >
+                    <option value="">Select Category</option>
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
