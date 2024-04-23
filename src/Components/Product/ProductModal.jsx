@@ -94,12 +94,12 @@ const ProductModal = ({ isOpen, closeModal, openModal, product }) => {
         <div className="w-1/2">
           <div className="relative">
             <img
-              src={product.hoverImage}
+              src={product.image}
               alt={product.name}
               className="w-full rounded-lg"
             />
             <img
-              src={product.image}
+              src={product.hoverImage}
               alt={product.name}
               className="w-full rounded-lg absolute top-0 opacity-0 hover:opacity-100 transition duration-300"
             />

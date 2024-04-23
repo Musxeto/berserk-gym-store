@@ -3,60 +3,54 @@ import ModalBtn from "./ModalBtn.jsx";
 import ProductModal from "./ProductModal.jsx";
 
 const Product = ({ product }) => {
-  // Calculate the discounted price
-  const discountedPrice =
-    product.price - (product.price * parseInt(product.discount)) / 100;
+  const discountedPrice = calculateDiscountedPrice(product);
 
-  // State to manage the visibility of the product modal
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Function to handle opening the product modal
   const openModal = () => {
     setModalOpen(true);
   };
 
-  // Function to handle closing the product modal
   const closeModal = () => {
     setModalOpen(false);
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4">
-      <div className="relative w-full h-0" style={{ paddingBottom: "100%" }}>
-        {/* Loading placeholder */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse rounded-lg"></div>
-        {/* Actual image */}
+    <div className="product-container bg-white rounded-lg shadow-lg p-4">
+      <div
+        className="image-container relative w-full h-0"
+        style={{ paddingBottom: "100%" }}
+      >
+        <div className="loading-placeholder absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse rounded-lg"></div>
         <img
           src={product.image}
           alt={product.name}
-          className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
+          className="product-image absolute top-0 left-0 w-full h-full object-cover rounded-lg"
         />
-        {/* Hover image */}
         <img
           src={product.hoverImage}
           alt={product.name}
-          className="absolute top-0 left-0 w-full h-full object-cover rounded-lg opacity-0 hover:opacity-100 transition duration-300"
+          className="hover-image absolute top-0 left-0 w-full h-full object-cover rounded-lg opacity-0 hover:opacity-100 transition duration-300"
         />
       </div>
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold">{product.name}</h3>
-        {/* Display the discounted price and original price */}
-        <div className="flex items-center">
-          <span className="text-gray-800 mr-2">
-            <span className="text-red-500">${discountedPrice.toFixed(2)}</span>{" "}
-            {/* Display discounted price */}
-            {product.discount > 0 && (
-              <span className="ml-2 text-gray-400 line-through">
-                ${product.price}
-              </span> // Display original price with strike-through
-            )}
+      <div className="details mt-4">
+        <h3 className="product-name text-base font-semibold">{product.name}</h3>
+        <div className="prices flex items-center mt-2">
+          <span className="discounted-price text-gray-800 mr-2">
+            ${discountedPrice.toFixed(2)}
           </span>
           {product.discount > 0 && (
-            <div className="text-red-500">{product.discount}% off</div>
+            <span className="original-price text-sm text-gray-400 line-through">
+              ${product.price}
+            </span>
+          )}
+          {product.discount > 0 && (
+            <div className="discount text-red-500 text-sm ml-2">
+              {product.discount}% off
+            </div>
           )}
         </div>
-        {/* Display sizes */}
-        <div className="mt-4 flex flex-wrap">
+        <div className="sizes mt-4 flex flex-wrap">
           {Array.isArray(product.sizes) ? (
             product.sizes.map((size) => (
               <button
@@ -68,24 +62,24 @@ const Product = ({ product }) => {
               </button>
             ))
           ) : (
-            <p>Sizes not available</p>
+            <p className="unavailable-sizes">Sizes not available</p>
           )}
         </div>
-        {/* Add the AddToCartButton component */}
-        <div className="mt-4">
+        <div className="add-to-cart mt-4">
           <ModalBtn product={product} />
         </div>
-
-        {/* Product modal */}
         <ProductModal
           isOpen={modalOpen}
           closeModal={closeModal}
-          openModal={openModal} // Pass openModal function down
           product={product}
         />
       </div>
     </div>
   );
+};
+
+const calculateDiscountedPrice = (product) => {
+  return product.price - (product.price * parseInt(product.discount)) / 100;
 };
 
 export default Product;
