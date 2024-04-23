@@ -59,14 +59,16 @@ const Home = () => {
         <h2 className="text-3xl font-bold mb-4 text-center">
           Featured Products
         </h2>
-        {error && <div className="text-red-500 text-center">{error}</div>}
-        {!isLoading ? (
-          <Products products={products} />
-        ) : (
-          <div className="flex justify-center">
-            <ClipLoader color={"#000"} loading={true} size={50} />
-          </div>
-        )}
+        <div className="p-2">
+          {error && <div className="text-red-500 text-center">{error}</div>}
+          {!isLoading ? (
+            <Products products={products} />
+          ) : (
+            <div className="flex justify-center">
+              <ClipLoader color={"#000"} loading={true} size={50} />
+            </div>
+          )}
+        </div>
       </div>
       <Footer />
     </>
