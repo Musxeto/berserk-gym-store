@@ -14,7 +14,6 @@ const Product = ({ product }) => {
   const closeModal = () => {
     setModalOpen(false);
   };
-
   return (
     <div className="product-container bg-white rounded-lg shadow-lg p-4">
       <div
@@ -34,13 +33,15 @@ const Product = ({ product }) => {
         />
       </div>
       <div className="details mt-4">
-        <h3 className="product-name text-base font-semibold">{product.name}</h3>
+        <h3 className="product-name text-base font-semibold truncate">
+          {product.name}
+        </h3>
         <div className="prices flex items-center mt-2">
-          <span className="discounted-price text-gray-800 mr-2">
+          <span className="discounted-price text-gray-800 mr-2 whitespace-nowrap">
             ${discountedPrice.toFixed(2)}
           </span>
           {product.discount > 0 && (
-            <span className="original-price text-sm text-gray-400 line-through">
+            <span className="original-price text-sm text-gray-400 line-through whitespace-nowrap">
               ${product.price}
             </span>
           )}
