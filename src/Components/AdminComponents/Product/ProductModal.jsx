@@ -307,7 +307,7 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
           <div className="flex justify-center mt-4">
             <button
               type="submit"
-              className="button mr-2 bg-black text-white px-3 py-1 rounded-md hover:bg-gray-800"
+              className="button mr-2 bg-black text-white px-3 py-1 rounded-md hover:bg-gray-800 disabled:bg-gray-700"
               disabled={loading}
             >
               {product ? "Update" : "Add"}
