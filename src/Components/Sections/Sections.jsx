@@ -18,13 +18,13 @@ const SectionPreview = () => {
     {
       name: "Protein Powders",
       description: "Find the perfect Protein Powder for your needs.",
-      image: "/protien.jpg",
+      image: "/whey-protien.png",
       link: "/proteinpowder",
     },
     {
       name: "Wrist Wraps",
       description: "Browse our selection of workout Accessories.",
-      image: "/accessories.jpeg",
+      image: "/wraps.jpg",
       link: "accessories/wrist-wraps",
     },
   ];
