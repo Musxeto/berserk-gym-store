@@ -103,20 +103,24 @@ const ShoppingCart = ({ isOpen, closeSidebar }) => {
       </div>
       {cart.length > 0 && !checkoutMode && (
         // Display clear cart and proceed to checkout buttons
+        // Display clear cart and proceed to checkout buttons
         <div className="p-4 border-t flex justify-between">
-          <button
-            className="bg-red-600 text-white py-2 px-4 rounded-lg mb-4"
-            onClick={clearCart}
-          >
-            Clear Cart
-          </button>
-          <div>
-            <p>Subtotal: ${calculateTotal()}</p>
-            <p>Delivery Charges: ${deliveryCharges}</p>
-            <p>Total: ${calculateTotal()}</p>
-
+          <div className="flex mt-4 flex-col">
             <button
-              className="bg-blue-600 mt-3 text-white py-2 px-4 rounded-lg"
+              className="bg-red-600 text-white py-2 px-4 rounded-lg mb-4"
+              onClick={clearCart}
+            >
+              Clear Cart
+            </button>
+            <div>
+              <p>Subtotal: ${calculateTotal()}</p>
+              <p>Delivery Charges: ${deliveryCharges}</p>
+              <p>Total: ${calculateTotal()}</p>
+            </div>
+          </div>
+          <div>
+            <button
+              className="bg-blue-600 mt-4 text-white py-2 px-4 rounded-lg"
               onClick={handleProceedToCheckout}
             >
               Proceed to Checkout
