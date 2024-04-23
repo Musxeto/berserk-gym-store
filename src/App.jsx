@@ -45,11 +45,46 @@ function App() {
           {/*--------------------------------------------------------------- */}
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/forgot-password" element={<AdminForgotPassword />} />
-          <Route path="/admin/dashboard" element={<AdminDashBoard />} />
-          <Route path="/admin/orders" element={<Orders />} />
-          <Route path="/admin/products" element={<Products />} />
-          <Route path="/admin/account" element={<Account />} />
-          <Route path="/admin/settings" element={<Settings />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <PrivateRoute>
+                <AdminDashBoard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/orders"
+            element={
+              <PrivateRoute>
+                <Orders />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/products"
+            element={
+              <PrivateRoute>
+                <Products />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/account"
+            element={
+              <PrivateRoute>
+                <Account />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/settings"
+            element={
+              <PrivateRoute>
+                <Settings />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </ToastProvider>
     </CartProvider>
