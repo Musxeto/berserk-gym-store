@@ -88,6 +88,7 @@ const OrderItem = ({ order }) => {
                     <p>Category: {product.category}</p>
                     <p>Price: ${product.price}</p>
                     <p>Quantity: {product.quantity}</p>
+                    <p>Size: {product.size}</p>
                   </div>
                 ))
               ) : (

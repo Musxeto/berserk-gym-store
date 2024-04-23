@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../Components/Layout/Navbar/Navbar";
 import Footer from "../../Components/Layout/Footer/Footer";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { css } from "@emotion/react";
 import { RingLoader } from "react-spinners";
 import { signIn } from "../../firebase.jsx";
 import { showSuccessToast, showFailureToast } from "../../App";
+import { toast } from "react-toastify";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
