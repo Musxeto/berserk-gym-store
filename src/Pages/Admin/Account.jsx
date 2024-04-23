@@ -82,18 +82,14 @@ const Account = () => {
 
   const handleProfileUpdate = async () => {
     try {
-      // Check if email or password is provided
-      if (!formData.newEmail && !formData.newPassword) {
-        throw new Error("Please provide email or password to update");
-      }
-
-      // Call the updateUserProfile function with new email and password
+      setLoading(true);
       await updateUserProfile(formData.newEmail, formData.newPassword);
-
+      setLoading(false);
       // Show success message
       showSuccessToast("Profile updated successfully!");
     } catch (error) {
       // Show error message
+      setLoading(false);
       showFailureToast(error.message);
     }
   };
@@ -191,12 +187,12 @@ const Account = () => {
                   <button
                     type="submit"
                     onSubmit={handleProfileUpdate}
-                    className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+                    className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-blue-300 ${
                       loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                     disabled={loading}
                   >
-                    {loading ? "Updating..." : "Update Profile"}
+                    Update Profile
                   </button>
                 </div>
               </form>

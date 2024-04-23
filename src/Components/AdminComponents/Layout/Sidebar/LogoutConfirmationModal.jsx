@@ -31,7 +31,7 @@ const LogoutConfirmationModal = ({
           )}
           <button
             className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white"
-            onClick={onLogout} // Ensure onLogout is called on click
+            onClick={onLogout}
             disabled={loading}
           >
             {loading ? "Logging out..." : "Logout"}

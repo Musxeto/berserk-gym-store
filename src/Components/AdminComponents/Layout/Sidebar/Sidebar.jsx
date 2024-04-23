@@ -18,6 +18,7 @@ const Sidebar = ({ className }) => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const [logoutError, setLogoutError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -32,9 +33,11 @@ const Sidebar = ({ className }) => {
     try {
       setSidebarOpen(false);
       setLoggingOut(true);
+      setLoading(true);
       console.log("Logging out...");
       await logout();
       setLoggingOut(false);
+      setLoading(false);
       showSuccessToast("Logged Out");
       console.log("Logged Out!");
       navigate("/admin");
@@ -159,6 +162,7 @@ const Sidebar = ({ className }) => {
         isOpen={logoutModalOpen}
         onClose={toggleLogoutModal}
         onLogout={handleLogout} // Make sure this is passed correctly
+        loading={loading}
       />
     </>
   );
