@@ -77,7 +77,7 @@ const OrderItem = ({ order }) => {
           </div>
           <div className="text-gray-600 mb-2">
             <h4>Products:</h4>
-            <div className="grid grid-cols-3 mx-10  gap-4 ">
+            <div className="grid grid-cols-1 md:grid-cols-3 mx-10  gap-4 ">
               {order.products && order.products.length > 0 ? (
                 order.products.map((product) => (
                   <div
