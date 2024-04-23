@@ -4,8 +4,9 @@ import { Navigate, Route } from "react-router-dom";
 import { auth } from "../firebase";
 
 const PrivateRoute = ({ children }) => {
-  const { currentUser } = auth.currentUser;
-  if (currentUser !== null && currentUser !== undefined) {
+  const currentUser = auth.currentUser;
+
+  if (currentUser) {
     return children;
   } else {
     return <Navigate to={"/admin"} />;

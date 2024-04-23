@@ -25,69 +25,90 @@ import Settings from "./Pages/Admin/Settings";
 import Account from "./Pages/Admin/Account";
 import AdminForgotPassword from "./Pages/Admin/AdminForgotPassword";
 import PrivateRoute from "./Components/PrivateRoute";
+import { AuthProvider } from "./Contexts/AuthProvider";
+import LoginRoute from "./Components/LoginRoute";
 function App() {
   return (
-    <CartProvider>
-      <ToastProvider>
-        <Routes>
-          <Route path="/" element={<Home />} exact />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<AllProducts />} />
-          <Route path="/tshirts" element={<Tshirts />} />
-          <Route path="/tanktops" element={<TankTops />} />
-          <Route path="/shorts" element={<Shorts />} />
-          <Route path="/leggings" element={<Leggings />} />
-          <Route path="/proteinpowder" element={<ProteinPowder />} />
-          <Route path="/creatine" element={<Creatine />} />
-          <Route path="/preworkout" element={<PreWorkout />} />
-          <Route path="/accessories/lifting-belts" element={<LiftingBelts />} />
-          <Route path="/accessories/wrist-wraps" element={<WristWraps />} />
-          {/*--------------------------------------------------------------- */}
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/forgot-password" element={<AdminForgotPassword />} />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <PrivateRoute>
-                <AdminDashBoard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/orders"
-            element={
-              <PrivateRoute>
-                <Orders />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/products"
-            element={
-              <PrivateRoute>
-                <Products />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/account"
-            element={
-              <PrivateRoute>
-                <Account />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/settings"
-            element={
-              <PrivateRoute>
-                <Settings />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </ToastProvider>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <ToastProvider>
+          <Routes>
+            <Route path="/" element={<Home />} exact />
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<AllProducts />} />
+            <Route path="/tshirts" element={<Tshirts />} />
+            <Route path="/tanktops" element={<TankTops />} />
+            <Route path="/shorts" element={<Shorts />} />
+            <Route path="/leggings" element={<Leggings />} />
+            <Route path="/proteinpowder" element={<ProteinPowder />} />
+            <Route path="/creatine" element={<Creatine />} />
+            <Route path="/preworkout" element={<PreWorkout />} />
+            <Route
+              path="/accessories/lifting-belts"
+              element={<LiftingBelts />}
+            />
+            <Route path="/accessories/wrist-wraps" element={<WristWraps />} />
+            {/*--------------------------------------------------------------- */}
+            <Route
+              path="/admin"
+              element={
+                <LoginRoute>
+                  <AdminLogin />
+                </LoginRoute>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <LoginRoute>
+                  <AdminForgotPassword />
+                </LoginRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard"
+              element={
+                <PrivateRoute>
+                  <AdminDashBoard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/orders"
+              element={
+                <PrivateRoute>
+                  <Orders />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/products"
+              element={
+                <PrivateRoute>
+                  <Products />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/account"
+              element={
+                <PrivateRoute>
+                  <Account />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </ToastProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

@@ -87,7 +87,7 @@ const AdminForgotPassword = () => {
                   to="/admin"
                   className="text-gray-700 no-underline hover:no-underline hover:text-gray-600"
                 >
-                  Forgot Password?
+                  Back To Signing IN?
                 </Link>
               </div>
             )}

@@ -4,7 +4,6 @@ import berserkLogo from "/berserk.png";
 import { FaBars, FaShoppingCart, FaChevronDown } from "react-icons/fa";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import { useCart } from "../../../Contexts/CartContext";
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showGymWear, setShowGymWear] = useState(false);
@@ -159,7 +158,7 @@ const Navbar = () => {
             </span>
           </Link>
           <Link
-            to="/admin"
+            to="/admin/dashboard"
             className="text-gray-600 hover:text-gray-900 transition duration-300"
           >
             <span

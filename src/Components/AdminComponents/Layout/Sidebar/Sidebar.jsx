@@ -1,57 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
 import {
   FiHome,
-  FiBox,
-  FiInbox,
-  FiUsers,
-  FiLogIn,
-  FiUserPlus,
-  FiPackage,
-  FiList,
+  FiLogOut,
   FiShoppingBag,
-} from "react-icons/fi"; // Importing icons from react-icons
+  FiPackage,
+  FiUsers,
+} from "react-icons/fi";
 import { logout } from "../../../../firebase";
-import { IoSettingsOutline } from "react-icons/io5"; // Importing settings icon
-import LogoutConfirmationModal from "./LogoutConfirmationModal"; // Import the logout confirmation modal component
-import { showSuccessToast } from "../../../../App";
+import { IoSettingsOutline } from "react-icons/io5";
+import LogoutConfirmationModal from "./LogoutConfirmationModal";
+import { showSuccessToast, showFailureToast } from "../../../../App";
+import { MdCached } from "react-icons/md";
+import { Link, Navigate } from "react-router-dom";
 
 const Sidebar = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false); // State to control the visibility of the logout confirmation modal
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState(null);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (
-        sidebarOpen &&
-        !event.target.closest("#default-sidebar") &&
-        !event.target.closest("[data-drawer-toggle]")
-      ) {
-        setSidebarOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, [sidebarOpen]);
-
   const toggleLogoutModal = () => {
     setLogoutModalOpen(!logoutModalOpen);
+    setSidebarOpen(false);
   };
 
   const handleLogout = async () => {
-    // Perform logout action here
-    console.log("Logging out...");
-    await logout();
-    showSuccessToast("Logged Out");
-    console.log("Logged Out!");
+    try {
+      setSidebarOpen(false);
+      setLoggingOut(true);
+      console.log("Logging out...");
+      await logout();
+      setLoggingOut(false);
+      showSuccessToast("Logged Out");
+      console.log("Logged Out!");
+    } catch (error) {
+      console.error("Error logging out:", error);
+      setLoggingOut(false);
+      setLogoutError(error.message || "Failed to logout");
+      showFailureToast(logoutError);
+    } finally {
+      <Navigate to="/admin" />;
+    }
   };
 
   return (
@@ -88,28 +81,29 @@ const Sidebar = ({ className }) => {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 bg-gray-50 dark:bg-gray-800 shadow-lg">
+          {/* Upper section */}
           <div>
             <ul className="space-y-2 font-medium">
               <li>
-                <NavLink
+                <Link
                   to="/admin/dashboard"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <FiHome className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                   <span className="ms-3">Dashboard</span>
-                </NavLink>
+                </Link>
               </li>
               <li>
-                <NavLink
+                <Link
                   to="/admin/orders"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <FiShoppingBag className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                   <span className="ms-3">Orders</span>
-                </NavLink>
+                </Link>
               </li>
               <li>
-                <NavLink
+                <Link
                   to="/admin/products"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
@@ -117,25 +111,25 @@ const Sidebar = ({ className }) => {
                   <span className="flex-1 ms-3 whitespace-nowrap">
                     Products
                   </span>
-                </NavLink>
+                </Link>
               </li>
               <li>
-                <NavLink
+                <Link
                   to="/admin/settings"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <IoSettingsOutline className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                   <span className="ms-3">Settings</span>
-                </NavLink>
+                </Link>
               </li>
               <li>
-                <NavLink
+                <Link
                   to="/admin/account"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <FiUsers className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Account</span>
-                </NavLink>
+                </Link>
               </li>
             </ul>
           </div>
@@ -143,12 +137,16 @@ const Sidebar = ({ className }) => {
           <div>
             <ul className="space-y-2 font-medium">
               <li>
-                {/* Logout button with modal */}
+                {/* Logout button with spinner */}
                 <button
                   onClick={toggleLogoutModal}
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
-                  <FiLogIn className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                  {loggingOut ? (
+                    <MdCached className="animate-spin w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                  ) : (
+                    <FiLogOut className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                  )}
                   <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
                 </button>
               </li>
@@ -161,7 +159,7 @@ const Sidebar = ({ className }) => {
       <LogoutConfirmationModal
         isOpen={logoutModalOpen}
         onClose={toggleLogoutModal}
-        onConfirm={handleLogout} // Pass the logout action function as a prop to the modal
+        onLogout={handleLogout} // Make sure this is passed correctly
       />
     </>
   );
