@@ -42,7 +42,37 @@ const Account = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Your form submission logic
+
+    // Validate email if provided
+    if (formData.newEmail && !validateEmail(formData.newEmail)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        emailError: "Please enter a valid email address",
+      }));
+      return;
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        emailError: "",
+      }));
+    }
+
+    // Validate password if provided
+    if (formData.newPassword !== formData.confirmPassword) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        passwordError: "Passwords do not match",
+      }));
+      return;
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        passwordError: "",
+      }));
+    }
+
+    // Call handleProfileUpdate to update profile information
+    handleProfileUpdate();
   };
 
   const validateEmail = (email) => {
@@ -51,20 +81,20 @@ const Account = () => {
   };
 
   const handleProfileUpdate = async () => {
-    if (!auth.currentUser) {
-      throw new Error("User is not authenticated");
-    }
-    await updateUserProfile(formData.newEmail, formData.newPassword);
-    showSuccessToast("Profile updated successfully!");
-  };
-
-  const handlePasswordReset = async () => {
     try {
-      await sendPassResetEmail(formData.newEmail);
-      showSuccessToast("Password reset email sent successfully");
+      // Check if email or password is provided
+      if (!formData.newEmail && !formData.newPassword) {
+        throw new Error("Please provide email or password to update");
+      }
+
+      // Call the updateUserProfile function with new email and password
+      await updateUserProfile(formData.newEmail, formData.newPassword);
+
+      // Show success message
+      showSuccessToast("Profile updated successfully!");
     } catch (error) {
-      console.error("Error sending password reset email:", error);
-      toast.error("Failed to send password reset email. Please try again.");
+      // Show error message
+      showFailureToast(error.message);
     }
   };
 
@@ -97,7 +127,7 @@ const Account = () => {
               <form onSubmit={handleSubmit} className="bg-white p-1 md:p-1">
                 <div className="mb-4">
                   <label htmlFor="newEmail" className="block font-medium mb-1">
-                    New Email:
+                    Email:
                   </label>
                   <input
                     type="email"
@@ -108,8 +138,9 @@ const Account = () => {
                         ? auth.currentUser.email
                         : formData.newEmail
                     }
+                    disabled
                     onChange={handleChange}
-                    className="border border-gray-300 rounded-md px-3 py-2 w-full"
+                    className="border border-gray-300 rounded-md px-3 disabled:text-gray-400 py-2 w-full"
                     required
                   />
 
@@ -159,19 +190,13 @@ const Account = () => {
                 <div className="text-right md:text-center">
                   <button
                     type="submit"
+                    onSubmit={handleProfileUpdate}
                     className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
                       loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                     disabled={loading}
                   >
                     {loading ? "Updating..." : "Update Profile"}
-                  </button>
-                  <button
-                    type="button"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
-                    onClick={handlePasswordReset}
-                  >
-                    Reset Password
                   </button>
                 </div>
               </form>

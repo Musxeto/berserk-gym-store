@@ -37,13 +37,12 @@ const Sidebar = ({ className }) => {
       setLoggingOut(false);
       showSuccessToast("Logged Out");
       console.log("Logged Out!");
+      <Navigate to="/admin" />;
     } catch (error) {
       console.error("Error logging out:", error);
       setLoggingOut(false);
       setLogoutError(error.message || "Failed to logout");
       showFailureToast(logoutError);
-    } finally {
-      <Navigate to="/admin" />;
     }
   };
 

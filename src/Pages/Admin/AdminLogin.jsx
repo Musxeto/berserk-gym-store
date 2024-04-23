@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../../Components/Layout/Navbar/Navbar";
 import Footer from "../../Components/Layout/Footer/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
 import { RingLoader } from "react-spinners";
 import { signIn } from "../../firebase.jsx";
@@ -11,6 +11,7 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Use the useNavigate hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,12 +24,12 @@ const AdminLogin = () => {
       setEmail("");
       setPassword("");
       showSuccessToast("Signed in successfully!");
+      navigate("/admin/dashboard"); // Navigate to admin dashboard
     } catch (error) {
       setLoading(false);
       showFailureToast(`Failed to sign in: ${error.message}`);
     }
   };
-
   const override = css`
     display: block;
     margin: 0 auto;
