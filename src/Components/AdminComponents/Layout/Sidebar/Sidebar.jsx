@@ -11,10 +11,14 @@ import {
   FiList,
   FiShoppingBag,
 } from "react-icons/fi"; // Importing icons from react-icons
+import { logout } from "../../../../firebase";
 import { IoSettingsOutline } from "react-icons/io5"; // Importing settings icon
+import LogoutConfirmationModal from "./LogoutConfirmationModal"; // Import the logout confirmation modal component
+import { showSuccessToast } from "../../../../App";
 
 const Sidebar = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false); // State to control the visibility of the logout confirmation modal
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -37,6 +41,18 @@ const Sidebar = ({ className }) => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [sidebarOpen]);
+
+  const toggleLogoutModal = () => {
+    setLogoutModalOpen(!logoutModalOpen);
+  };
+
+  const handleLogout = async () => {
+    // Perform logout action here
+    console.log("Logging out...");
+    await logout();
+    showSuccessToast("Logged Out");
+    console.log("Logged Out!");
+  };
 
   return (
     <>
@@ -74,7 +90,6 @@ const Sidebar = ({ className }) => {
         <div className="h-full px-3 py-4 bg-gray-50 dark:bg-gray-800 shadow-lg">
           <div>
             <ul className="space-y-2 font-medium">
-              {/* Upper section */}
               <li>
                 <NavLink
                   to="/admin/dashboard"
@@ -128,18 +143,26 @@ const Sidebar = ({ className }) => {
           <div>
             <ul className="space-y-2 font-medium">
               <li>
-                <NavLink
-                  to="/admin/"
+                {/* Logout button with modal */}
+                <button
+                  onClick={toggleLogoutModal}
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <FiLogIn className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                   <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
-                </NavLink>
+                </button>
               </li>
             </ul>
           </div>
         </div>
       </aside>
+
+      {/* Logout confirmation modal */}
+      <LogoutConfirmationModal
+        isOpen={logoutModalOpen}
+        onClose={toggleLogoutModal}
+        onConfirm={handleLogout} // Pass the logout action function as a prop to the modal
+      />
     </>
   );
 };

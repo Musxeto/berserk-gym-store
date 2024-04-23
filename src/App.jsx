@@ -15,10 +15,8 @@ import LiftingBelts from "./Pages/LiftingBelts"; // Import LiftingBelts componen
 import WristWraps from "./Pages/WristWraps"; // Import WristWraps component/page
 import ToastProvider from "./Contexts/ToastProvider";
 import { CartProvider } from "./Contexts/CartContext";
-
 import { Route, Routes } from "react-router-dom";
 import AllProducts from "./Pages/AllProducts";
-
 import AdminLogin from "./Pages/Admin/AdminLogin";
 import AdminDashBoard from "./Pages/Admin/AdminDashBoard";
 import Orders from "./Pages/Admin/Orders";
@@ -26,6 +24,7 @@ import Products from "./Pages/Admin/Products";
 import Settings from "./Pages/Admin/Settings";
 import Account from "./Pages/Admin/Account";
 import AdminForgotPassword from "./Pages/Admin/AdminForgotPassword";
+import PrivateRoute from "./Components/PrivateRoute";
 function App() {
   return (
     <CartProvider>
