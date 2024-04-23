@@ -11,14 +11,14 @@ import { IoSettingsOutline } from "react-icons/io5";
 import LogoutConfirmationModal from "./LogoutConfirmationModal";
 import { showSuccessToast, showFailureToast } from "../../../../App";
 import { MdCached } from "react-icons/md";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ className }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const [logoutError, setLogoutError] = useState(null);
-
+  const navigate = useNavigate();
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -37,7 +37,7 @@ const Sidebar = ({ className }) => {
       setLoggingOut(false);
       showSuccessToast("Logged Out");
       console.log("Logged Out!");
-      <Navigate to="/admin" />;
+      navigate("/admin");
     } catch (error) {
       console.error("Error logging out:", error);
       setLoggingOut(false);
