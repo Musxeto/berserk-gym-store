@@ -3,6 +3,7 @@ import { updateProduct, addProduct } from "../../../firebase";
 import { storage } from "../../../firebase";
 import { ClipLoader } from "react-spinners";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
+import { showFailureToast } from "../../../App";
 
 const categories = [
   "creatine",
@@ -95,6 +96,7 @@ const ProductModal = ({ isOpen, onClose, onSubmit, product }) => {
       setHoverImagePreview(null);
     } catch (error) {
       console.error("Failed to save product:", error);
+      showFailureToast("Failed to Upddate, Try Reloading the Page");
     } finally {
       setLoading(false);
     }

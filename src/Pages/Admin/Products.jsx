@@ -44,7 +44,7 @@ const Products = () => {
       setIsAddModalOpen(false);
       showSuccessToast("Product added successfully!");
     } catch (error) {
-      showFailureToast("Failed to add product. Please try again.");
+      showFailureToast("Failed to add product, Try Reloading the Page.");
     }
   };
 
