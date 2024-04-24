@@ -4,6 +4,7 @@ import berserkLogo from "/berserk.png";
 import { FaBars, FaShoppingCart, FaChevronDown } from "react-icons/fa";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import { useCart } from "../../../Contexts/CartContext";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showGymWear, setShowGymWear] = useState(false);
@@ -107,18 +108,15 @@ const Navbar = () => {
             <FaBars className="w-6 h-6" />
             <span className="sr-only">Open mobile menu</span>
           </button>
-          <FaShoppingCart
-            className="w-6 h-6 text-gray-600 relative"
-            onClick={() => setShowCart(!showCart)}
-          />
-          {cart.length > 0 && (
-            <span
+          <div className="relative">
+            <FaShoppingCart
+              className="w-6 h-6 text-gray-600"
               onClick={() => setShowCart(!showCart)}
-              className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute top-0 right-0 transform -translate-x-1 mt-5 "
-            >
+            />
+            <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute -top-1 -right-1 transform translate-x-full -translate-y-full mt-5 mr-3">
               {cart.length}
             </span>
-          )}
+          </div>
         </div>
 
         {/* Navigation links */}
@@ -172,15 +170,15 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center space-x-3">
           {/* Shopping cart */}
-          <FaShoppingCart
-            className="w-6 h-6 text-gray-600 relative"
-            onClick={() => setShowCart(!showCart)}
-          />
-          {cart.length > 0 && (
-            <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute top-0 right-0 transform -translate-x-8 mt-5 ">
+          <div className="relative">
+            <FaShoppingCart
+              className="w-6 h-6 text-gray-600"
+              onClick={() => setShowCart(!showCart)}
+            />
+            <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute -top-1 -right-1 transform translate-x-full -translate-y-full mt-5 mr-3">
               {cart.length}
             </span>
-          )}
+          </div>
         </div>
       </div>
       {/*---------------------------------------M o b i l e   d r o p d o w n  m e n u----------------------------------------------------*/}
