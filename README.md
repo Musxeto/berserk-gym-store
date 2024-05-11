@@ -4,6 +4,12 @@
 
 Welcome to the documentation for the Berserk Gym E-commerce Platform. This comprehensive guide provides an in-depth overview of the architecture, features, technologies used, setup instructions, and usage guidelines for the platform.
 
+LIVE DEMO: https://berserkfit.netlify.app
+
+Admin credentials:
+Email:     admin@berserk.fit
+Password:  berserk12 
+
 ## Architecture Overview
 
 The Berserk Gym E-commerce Platform is built using a modern and scalable architecture that ensures reliability, flexibility, and performance. Here's an overview of the key components:
